@@ -1,3 +1,5 @@
+'use strict';
+
 // THIS IS AN EXAMPLE
 const {app, BrowserWindow} = require('electron')
 const path = require('path')

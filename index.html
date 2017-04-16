@@ -1,17 +1,35 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset="UTF-8">
     <title>CS 2200 Cache Simulator</title>
+
+    <!-- Use minified files in production -->
+    <script src="node_modules/angular/angular.js"></script>
+    <script src="node_modules/angular-material/angular-material.js"></script>
+    <link rel="stylesheet" href="node_modules/angular-material/angular-material.min.css">
+    <script src="node_modules/angular-animate/angular-animate.js"></script>
+    <script src="node_modules/angular-aria/angular-aria.js"></script>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
     <script src="main.js" charset="utf-8"></script>
-    <script src="cache-parameters.js" charset="utf-8"></script>
-  </head>
-  <body>
-    <h1>Welcome to Indacache</h1>
+    <script src="app.js"></script>
+    <script src="cacheInput.js"></script>
+</head>
+
+<body ng-app="Simulator" layout="row">
+    <div flex="65">
+        <h1>Welcome to Indacache</h1>
+    </div>
+    <div flex>
+        <cache-input></cache-input>
+    </div>
     <!-- We are using node <script>document.write(process.versions.node)</script>,
     Chrome <script>document.write(process.versions.chrome)</script>,
     and Electron <script>document.write(process.versions.electron)</script>. -->
-    <form id="parameters">
+    <!-- <form id="parameters">
         <fieldset name="cache-parameters">
             <legend>Cache Parameters</legend>
             <p>
@@ -118,8 +136,7 @@
                 <button type="button" name="upload-button">Upload</button>
             </p>
         </fieldset>
-    </form>
+    </form> -->
+</body>
 
-
-  </body>
 </html>
