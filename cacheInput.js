@@ -35,11 +35,13 @@ function CacheInputController($scope) {
     ]
 
     ctrl.addCache = function() {
-        ctrl.caches.push({
-            title: "L" + (ctrl.caches.length + 1),
-            policy: "",
-            blockSize: 1
-        });
+        if (ctrl.caches.length < 3) {
+            ctrl.caches.push({
+                title: "L" + (ctrl.caches.length + 1),
+                policy: "",
+                blockSize: 1
+            });
+        }
         //TODO Add cache in the other view
     };
 
