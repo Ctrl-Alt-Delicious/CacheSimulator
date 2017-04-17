@@ -1,3 +1,5 @@
+'use strict';
+
 // THIS IS AN EXAMPLE
 const {app, BrowserWindow} = require('electron')
 const path = require('path')
@@ -8,10 +10,6 @@ const $ = require('jQuery');
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win
-
-// Cache global variables
-let numCacheLevels = 1;
-let MAX_CACHE_LEVELS = 3;
 
 function createWindow () {
   // Create the browser window.
@@ -26,6 +24,9 @@ function createWindow () {
 
   // Open the DevTools.
   win.webContents.openDevTools()
+
+  // Maximize Browser Window
+  win.maximize()
 
   // Emitted when the window is closed.
   win.on('closed', () => {
@@ -60,46 +61,3 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
-function loadCacheLevels() {
-
-}
-
-function addCacheLevel(event) {
-    // Prevents page from reloading when button is clicked
-    event.preventDefault();
-
-    // Declare all variables
-    var i, tabcontent, tablinks;
-
-    if (numCacheLevels < 3) {
-        numCacheLevels++;
-        tablinks = document.getElementsByClassName("tablinks");
-        for (i=0; i < numCacheLevels; i++) {
-            $(tablinks[i]).show()
-        }
-    }
-}
-
-function openCacheLevelParams(event, cacheLevel) {
-    // Prevents page from reloading when button is clicked
-    event.preventDefault();
-
-    // Declare all variables
-    var i, tabcontent, tablinks;
-
-    // Get all elements with class="tabcontent" and hide them
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
-        tabcontent[i].style.display = "none";
-    }
-
-    // // Get all elements with class="tablinks" and remove the class "active"
-    // tablinks = document.getElementsByClassName("tablinks");
-    // for (i = 0; i < tablinks.length; i++) {
-    //     tablinks[i].className = tablinks[i].className.replace(" active", "");
-    // }
-
-    // Show the current tab, and add an "active" class to the button that opened the tab
-    document.getElementById(cacheLevel).style.display = "block";
-    // event.currentTarget.className += " active";
-}
