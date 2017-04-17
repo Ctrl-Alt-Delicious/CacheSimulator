@@ -1,4 +1,4 @@
-'use strct';
+'use strict';
 
 angular.module('Simulator').component('cacheInput', {
     templateUrl: 'cacheInput.html',
@@ -15,7 +15,7 @@ function CacheInputController($scope) {
     ctrl.fileName = "Graham.trace"
 
     ctrl.caches = [{
-        title: "One",
+        title: "L1",
         policy: "",
         blockSize: 1
     }];
