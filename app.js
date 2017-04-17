@@ -3,6 +3,7 @@
 angular.module('Simulator', ['ngMaterial'])
     .config(function($mdThemingProvider) {
         $mdThemingProvider.theme('docs-dark', 'default')
-            .primaryPalette('orange')
+            .primaryPalette('blue')
+            .accentPalette('blue-grey')
             .dark();
     });
