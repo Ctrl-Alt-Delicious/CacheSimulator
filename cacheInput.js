@@ -15,7 +15,7 @@ function CacheInputController($scope, simDriver) {
     ctrl.fileName = "Graham.trace"
 
     ctrl.caches = [{
-        title: "One",
+        title: "L1",
         policy: "",
         blockSize: 1
     }];
@@ -36,11 +36,13 @@ function CacheInputController($scope, simDriver) {
     ctrl.memQueue = simDriver.getMemAcceses();
 
     ctrl.addCache = function() {
-        ctrl.caches.push({
-            title: "L" + (ctrl.caches.length + 1),
-            policy: "",
-            blockSize: 1
-        });
+        if (ctrl.caches.length < 3) {
+            ctrl.caches.push({
+                title: "L" + (ctrl.caches.length + 1),
+                policy: "",
+                blockSize: 1
+            });
+        }
         //TODO Add cache in the other view
     };
 
