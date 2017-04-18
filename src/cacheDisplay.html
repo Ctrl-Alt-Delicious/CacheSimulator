@@ -1,26 +1,57 @@
 <div ng-cloak layout="row">
-    <md-content layout="column" layout-padding flex="65">
+    <!--Cache Display-->
+    <md-content layout="column" layout-padding md-theme="docs-dark" flex="65">
         <div title="header">
             <h1>Welcome to Indacache</h1>
             <h4>© 2017 Ctrl+Alt+Delicious</h4>
         </div>
 
-        <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
+        <!--Delete cache button-->
+        <md-button  ng-click="removeCache()"><i class="material-icons">delete</i>Remove Cache</md-button>
+
+        <div layout="inline">
+            <!--L1-->
+            <md-card ng-show="showCache[0]" md-theme="docs-dark" flex="40">
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">{{$ctrl.caches[0].title}}</span>
+                        <span class="md-subhead">{{$ctrl.caches[0].policy}}</span>
+                    </md-card-title-text>
+                    <md-card-title-media>
+                        <div class="md-media-lg card-media"></div>
+                    </md-card-title-media>
+                </md-card-title>
+            </md-card>
+
+            <!--L2-->
+            <md-card ng-show="showCache[1]" md-theme="docs-dark" flex>
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">{{$ctrl.caches[1].title}}</span>
+                        <span class="md-subhead">{{$ctrl.caches[1].policy}}</span>
+                    </md-card-title-text>
+                    <md-card-title-media>
+                        <div class="md-media-lg card-media"></div>
+                    </md-card-title-media>
+                </md-card-title>
+            </md-card>
+        </div>
+
+        <!--L3-->
+        <md-card ng-show="showCache[2]" md-theme="docs-dark">
             <md-card-title>
                 <md-card-title-text>
-                    <span class="md-headline">L1 Cache</span>
-                    <span class="md-subhead">{{$ctrl.test}}</span>
+                    <span class="md-headline">{{$ctrl.caches[2].title}}</span>
+                    <span class="md-subhead">{{$ctrl.caches[2].policy}}</span>
                 </md-card-title-text>
                 <md-card-title-media>
                     <div class="md-media-lg card-media"></div>
                 </md-card-title-media>
             </md-card-title>
-            <md-card-actions layout="row" layout-align="end center">
-                <md-button>View Details</md-button>
-            </md-card-actions>
         </md-card>
     </md-content>
 
+    <!--Cache Input-->
     <div layout="column" class="md-inline-form" md-theme="docs-dark" flex>
         <md-content layout="column" layout-padding>
             <md-input-container>

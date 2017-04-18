@@ -27,17 +27,22 @@ function CacheDisplayController($scope, simDriver) {
         if (ctrl.caches.length < 3) {
             ctrl.caches.push({
                 title: "L" + (ctrl.caches.length + 1),
-                policy: "",
+                policy: "put policy here",
                 blockSize: 1
             });
+            //TODO Add cache in the other view
+            $scope.showCache[ctrl.caches.length-1] = true;
         }
-        //TODO Add cache in the other view
+
     };
 
-    $scope.removeCache = function(cache) {
-        var index = ctrl.caches.indexOf(cache);
-        ctrl.caches.splice(index, 1);
-        //TODO remove the cache in other view
+    $scope.removeCache = function() {
+      if (ctrl.caches.length > 1) {
+        //TODO Add cache in the other view
+        ctrl.caches.pop()
+        $scope.showCache[ctrl.caches.length] = false;
+      }
+
     };
 
     //Constants
@@ -45,4 +50,6 @@ function CacheDisplayController($scope, simDriver) {
     $scope.blockSizes = [16, 24, 48, 64]
     $scope.cacheSizes = [64, 128, 256]
     $scope.associativities = [2, 4, 8, 16]
+
+    $scope.showCache = [true, false, false];
 }
