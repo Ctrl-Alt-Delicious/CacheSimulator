@@ -1,4 +1,3 @@
-
 angular.module('Simulator', ['ngMaterial', 'md.data.table'])
     .config(function($mdThemingProvider) {
         $mdThemingProvider.theme('docs-dark', 'default')
@@ -8,12 +7,38 @@ angular.module('Simulator', ['ngMaterial', 'md.data.table'])
     }).controller('IndexController', ['$scope', function($scope) {
         var ctrl = this;
 
-        $scope.showDetails = false;
-        $scope.showDisplay = true;
+        $scope.navs = [{
+                buttonTitle: "Overview",
+                active: true
+            },
+            {
+                buttonTitle: "L1",
+                active: true
+            }
+        ];
 
-        $scope.toggleView = function() {
-            $scope.showDetails = !$scope.showDetails
-            $scope.showDisplay = !$scope.showDisplay
-        }
+        $scope.changeView = function(index) {
+            for (var i = 0; i < $scope.navs.length; i++) {
+                if (index === i) {
+                    $scope.navs[i].active = true;
+                    $scope.$broadcast('updatedCaches', $scope.navs[i])
+                } else {
+                    $scope.navs[i].active = false
+                }
+            }
+            //Pass the updated cache list to cacheDetail template to change its model
+        };
 
+        $scope.$on('updatedCacheList', function(event, data) {
+            $scope.navs = [{
+                buttonTitle: "Overview",
+                active: true
+            }];
+            var i = 1;
+            for (cache of data) {
+                $scope.navs[i++] = {
+                    buttonTitle: cache.title
+                }
+            }
+        });
     }]);

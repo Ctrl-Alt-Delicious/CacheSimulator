@@ -10,5 +10,9 @@ function CacheDetailController($scope, simDriver) {
 
     var ctrl = this;
 
-    ctrl.test = "success";
+    ctrl.activeCache = "L1";
+
+    $scope.$on('updatedCaches', function(event, data) {
+        ctrl.activeCache = data.buttonTitle;
+    });
 }

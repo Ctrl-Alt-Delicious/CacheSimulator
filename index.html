@@ -20,14 +20,18 @@
     <script src="app.js"></script>
     <script src="src/cacheDisplay.js"></script>
     <script src="src/cacheDetail.js"></script>
-    <script src="src/simulator/simDriver.js"></script>
+    <script src="src/services/simDriver.js"></script>
+    <script src="src/services/fileParser.js"></script>
+
 </head>
 
 <body ng-app="Simulator">
     <div ng-controller="IndexController" layout="column">
-        <md-button ng-click="toggleView()">Details</md-button>
-        <cache-detail ng-show="showDetails"></cache-detail>
-        <cache-display ng-show="showDisplay"></cache-display>
+        <div layout="space-between">
+            <md-button ng-repeat="nav in navs" ng-click="changeView($index)">{{nav.buttonTitle}}</md-button>
+        </div>
+        <cache-detail ng-show="!navs[0].active"></cache-detail>
+        <cache-display ng-show="navs[0].active"></cache-display>
     </div>
 
 </body>

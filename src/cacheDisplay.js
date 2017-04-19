@@ -3,11 +3,11 @@
 angular.module('Simulator').component('cacheDisplay', {
     templateUrl: 'src/cacheDisplay.html',
     //add any dependencies below
-    controller: ['$scope', 'SimDriver', CacheDisplayController],
+    controller: ['$scope', 'SimDriver', 'FileParser', CacheDisplayController],
     bindings: {}
 });
 
-function CacheDisplayController($scope, simDriver) {
+function CacheDisplayController($scope, simDriver, fileParser) {
 
     var ctrl = this;
 
@@ -30,19 +30,19 @@ function CacheDisplayController($scope, simDriver) {
                 policy: "put policy here",
                 blockSize: 1
             });
-            //TODO Add cache in the other view
-            $scope.showCache[ctrl.caches.length-1] = true;
+            $scope.showCache[ctrl.caches.length - 1] = true;
+            $scope.$emit('updatedCacheList', ctrl.caches);
         }
 
     };
 
-    $scope.removeCache = function() {
-      if (ctrl.caches.length > 1) {
-        //TODO Add cache in the other view
-        ctrl.caches.pop()
-        $scope.showCache[ctrl.caches.length] = false;
-      }
-
+    $scope.removeCache = function(index) {
+        //TODO May want to remove by index
+        if (ctrl.caches.length > 1) {
+            ctrl.caches.pop()
+            $scope.showCache[ctrl.caches.length] = false;
+        }
+        $scope.$emit('updatedCacheList', ctrl.caches);
     };
 
     //Constants
