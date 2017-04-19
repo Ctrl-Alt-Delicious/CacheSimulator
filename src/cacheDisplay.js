@@ -16,10 +16,15 @@ function CacheDisplayController($scope, simDriver, fileParser) {
     ctrl.blockSize = 1;
     ctrl.fileName = ""
 
-    ctrl.caches = [{
-        title: "L1",
+    ctrl.cacheParams = [{
         policy: "",
         blockSize: 1
+    }];
+
+    ctrl.caches = [{
+        title: "L1",
+        size: "Not Set",
+        associativity: "Not Set"
     }];
 
     ctrl.memQueue = simDriver.getMemAcceses();
@@ -28,8 +33,8 @@ function CacheDisplayController($scope, simDriver, fileParser) {
         if (ctrl.caches.length < 3) {
             ctrl.caches.push({
                 title: "L" + (ctrl.caches.length + 1),
-                policy: "put policy here",
-                blockSize: 1
+                size: "Not Set",
+                associativity: "Not Set"
             });
             $scope.showCache[ctrl.caches.length - 1] = true;
             //Emit sends an event to the parent controller/component
@@ -41,7 +46,7 @@ function CacheDisplayController($scope, simDriver, fileParser) {
     ctrl.removeCache = function(index) {
         //TODO May want to remove by index
         if (ctrl.caches.length > 1) {
-            ctrl.caches.pop()
+            ctrl.caches.pop();
             $scope.showCache[ctrl.caches.length] = false;
         }
         $scope.$emit('updatedCacheList', ctrl.caches);
@@ -73,4 +78,23 @@ function CacheDisplayController($scope, simDriver, fileParser) {
     $scope.associativities = [2, 4, 8, 16]
 
     $scope.showCache = [true, false, false];
+
+    $scope.updateCache = function(item, index, setting) {
+        var c = ctrl.caches[index];
+        if (setting === "size") {
+            c.size = item;
+        } else if (setting === "associativity") {
+            c.associativity = item;
+        }
+
+        // console.log(item)
+        // var i;
+        // for (i = 0; i < ctrl.caches.length; i++) {
+        //     var c = ctrl.caches[i];
+        //     if (c.caches[i].title === item.title) {
+        //         c.size = item.cacheSize.size;
+        //         c.associativity = item.Associativity.associativity;
+        //     }
+        // }
+    }
 }

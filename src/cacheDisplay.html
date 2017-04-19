@@ -1,8 +1,35 @@
-<div ng-cloak layout="row">
+<div ng-cloak layout="row" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"
+     xmlns="http://www.w3.org/1999/html">
 
     <!--Cache Display-->
     <md-content layout="column" layout-padding md-theme="docs-dark" flex="65">
-        <div layout="column">
+        <md-button ng-click="$ctrl.removeCache($index)"><i class="material-icons">delete</i>Remove Cache</md-button>
+
+        <!--Less code, but puts all cache levels in one column-->
+
+        <!--<div layout="column">-->
+            <!--<md-card ng-repeat="cache in $ctrl.caches" ng-show="showCache[$index%4]" flex="40">-->
+                <!--<md-card-title layout="column">-->
+                    <!--<md-card-title-text>-->
+                        <!--<div layout="row" layout-align="space-between">-->
+                            <!--<div>-->
+                                <!--<span class="md-headline">{{cache.title}}</span>-->
+                                <!--<span class="md-subhead"><br />-->
+                                        <!--Size: {{cache.size}}<br />-->
+                                        <!--Associativity: {{cache.associativity}}-->
+                                    <!--</span>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</md-card-title-text>-->
+                    <!--<md-card-title-media>-->
+                        <!--<div class="md-media-lg card-media"></div>-->
+                    <!--</md-card-title-media>-->
+                <!--</md-card-title>-->
+            <!--</md-card>-->
+        <!--</div>-->
+
+        <!--Mode code, but cache levels are different sizes-->
+        <div layout="inline">
             <!--L1-->
             <md-card ng-show="showCache[0]" flex="40">
                 <md-card-title layout="column">
@@ -10,9 +37,11 @@
                         <div layout="row" layout-align="space-between">
                             <div>
                                 <span class="md-headline">{{$ctrl.caches[0].title}}</span>
-                                <span class="md-subhead">{{$ctrl.caches[0].policy}}</span>
+                                <span class="md-subhead"><br />
+                                    Size: {{$ctrl.caches[0].size}}<br />
+                                    Associativity: {{$ctrl.caches[0].associativity}}
+                                </span>
                             </div>
-                            <md-button ng-click="$ctrl.removeCache($index)"><i class="material-icons">delete</i>Remove Cache</md-button>
                         </div>
                     </md-card-title-text>
                     <md-card-title-media>
@@ -28,9 +57,11 @@
                         <div layout="row" layout-align="space-between">
                             <div>
                                 <span class="md-headline">{{$ctrl.caches[1].title}}</span>
-                                <span class="md-subhead">{{$ctrl.caches[1].policy}}</span>
+                                <span class="md-subhead"><br />
+                                    Size: {{$ctrl.caches[1].size}}<br />
+                                    Associativity: {{$ctrl.caches[1].associativity}}
+                                </span>
                             </div>
-                            <md-button ng-click="$ctrl.removeCache($index)"><i class="material-icons">delete</i>Remove Cache</md-button>
                         </div>
                     </md-card-title-text>
                     <md-card-title-media>
@@ -38,7 +69,8 @@
                     </md-card-title-media>
                 </md-card-title>
             </md-card>
-
+        </div>
+        <div layout="column">
             <!--L3-->
             <md-card ng-show="showCache[2]">
                 <md-card-title layout="column">
@@ -46,9 +78,11 @@
                         <div layout="row" layout-align="space-between">
                             <div>
                                 <span class="md-headline">{{$ctrl.caches[2].title}}</span>
-                                <span class="md-subhead">{{$ctrl.caches[2].policy}}</span>
+                                <span class="md-subhead"><br />
+                                    Size: {{$ctrl.caches[2].size}}<br />
+                                    Associativity: {{$ctrl.caches[2].associativity}}
+                                </span>
                             </div>
-                            <md-button ng-click="$ctrl.removeCache($index)"><i class="material-icons">delete</i>Remove Cache</md-button>
                         </div>
                     </md-card-title-text>
                     <md-card-title-media>
@@ -93,7 +127,8 @@
                         <md-content layout="column" layout-padding>
                             <md-input-container>
                                 <label>Cache Size</label>
-                                <md-select ng-model="tab.cacheSize" placeholder="Select a Size">
+                                <md-select ng-model="tab.cacheSize" placeholder="Select a Size"
+                                           ng-change="updateCache(tab.cacheSize, $index%4, 'size')">
                                     <md-option ng-repeat="size in cacheSizes" value="{{size}}">
                                         {{size}}
                                     </md-option>
@@ -102,7 +137,8 @@
 
                             <md-input-container>
                                 <label>Associativity</label>
-                                <md-select ng-model="tab.Associativity" placeholder="Select an Associativity">
+                                <md-select ng-model="tab.Associativity" placeholder="Select an Associativity"
+                                           ng-change="updateCache(tab.Associativity, $index%4, 'associativity')">
                                     <md-option ng-repeat="associativity in associativities" value="{{associativity}}">
                                         {{associativity}}
                                     </md-option>
