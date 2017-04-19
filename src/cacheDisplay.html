@@ -12,7 +12,7 @@
                                 <span class="md-headline">{{$ctrl.caches[0].title}}</span>
                                 <span class="md-subhead">{{$ctrl.caches[0].policy}}</span>
                             </div>
-                            <md-button ng-click="removeCache($index)"><i class="material-icons">delete</i>Remove Cache</md-button>
+                            <md-button ng-click="$ctrl.removeCache($index)"><i class="material-icons">delete</i>Remove Cache</md-button>
                         </div>
                     </md-card-title-text>
                     <md-card-title-media>
@@ -30,7 +30,7 @@
                                 <span class="md-headline">{{$ctrl.caches[1].title}}</span>
                                 <span class="md-subhead">{{$ctrl.caches[1].policy}}</span>
                             </div>
-                            <md-button ng-click="removeCache($index)"><i class="material-icons">delete</i>Remove Cache</md-button>
+                            <md-button ng-click="$ctrl.removeCache($index)"><i class="material-icons">delete</i>Remove Cache</md-button>
                         </div>
                     </md-card-title-text>
                     <md-card-title-media>
@@ -48,7 +48,7 @@
                                 <span class="md-headline">{{$ctrl.caches[2].title}}</span>
                                 <span class="md-subhead">{{$ctrl.caches[2].policy}}</span>
                             </div>
-                            <md-button ng-click="removeCache($index)"><i class="material-icons">delete</i>Remove Cache</md-button>
+                            <md-button ng-click="$ctrl.removeCache($index)"><i class="material-icons">delete</i>Remove Cache</md-button>
                         </div>
                     </md-card-title-text>
                     <md-card-title-media>
@@ -83,7 +83,7 @@
 
         <md-content class="md-padding">
             <md-tabs md-selected="selectedIndex" md-border-bottom md-autoselect>
-                <md-tab ng-disabled="false">
+                <md-tab ng-disabled="$ctrl.caches.length === 3">
                     <md-tab-label class="add-button">
                         <md-button class="md-icon-button" ng-click="$ctrl.addCache()"><i class="material-icons">add</i></md-button>
                     </md-tab-label>
@@ -116,7 +116,7 @@
 
         <md-content layout="row" layout-align="space-around center">
             <md-subheader class="md-no-sticky">{{$ctrl.fileName}}</md-subheader>
-            <md-button class="md-primary md-raised" ng-disabled="$ctrl.fileName.length != 0" type="submit" style="margin-right: 0;">Upload</md-button>
+            <md-button class="md-primary md-raised" ng-click="$ctrl.handleUpload()" ng-disabled="$ctrl.fileName.length != 0" type="submit" style="margin-right: 0;">Upload</md-button>
         </md-content>
         <md-list>
             <md-subheader class="md-no-sticky">Memory Access Queue</md-subheader>

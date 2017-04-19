@@ -1,5 +1,7 @@
 'use strict';
 
+const {ipcRenderer} = require('electron')
+
 angular.module('Simulator').component('cacheDisplay', {
     templateUrl: 'src/cacheDisplay.html',
     //add any dependencies below
@@ -10,10 +12,9 @@ angular.module('Simulator').component('cacheDisplay', {
 function CacheDisplayController($scope, simDriver, fileParser) {
 
     var ctrl = this;
-
     ctrl.policy = "";
     ctrl.blockSize = 1;
-    ctrl.fileName = "Graham.trace"
+    ctrl.fileName = ""
 
     ctrl.caches = [{
         title: "L1",
@@ -37,7 +38,7 @@ function CacheDisplayController($scope, simDriver, fileParser) {
 
     };
 
-    $scope.removeCache = function(index) {
+    ctrl.removeCache = function(index) {
         //TODO May want to remove by index
         if (ctrl.caches.length > 1) {
             ctrl.caches.pop()
@@ -45,6 +46,25 @@ function CacheDisplayController($scope, simDriver, fileParser) {
         }
         $scope.$emit('updatedCacheList', ctrl.caches);
     };
+
+    ctrl.handleUpload = function() {
+        //Sends an asynchronous event to the main process (main.js)
+        //Can add arguments if necessary
+        ipcRenderer.send('uploadFile')
+    }
+
+    ipcRenderer.on('fileNameReceived', (e, fName) => {
+        var directoryInd = fName.lastIndexOf('/')
+        ctrl.fileName = fName.substring(directoryInd + 1)
+        //This forces the angular rendering lifecycle to update the value
+        $scope.$digest();
+    })
+
+    ipcRenderer.on('fileDataReceived', (e, fData) => {
+        //This forces the angular rendering lifecycle to update the value
+        $scope.$digest();
+        console.log(fData)
+    })
 
     //Constants
     $scope.policies = ["FIFO", "LRU", "LFU"]
