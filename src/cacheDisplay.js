@@ -31,6 +31,7 @@ function CacheDisplayController($scope, simDriver, fileParser) {
                 blockSize: 1
             });
             $scope.showCache[ctrl.caches.length - 1] = true;
+            //Emit sends an event to the parent controller/component
             $scope.$emit('updatedCacheList', ctrl.caches);
         }
 

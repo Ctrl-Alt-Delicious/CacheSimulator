@@ -21,6 +21,7 @@ angular.module('Simulator', ['ngMaterial', 'md.data.table'])
             for (var i = 0; i < $scope.navs.length; i++) {
                 if (index === i) {
                     $scope.navs[i].active = true;
+                    //Broadcast sends an event to child controllers/components
                     $scope.$broadcast('updatedCaches', $scope.navs[i])
                 } else {
                     $scope.navs[i].active = false
@@ -29,6 +30,7 @@ angular.module('Simulator', ['ngMaterial', 'md.data.table'])
             //Pass the updated cache list to cacheDetail template to change its model
         };
 
+        //Listens for an event emitted from a child controller/component
         $scope.$on('updatedCacheList', function(event, data) {
             $scope.navs = [{
                 buttonTitle: "Overview",
