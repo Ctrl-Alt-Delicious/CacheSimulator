@@ -3,7 +3,6 @@
 
     <!--Cache Display-->
     <md-content layout="column" layout-padding md-theme="docs-dark" flex="65">
-        <md-button ng-click="$ctrl.removeCache($index)"><i class="material-icons">delete</i>Remove Cache</md-button>
 
         <!--Less code, but puts all cache levels in one column-->
 
@@ -44,6 +43,7 @@
                             </div>
                         </div>
                     </md-card-title-text>
+                    <md-button ng-click="$ctrl.removeCache(0)"><i class="material-icons">delete</i></md-button>
                     <md-card-title-media>
                         <div class="md-media-lg card-media"></div>
                     </md-card-title-media>
@@ -64,6 +64,7 @@
                             </div>
                         </div>
                     </md-card-title-text>
+                    <md-button ng-click="$ctrl.removeCache(1)"><i class="material-icons">delete</i></md-button>
                     <md-card-title-media>
                         <div class="md-media-lg card-media"></div>
                     </md-card-title-media>
@@ -88,8 +89,11 @@
                     <md-card-title-media>
                         <div class="md-media-lg card-media"></div>
                     </md-card-title-media>
+                    <md-button ng-click="$ctrl.removeCache(2)"><i class="material-icons">delete</i></md-button>
                 </md-card-title>
+
             </md-card>
+
         </div>
     </md-content>
 

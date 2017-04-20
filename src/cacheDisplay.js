@@ -44,10 +44,12 @@ function CacheDisplayController($scope, simDriver, fileParser) {
     };
 
     ctrl.removeCache = function(index) {
-        //TODO May want to remove by index
         if (ctrl.caches.length > 1) {
-            ctrl.caches.pop();
+            ctrl.caches.splice(index, 1);
             $scope.showCache[ctrl.caches.length] = false;
+            for(var i = 1; i <= ctrl.caches.length; i++) {
+                ctrl.caches[i-1].title = "L" + i;
+            }
         }
         $scope.$emit('updatedCacheList', ctrl.caches);
     };
@@ -86,15 +88,5 @@ function CacheDisplayController($scope, simDriver, fileParser) {
         } else if (setting === "associativity") {
             c.associativity = item;
         }
-
-        // console.log(item)
-        // var i;
-        // for (i = 0; i < ctrl.caches.length; i++) {
-        //     var c = ctrl.caches[i];
-        //     if (c.caches[i].title === item.title) {
-        //         c.size = item.cacheSize.size;
-        //         c.associativity = item.Associativity.associativity;
-        //     }
-        // }
     }
 }
