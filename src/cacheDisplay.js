@@ -16,6 +16,8 @@ function CacheDisplayController($scope, simDriver, fileParser) {
     ctrl.blockSize = 1;
     ctrl.fileName = ""
 
+    var B_min = 3, B_max = 7;
+
     ctrl.caches = [{
         title: "L1",
         policy: "",
@@ -68,9 +70,14 @@ function CacheDisplayController($scope, simDriver, fileParser) {
 
     //Constants
     $scope.policies = ["FIFO", "LRU", "LFU"]
-    $scope.blockSizes = [16, 24, 48, 64]
+    $scope.blockSizes = []
     $scope.cacheSizes = [64, 128, 256]
     $scope.associativities = [2, 4, 8, 16]
 
     $scope.showCache = [true, false, false];
+    
+    for (var i = B_min; i <= B_max; i++) {
+        $scope.blockSizes.push(Math.pow(2, i));
+    }
+    
 }
