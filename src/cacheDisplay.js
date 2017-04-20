@@ -29,6 +29,7 @@ function CacheDisplayController($scope, simDriver, fileParser) {
         policy: "",
         size: "Not Set",
         associativity: "Not Set",
+        associativities: [],
         C: "",
         S: ""
     }];
@@ -67,7 +68,7 @@ function CacheDisplayController($scope, simDriver, fileParser) {
     };
 
     ctrl.setBlockSize = function() {
-        ctrl.B = Math.log(ctrl.blockSize, 2);
+        ctrl.B = Math.log(ctrl.blockSize) / Math.log(2);
         setCacheSizeOptions();
     };
 
@@ -89,7 +90,7 @@ function CacheDisplayController($scope, simDriver, fileParser) {
     $scope.policies = ["FIFO", "LRU", "LFU"]
     $scope.blockSizes = []
     $scope.cacheSizes = []
-    $scope.associativities = [2, 4, 8, 16]
+    //$scope.associativities = []
 
     $scope.showCache = [true, false, false];
 
@@ -97,6 +98,7 @@ function CacheDisplayController($scope, simDriver, fileParser) {
         var c = ctrl.caches[index];
         if (setting === "size") {
             c.size = item;
+            setAssocOptions(index);
         } else if (setting === "associativity") {
             c.associativity = item;
         }
@@ -111,9 +113,24 @@ function CacheDisplayController($scope, simDriver, fileParser) {
         var C_min = ctrl.B;
         var C_max = 30;
 
-
+        $scope.cacheSizes = [];
         for (var i = C_min; i <= C_max; i++) {
             $scope.cacheSizes.push(Math.pow(2, i));
+        }
+    }
+
+    var setAssocOptions = function(index) {
+
+        var C = ctrl.caches[index].C;
+        var B = ctrl.caches[index].B;
+
+
+        var S_min = 0;
+        var S_max = C - B;
+
+        ctrl.caches[index].associativities = [];
+        for (var i = S_min; i <= S_max; i++) {
+            ctrl.caches[index].associativities.push(Math.pow(2, i));
         }
     }
 
