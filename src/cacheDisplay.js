@@ -108,8 +108,8 @@ function CacheDisplayController($scope, simDriver, fileParser) {
 
     var setCacheSizeOptions = function() {
 
-        C_min = ctrl.B;
-        C_max = 30;
+        var C_min = ctrl.B;
+        var C_max = 30;
 
 
         for (var i = C_min; i <= C_max; i++) {
