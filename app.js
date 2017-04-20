@@ -1,6 +1,6 @@
 angular.module('Simulator', ['ngMaterial', 'md.data.table'])
     .config(function($mdThemingProvider) {
-        $mdThemingProvider.theme('docs-dark', 'default')
+        $mdThemingProvider.theme('docs-dark')
             .primaryPalette('blue')
             .accentPalette('blue-grey')
             .dark();
