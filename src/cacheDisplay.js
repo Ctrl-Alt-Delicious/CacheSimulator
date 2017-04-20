@@ -15,6 +15,9 @@ function CacheDisplayController($scope, simDriver, fileParser) {
     ctrl.policy = "";
     ctrl.blockSize = 1;
     ctrl.fileName = ""
+    ctrl.B = ""
+
+    var B_min = 3, B_max = 7;
 
     ctrl.cacheParams = [{
         policy: "",
@@ -23,8 +26,11 @@ function CacheDisplayController($scope, simDriver, fileParser) {
 
     ctrl.caches = [{
         title: "L1",
+        policy: "",
         size: "Not Set",
-        associativity: "Not Set"
+        associativity: "Not Set",
+        C: "",
+        S: ""
     }];
 
     ctrl.memQueue = simDriver.getMemAcceses();
@@ -58,7 +64,13 @@ function CacheDisplayController($scope, simDriver, fileParser) {
         //Sends an asynchronous event to the main process (main.js)
         //Can add arguments if necessary
         ipcRenderer.send('uploadFile')
-    }
+    };
+
+    ctrl.setBlockSize = function() {
+        ctrl.B = Math.log(ctrl.blockSize, 2);
+        setCacheSizeOptions();
+    };
+
 
     ipcRenderer.on('fileNameReceived', (e, fName) => {
         var directoryInd = fName.lastIndexOf('/')
@@ -75,8 +87,8 @@ function CacheDisplayController($scope, simDriver, fileParser) {
 
     //Constants
     $scope.policies = ["FIFO", "LRU", "LFU"]
-    $scope.blockSizes = [16, 24, 48, 64]
-    $scope.cacheSizes = [64, 128, 256]
+    $scope.blockSizes = []
+    $scope.cacheSizes = []
     $scope.associativities = [2, 4, 8, 16]
 
     $scope.showCache = [true, false, false];
@@ -89,4 +101,20 @@ function CacheDisplayController($scope, simDriver, fileParser) {
             c.associativity = item;
         }
     }
+
+    for (var i = B_min; i <= B_max; i++) {
+        $scope.blockSizes.push(Math.pow(2, i));
+    }
+
+    var setCacheSizeOptions = function() {
+
+        C_min = ctrl.B;
+        C_max = 30;
+
+
+        for (var i = C_min; i <= C_max; i++) {
+            $scope.cacheSizes.push(Math.pow(2, i));
+        }
+    }
+
 }

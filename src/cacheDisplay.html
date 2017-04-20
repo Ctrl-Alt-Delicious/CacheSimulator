@@ -43,7 +43,6 @@
                             </div>
                         </div>
                     </md-card-title-text>
-
                     <md-card-title-media>
                         <div class="md-media-lg card-media"></div>
                     </md-card-title-media>
@@ -68,7 +67,6 @@
 
                     <md-card-title-media>
                         <div class="md-media-lg card-media"></div>
-                        <!--<img ng-src="assets/imgs/grid.jpg" class="md-card-image">-->
                     </md-card-title-media>
                     <md-button ng-click="$ctrl.removeCache(1)"><i class="material-icons">delete</i></md-button>
                 </md-card-title>
@@ -94,9 +92,7 @@
                     </md-card-title-media>
                     <md-button ng-click="$ctrl.removeCache(2)"><i class="material-icons">delete</i></md-button>
                 </md-card-title>
-
             </md-card>
-
         </div>
     </md-content>
 
@@ -114,7 +110,7 @@
 
             <md-input-container>
                 <label>Block Size</label>
-                <md-select ng-model="$ctrl.blockSize" placeholder="Select a Size">
+                <md-select ng-model="$ctrl.blockSize" ng-change="$ctrl.setBlockSize()" placeholder="Select a Block Size">
                     <md-option ng-repeat="size in blockSizes" value="{{size}}">
                         {{size}}
                     </md-option>
@@ -134,7 +130,7 @@
                         <md-content layout="column" layout-padding>
                             <md-input-container>
                                 <label>Cache Size</label>
-                                <md-select ng-model="tab.cacheSize" placeholder="Select a Size"
+                                <md-select ng-model="tab.cacheSize" placeholder="Select a Cache Size"
                                            ng-change="updateCache(tab.cacheSize, $index%4, 'size')">
                                     <md-option ng-repeat="size in cacheSizes" value="{{size}}">
                                         {{size}}
