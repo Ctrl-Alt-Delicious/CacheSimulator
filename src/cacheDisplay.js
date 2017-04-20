@@ -30,8 +30,8 @@ function CacheDisplayController($scope, simDriver, fileParser) {
         size: "Not Set",
         associativity: "Not Set",
         associativities: [],
-        C: "",
-        S: ""
+        C: 1,
+        S: 1
     }];
 
     ctrl.addCache = function() {
@@ -65,7 +65,7 @@ function CacheDisplayController($scope, simDriver, fileParser) {
         ipcRenderer.send('uploadFile')
     };
 
-    ctrl.setCacheSize = function(index) {
+    var setCacheSize = function(index) {
         ctrl.caches[index].C = Math.log(ctrl.cacheSize) / Math.log(2);
         setAssocOptions(index);
     };
@@ -109,6 +109,7 @@ function CacheDisplayController($scope, simDriver, fileParser) {
         var c = ctrl.caches[index];
         if (setting === "size") {
             c.size = item;
+            ctrl.cacheSize = item;
             setCacheSize(index);
         } else if (setting === "associativity") {
             c.associativity = item;
@@ -134,7 +135,6 @@ function CacheDisplayController($scope, simDriver, fileParser) {
 
         var C = ctrl.caches[index].C;
         var B = ctrl.B;
-
 
         var S_min = 0;
         var S_max = C - B;
