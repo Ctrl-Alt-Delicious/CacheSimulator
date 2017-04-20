@@ -34,8 +34,6 @@ function CacheDisplayController($scope, simDriver, fileParser) {
         S: ""
     }];
 
-    ctrl.memQueue = simDriver.getMemAcceses();
-
     ctrl.addCache = function() {
         if (ctrl.caches.length < 3) {
             ctrl.caches.push({
@@ -80,10 +78,18 @@ function CacheDisplayController($scope, simDriver, fileParser) {
         $scope.$digest();
     })
 
+    //subscribe to fileParser notifications when file is parsed
+    fileParser.subscribe($scope, () => {
+        //ask for new mem traces in queue
+        console.log("updating traces")
+        ctrl.memQueue = simDriver.getMemAcceses()
+    })
+
     ipcRenderer.on('fileDataReceived', (e, fData) => {
+        fileParser.parseFile(fData)
         //This forces the angular rendering lifecycle to update the value
         $scope.$digest();
-        console.log(fData)
+
     })
 
     //Constants
