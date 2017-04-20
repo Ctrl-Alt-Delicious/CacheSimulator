@@ -142,7 +142,7 @@
                                 <label>Associativity</label>
                                 <md-select ng-model="tab.Associativity" placeholder="Select an Associativity"
                                            ng-change="updateCache(tab.Associativity, $index%4, 'associativity')">
-                                    <md-option ng-repeat="associativity in tab.associativities" value="{{associativity}}">
+                                    <md-option ng-repeat="associativity in $ctrl.caches[$index%4].associativities" value="{{associativity}}">
                                         {{associativity}}
                                     </md-option>
                                 </md-select>
