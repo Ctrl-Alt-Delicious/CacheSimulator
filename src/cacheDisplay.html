@@ -73,7 +73,7 @@
 
             <md-input-container>
                 <label>Block Size</label>
-                <md-select ng-model="$ctrl.blockSize" placeholder="Select a Block Size">
+                <md-select ng-model="$ctrl.blockSize" ng-change="$ctrl.setBlockSize()" placeholder="Select a Block Size">
                     <md-option ng-repeat="size in blockSizes" value="{{size}}">
                         {{size}}
                     </md-option>
