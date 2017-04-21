@@ -1,5 +1,7 @@
 'use strict';
 
+const os = require('os')
+
 angular.module('Simulator').factory('FileParser', ['SimDriver', '$rootScope', function FileParserService(simDriver, $rootScope) {
 
     var ctrl = this;
@@ -19,8 +21,13 @@ angular.module('Simulator').factory('FileParser', ['SimDriver', '$rootScope', fu
     }
 
     ctrl.parseFile = function(input) {
-        rawData = input;
-        simDriver.setQueue(input)
+        //use node's value for native OS end of line
+        rawData = input.split(os.EOL)
+        //many text editors end in a new line char
+        if (rawData[rawData.length - 1] === "") {
+            rawData.splice(rawData.length - 1)
+        }
+        simDriver.setQueue(rawData)
         ctrl.notify()
     }
 

@@ -16,6 +16,8 @@ function CacheDisplayController($scope, simDriver, fileParser) {
     ctrl.blockSize = 1;
     ctrl.fileName = ""
     ctrl.B = ""
+    ctrl.policySet = false;
+    ctrl.blockSizeSet = false;
 
     var B_min = 3, B_max = 7;
 
@@ -73,12 +75,17 @@ function CacheDisplayController($scope, simDriver, fileParser) {
     ctrl.setBlockSize = function() {
         ctrl.B = Math.log(ctrl.blockSize) / Math.log(2);
         setCacheSizeOptions();
+        ctrl.blockSizeSet = true;
     };
 
+    ctrl.setPolicy = function() {
+        ctrl.policySet = true;
+    }
 
-    ipcRenderer.on('fileNameReceived', (e, fName) => {
-        var directoryInd = fName.lastIndexOf('/')
-        ctrl.fileName = fName.substring(directoryInd + 1)
+
+    ipcRenderer.on('fileNameReceived', (e, fPath) => {
+        //Use node's functions for parsing file path to base name on all native OS
+        ctrl.fileName = path.basename(fPath)
         //This forces the angular rendering lifecycle to update the value
         $scope.$digest();
     })
