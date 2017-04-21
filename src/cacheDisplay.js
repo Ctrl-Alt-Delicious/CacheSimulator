@@ -18,6 +18,7 @@ function CacheDisplayController($scope, simDriver, fileParser) {
     ctrl.B = ""
     ctrl.policySet = false;
     ctrl.blockSizeSet = false;
+    ctrl.disableDeleteCache = true;
 
     var B_min = 3, B_max = 7;
 
@@ -47,7 +48,9 @@ function CacheDisplayController($scope, simDriver, fileParser) {
             //Emit sends an event to the parent controller/component
             $scope.$emit('updatedCacheList', ctrl.caches);
         }
-
+        if (ctrl.caches.length > 1) {
+            ctrl.disableDeleteCache = false;
+        }
     };
 
     ctrl.removeCache = function(index) {
@@ -57,6 +60,9 @@ function CacheDisplayController($scope, simDriver, fileParser) {
             for(var i = 1; i <= ctrl.caches.length; i++) {
                 ctrl.caches[i-1].title = "L" + i;
             }
+        }
+        if (ctrl.caches.length === 1) {
+            ctrl.disableDeleteCache = true;
         }
         $scope.$emit('updatedCacheList', ctrl.caches);
     };
