@@ -16,6 +16,9 @@ function CacheDisplayController($scope, simDriver, fileParser) {
     ctrl.blockSize = 1;
     ctrl.fileName = ""
     ctrl.B = ""
+    ctrl.policySet = false;
+    ctrl.blockSizeSet = false;
+    ctrl.disableDeleteCache = true;
 
     var B_min = 3, B_max = 7;
 
@@ -48,7 +51,9 @@ function CacheDisplayController($scope, simDriver, fileParser) {
             //Emit sends an event to the parent controller/component
             $scope.$emit('updatedCacheList', ctrl.caches);
         }
-
+        if (ctrl.caches.length > 1) {
+            ctrl.disableDeleteCache = false;
+        }
     };
 
     ctrl.removeCache = function(index) {
@@ -58,6 +63,9 @@ function CacheDisplayController($scope, simDriver, fileParser) {
             for(var i = 1; i <= ctrl.caches.length; i++) {
                 ctrl.caches[i-1].title = "L" + i;
             }
+        }
+        if (ctrl.caches.length === 1) {
+            ctrl.disableDeleteCache = true;
         }
         $scope.$emit('updatedCacheList', ctrl.caches);
     };
@@ -76,12 +84,17 @@ function CacheDisplayController($scope, simDriver, fileParser) {
     ctrl.setBlockSize = function() {
         ctrl.B = Math.log(ctrl.blockSize) / Math.log(2);
         setCacheSizeOptions();
+        ctrl.blockSizeSet = true;
     };
 
-    
-    ipcRenderer.on('fileNameReceived', (e, fName) => {
-        var directoryInd = fName.lastIndexOf('/')
-        ctrl.fileName = fName.substring(directoryInd + 1)
+    ctrl.setPolicy = function() {
+        ctrl.policySet = true;
+    }
+
+
+    ipcRenderer.on('fileNameReceived', (e, fPath) => {
+        //Use node's functions for parsing file path to base name on all native OS
+        ctrl.fileName = path.basename(fPath)
         //This forces the angular rendering lifecycle to update the value
         $scope.$digest();
     })
