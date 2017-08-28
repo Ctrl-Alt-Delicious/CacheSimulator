@@ -1,14 +1,143 @@
 <!DOCTYPE html>
-<!THIS iS AN EXAMPLE>
 <html>
-  <head>
+
+<head>
     <meta charset="UTF-8">
-    <title>Hello World!</title>
-  </head>
-  <body>
-    <h1>Hello World!</h1>
-    We are using node <script>document.write(process.versions.node)</script>,
+    <title>CS 2200 Cache Simulator</title>
+    <link rel="stylesheet" href="css/photon.css">
+
+    <!-- Use minified files in production -->
+    <script src="node_modules/angular/angular.js"></script>
+    <script src="node_modules/angular-material/angular-material.js"></script>
+    <link rel="stylesheet" href="node_modules/angular-material/angular-material.min.css">
+    <script src="node_modules/angular-animate/angular-animate.js"></script>
+    <script src="node_modules/angular-aria/angular-aria.js"></script>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <script src="main.js" charset="utf-8"></script>
+    <script src="app.js"></script>
+    <script src="cacheInput.js"></script>
+</head>
+
+<body ng-app="Simulator" layout="row">
+    <div flex="65">
+        <h1>Welcome to Indacache</h1>
+    </div>
+    <div flex>
+        <cache-input></cache-input>
+    </div>
+    <!-- We are using node <script>document.write(process.versions.node)</script>,
     Chrome <script>document.write(process.versions.chrome)</script>,
-    and Electron <script>document.write(process.versions.electron)</script>.
-  </body>
+    and Electron <script>document.write(process.versions.electron)</script>. -->
+    <!-- <form id="parameters">
+        <fieldset name="cache-parameters">
+            <legend>Cache Parameters</legend>
+            <p>
+            <label>Replacement Policy</label>
+            <select>
+                <option value="random">Random</option>
+                <option value="fifo">First In First Out (FIFO)</option>
+                <option value="lifo">Last In First Out (FIFO)</option>
+                <option value="lru">Least Recently Used (LRU)</option>
+                <option value="lfu">Least Frequently Used (LFU)</option>
+            </select>
+            </p>
+            <p>
+            <label>Block Size</label>
+            <select>
+                <option value="32">32-bit</option>
+                <option value="64">64-bit</option>
+            </select>
+            </p>
+        </fieldset>
+
+        <fieldset name="cache-level-parameters">
+            <legend>Cache Levels</legend>
+            <p>
+            <div class="tab">
+              <button class="addButton" onclick="addCacheLevel(event)">+</button>
+              <button class="tablinks" onclick="openCacheLevelParams(event, 'L1')">L1</button>
+              <button class="tablinks" onclick="openCacheLevelParams(event, 'L2')" hidden="true">L2</button>
+              <button class="tablinks" onclick="openCacheLevelParams(event, 'L3')" hidden="true">L3</button>
+            </div>
+
+            <div id="L1" class="tabcontent">
+              <h3>L1</h3>
+              <p>
+              <label>Cache Size</label>
+              <select>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+              </select>
+              </p>
+              <p>
+              <label>Associativity</label>
+              <select>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+              </select>
+              </p>
+            </div>
+
+            <div id="L2" class="tabcontent" hidden="true">
+              <h3>L2</h3>
+              <p>
+              <label>Cache Size</label>
+              <select>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+              </select>
+              </p>
+              <p>
+              <label>Associativity</label>
+              <select>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+              </select>
+              </p>
+            </div>
+
+            <div id="L3" class="tabcontent" hidden="true">
+              <h3>L3</h3>
+              <p>
+              <label>Cache Size</label>
+              <select>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+              </select>
+              </p>
+              <p>
+              <label>Associativity</label>
+              <select>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+              </select>
+              </p>
+            </div>
+            </p>
+        </fieldset>
+
+
+        <fieldset name="program-file">
+            <legend>Program File</legend>
+            <p>
+                <button type="button" name="upload-button">Upload</button>
+            </p>
+        </fieldset>
+    </form> -->
+</body>
+
 </html>
