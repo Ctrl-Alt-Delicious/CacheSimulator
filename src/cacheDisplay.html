@@ -157,7 +157,29 @@
             <md-subheader class="md-no-sticky">{{$ctrl.fileName}}</md-subheader>
             <md-button class="md-primary md-raised" ng-click="$ctrl.handleUpload()" ng-disabled="$ctrl.fileName.length != 0" type="submit" style="margin-right: 0;">Upload</md-button>
         </md-content>
-            <md-list>
+            <md-table-container>
+            <md-subheader class="md-no-sticky">Memory Access Queue</md-subheader>
+              <table md-table md-row-select multiple ng-model="selected" md-progress="promise">
+                <thead md-head md-order="query.order">
+                  <tr md-row>
+                    <th md-column md-numeric>Address</th>
+                    <th md-column md-numeric>Tag</th>
+                    <th md-column md-numeric>Index</th>
+                    <th md-column md-numeric>Offset</th>
+                  </tr>
+                </thead>
+                <tbody md-body>
+                  <tr md-row ng-repeat="item in $ctrl.memQueue | limitTo:10">
+                    <td md-cell>{{item.address}}</td>
+                    <td md-cell>{{item.tag}}</td>
+                    <td md-cell>{{item.index}}</td>
+                    <td md-cell>{{item.offset}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </md-table-container>
+
+            <!-- <md-list>
                 <md-subheader class="md-no-sticky">Memory Access Queue</md-subheader>
                 <md-list-item ng-repeat="item in $ctrl.memQueue | limitTo:10">
                     <p>{{item.address}}</p>
@@ -179,7 +201,7 @@
                         </md-menu-content>
                     </md-menu>
                 </md-list-item>
-            </md-list>
+            </md-list> -->
         <md-content layout="row" layout-align="space-around center">
             <md-button class="md-icon-button"><i class="material-icons">skip_previous</i></md-button>
             <md-button class="md-icon-button"><i class="material-icons">pause</i></md-button>
