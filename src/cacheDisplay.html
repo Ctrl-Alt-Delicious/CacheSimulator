@@ -157,9 +157,9 @@
             <md-subheader class="md-no-sticky">{{$ctrl.fileName}}</md-subheader>
             <md-button class="md-primary md-raised" ng-click="$ctrl.handleUpload()" ng-disabled="$ctrl.fileName.length != 0" type="submit" style="margin-right: 0;">Upload</md-button>
         </md-content>
-            <md-table-container>
             <md-subheader class="md-no-sticky">Memory Access Queue</md-subheader>
-              <table md-table md-row-select multiple ng-model="selected" md-progress="promise">
+            <md-table-container style="height:150px">
+              <table md-table md-row-select multiple ng-model="selected" md-progress="promise" md-theme="docs-dark">
                 <thead md-head md-order="query.order">
                   <tr md-row>
                     <th md-column md-numeric>Address</th>
@@ -169,7 +169,7 @@
                   </tr>
                 </thead>
                 <tbody md-body>
-                  <tr md-row ng-repeat="item in $ctrl.memQueue | limitTo:10">
+                  <tr md-row ng-repeat="item in $ctrl.memQueue">
                     <td md-cell>{{item.address}}</td>
                     <td md-cell>{{item.tag}}</td>
                     <td md-cell>{{item.index}}</td>
