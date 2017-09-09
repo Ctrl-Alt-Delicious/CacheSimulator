@@ -161,25 +161,25 @@
                     <md-button class="md-primary md-raised" ng-click="$ctrl.handleUpload()" ng-disabled="$ctrl.fileName.length != 0" type="submit" style="margin-right: 0;">Upload</md-button>
                 </md-content>
                 <md-subheader class="md-no-sticky">Memory Access Queue</md-subheader>
-                <md-table-container style="height:150px;color:white">
-                  <table md-table>
-                    <thead md-head>
-                      <tr md-row>
-                        <th md-column md-numeric>Address</th>
-                        <th md-column md-numeric>Tag</th>
-                        <th md-column md-numeric>Index</th>
-                        <th md-column md-numeric>Offset</th>
-                      </tr>
-                    </thead>
-                    <tbody md-body>
-                      <tr md-row ng-repeat="item in $ctrl.memQueue">
-                        <td md-cell>{{item.address}}</td>
-                        <td md-cell>{{item.tag}}</td>
-                        <td md-cell>{{item.index}}</td>
-                        <td md-cell>{{item.offset}}</td>
-                      </tr>
-                    </tbody>
-                  </table>
+                <md-table-container style="height:150px">
+                    <table md-table>
+                        <thead md-head>
+                          <tr md-row>
+                            <th md-column md-numeric>Address</th>
+                            <th md-column md-numeric>Tag</th>
+                            <th md-column md-numeric>Index</th>
+                            <th md-column md-numeric>Offset</th>
+                          </tr>
+                        </thead>
+                        <tbody md-body>
+                          <tr md-row ng-repeat="item in $ctrl.memQueue">
+                            <td md-cell>{{item.address}}</td>
+                            <td md-cell>{{item.tag}}</td>
+                            <td md-cell>{{item.index}}</td>
+                            <td md-cell>{{item.offset}}</td>
+                          </tr>
+                        </tbody>
+                    </table>
                 </md-table-container>
 
                 <!-- Control Flow Buttons -->
