@@ -5,7 +5,7 @@
   "scripts": {
     "start": "electron ."
   },
-  "repository": "https://github.gatech.edu/krose33/01-cache-sim-prototype.git",
+  "repository": "https://github.com/Ctrl-Alt-Delicious/CacheSimulator.git",
   "devDependencies": {
     "electron": "~1.6.2"
   },
