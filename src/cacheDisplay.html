@@ -1,5 +1,5 @@
 <div ng-cloak layout="row" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"
-     xmlns="http://www.w3.org/1999/html">
+     xmlns="http://www.w3.org/1999/html" flex="100">
 
     <!--Cache Display-->
     <md-content layout="column" layout-padding md-theme="docs-dark" flex="75">
@@ -97,102 +97,107 @@
     </md-content>
 
     <!--Cache Input-->
-    <md-content layout="column" md-theme="docs-dark" class="md-inline-form" flex>
-        <md-content layout="column">
-            <md-input-container>
-                <label>Replacement Policy</label>
-                <md-select ng-model="$ctrl.policy" placeholder="Select a Policy" ng-change="$ctrl.setPolicy()">
-                    <md-option ng-repeat="policy in policies" value="{{policy}}">
-                        {{policy}}
-                    </md-option>
-                </md-select>
-            </md-input-container>
+    <body ng-app="angularResizable">
+        <section resizable r-directions="['right']">
+            <md-content layout="column" md-theme="docs-dark" class="md-inline-form" flex>
+                <md-content layout="column">
+                    <md-input-container>
+                        <label>Replacement Policy</label>
+                        <md-select ng-model="$ctrl.policy" placeholder="Select a Policy" ng-change="$ctrl.setPolicy()">
+                            <md-option ng-repeat="policy in policies" value="{{policy}}">
+                                {{policy}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
 
-            <md-input-container>
-                <label>Block Size</label>
-                <md-select ng-model="$ctrl.blockSize" ng-change="$ctrl.setBlockSize()" placeholder="Select a Block Size">
-                    <md-option ng-repeat="size in blockSizes" value="{{size}}">
-                        {{size}}
-                    </md-option>
-                </md-select>
-            </md-input-container>
-        </md-content>
+                    <md-input-container>
+                        <label>Block Size</label>
+                        <md-select ng-model="$ctrl.blockSize" ng-change="$ctrl.setBlockSize()" placeholder="Select a Block Size">
+                            <md-option ng-repeat="size in blockSizes" value="{{size}}">
+                                {{size}}
+                            </md-option>
+                        </md-select>
+                    </md-input-container>
+                </md-content>
 
-        <md-content>
-            <md-tabs md-selected="selectedIndex" md-border-bottom md-autoselect>
-                <md-tab ng-disabled="$ctrl.caches.length === 3">
-                    <md-tab-label class="add-button">
-                        <md-button class="md-icon-button" ng-click="$ctrl.addCache()"><i class="material-icons">add</i></md-button>
-                    </md-tab-label>
-                </md-tab>
-                <md-tab ng-repeat="tab in $ctrl.caches" label="{{tab.title}}">
-                    <div class="tab{{$index%4}}" style="padding: 25px; text-align: center;">
-                        <md-content layout="column">
-                            <md-input-container>
-                                <label>Cache Size</label>
-                                <md-select ng-model="tab.cacheSize" placeholder="Select a Cache Size"
-                                           ng-change="updateCache(tab.cacheSize, $index%4, 'size')" ng-disabled="!($ctrl.policySet && $ctrl.blockSizeSet)">
-                                    <md-option ng-repeat="size in cacheSizes" value="{{size}}">
-                                        {{size}}
-                                    </md-option>
-                                </md-select>
-                            </md-input-container>
+                <md-content>
+                    <md-tabs md-selected="selectedIndex" md-border-bottom md-autoselect>
+                        <md-tab ng-disabled="$ctrl.caches.length === 3">
+                            <md-tab-label class="add-button">
+                                <md-button class="md-icon-button" ng-click="$ctrl.addCache()"><i class="material-icons">add</i></md-button>
+                            </md-tab-label>
+                        </md-tab>
+                        <md-tab ng-repeat="tab in $ctrl.caches" label="{{tab.title}}">
+                            <div class="tab{{$index%4}}" style="padding: 25px; text-align: center;">
+                                <md-content layout="column">
+                                    <md-input-container>
+                                        <label>Cache Size</label>
+                                        <md-select ng-model="tab.cacheSize" placeholder="Select a Cache Size"
+                                                   ng-change="updateCache(tab.cacheSize, $index%4, 'size')" ng-disabled="!($ctrl.policySet && $ctrl.blockSizeSet)">
+                                            <md-option ng-repeat="size in cacheSizes" value="{{size}}">
+                                                {{size}}
+                                            </md-option>
+                                        </md-select>
+                                    </md-input-container>
 
-                            <md-input-container>
-                                <label>Associativity</label>
-                                <md-select ng-model="tab.Associativity" placeholder="Select an Associativity"
-                                           ng-change="updateCache(tab.Associativity, $index%4, 'associativity')" ng-disabled="!($ctrl.policySet && $ctrl.blockSizeSet)">
-                                    <md-option ng-repeat="associativity in $ctrl.caches[$index%4].associativities" value="{{associativity}}">
-                                        {{associativity}}
-                                    </md-option>
-                                </md-select>
-                            </md-input-container>
-                        </md-content>
-                    </div>
-                </md-tab>
-            </md-tabs>
-        </md-content>
+                                    <md-input-container>
+                                        <label>Associativity</label>
+                                        <md-select ng-model="tab.Associativity" placeholder="Select an Associativity"
+                                                   ng-change="updateCache(tab.Associativity, $index%4, 'associativity')" ng-disabled="!($ctrl.policySet && $ctrl.blockSizeSet)">
+                                            <md-option ng-repeat="associativity in $ctrl.caches[$index%4].associativities" value="{{associativity}}">
+                                                {{associativity}}
+                                            </md-option>
+                                        </md-select>
+                                    </md-input-container>
+                                </md-content>
+                            </div>
+                        </md-tab>
+                    </md-tabs>
+                </md-content>
 
-        <md-content layout="row" layout-align="space-around center">
-            <md-subheader class="md-no-sticky">{{$ctrl.fileName}}</md-subheader>
-            <md-button class="md-primary md-raised" ng-click="$ctrl.handleUpload()" ng-disabled="$ctrl.fileName.length != 0" type="submit" style="margin-right: 0;">Upload</md-button>
-        </md-content>
-            <md-list>
+                <!-- Memory Access Queue -->
+                <md-content layout="row" layout-align="space-around center">
+                    <md-subheader class="md-no-sticky">{{$ctrl.fileName}}</md-subheader>
+                    <md-button class="md-primary md-raised" ng-click="$ctrl.handleUpload()" ng-disabled="$ctrl.fileName.length != 0" type="submit" style="margin-right: 0;">Upload</md-button>
+                </md-content>
                 <md-subheader class="md-no-sticky">Memory Access Queue</md-subheader>
-                <md-list-item ng-repeat="item in $ctrl.memQueue | limitTo:10">
-                    <p>{{item.address}}</p>
-                    <md-menu class="md-secondary">
-                        <md-button class="md-icon-button">
-                            <i class="material-icons" style="color: rgb(33,150,243)">message</i>
-                        </md-button>
-                        <md-menu-content width="4">
-                            <md-menu-item>
-                                {{item.offset}}
-                            </md-menu-item>
-                            <md-menu-item>
-                                {{item.index}}
-                            </md-menu-item>
-                            <md-menu-divider></md-menu-divider>
-                            <md-menu-item>
-                                {{item.tag}}
-                            </md-menu-item>
-                        </md-menu-content>
-                    </md-menu>
-                </md-list-item>
-            </md-list>
-        <md-content layout="row" layout-align="space-around center">
-            <md-button class="md-icon-button"><i class="material-icons">skip_previous</i></md-button>
-            <md-button class="md-icon-button"><i class="material-icons">pause</i></md-button>
-            <md-button class="md-icon-button"><i class="material-icons">play_arrow</i></md-button>
-            <md-button class="md-icon-button"><i class="material-icons">skip_next</i></md-button>
-            <md-button class="md-icon-button"><i class="material-icons">replay</i></md-button>
-        </md-content>
-        <md-content layout="row" layout-align="center" style="padding-top: 25px; padding-right: 10px;">
-            <div layout layout-align="center center">
-                <span class="md-body-1">Speed</span>
-            </div>
-            <md-slider flex class="md-primary" md-discrete ng-model="$ctrl.speedRating" step="1" min="1" max="5" aria-label="rating">
-            </md-slider>
-        </md-content>
-    </div>
+                <md-table-container style="height:150px">
+                    <table md-table>
+                        <thead md-head>
+                          <tr md-row>
+                            <th md-column md-numeric>Address</th>
+                            <th md-column md-numeric>Tag</th>
+                            <th md-column md-numeric>Index</th>
+                            <th md-column md-numeric>Offset</th>
+                          </tr>
+                        </thead>
+                        <tbody md-body>
+                          <tr md-row ng-repeat="item in $ctrl.memQueue">
+                            <td md-cell>{{item.address}}</td>
+                            <td md-cell>{{item.tag}}</td>
+                            <td md-cell>{{item.index}}</td>
+                            <td md-cell>{{item.offset}}</td>
+                          </tr>
+                        </tbody>
+                    </table>
+                </md-table-container>
+
+                <!-- Control Flow Buttons -->
+                <md-content layout="row" layout-align="space-around center">
+                    <md-button class="md-icon-button"><i class="material-icons">skip_previous</i></md-button>
+                    <md-button class="md-icon-button"><i class="material-icons">pause</i></md-button>
+                    <md-button class="md-icon-button"><i class="material-icons">play_arrow</i></md-button>
+                    <md-button class="md-icon-button"><i class="material-icons">skip_next</i></md-button>
+                    <md-button class="md-icon-button"><i class="material-icons">replay</i></md-button>
+                </md-content>
+                <md-content layout="row" layout-align="center" style="padding-top: 25px; padding-right: 10px;">
+                    <div layout layout-align="center center">
+                        <span class="md-body-1">Speed</span>
+                    </div>
+                    <md-slider flex class="md-primary" md-discrete ng-model="$ctrl.speedRating" step="1" min="1" max="5" aria-label="rating">
+                    </md-slider>
+                </md-content>
+            </md-content>
+        </section>
+    </body>
 </div>
