@@ -98,6 +98,10 @@
 
     <!--Cache Input-->
     <md-content layout="column" md-theme="docs-dark" class="md-inline-form" flex>
+        <md-content layout="row" layout-align="space-around center" ng-show="$ctrl.hide">
+            <md-subheader class="md-no-sticky">{{$ctrl.fileName}}</md-subheader>
+            <md-button class="md-primary md-raised" ng-click="$ctrl.handleUpload()" ng-show="$ctrl.hide" ng-disabled="$ctrl.fileName.length != 0" type="submit" style="margin-right: 0;">Upload</md-button>
+        </md-content>
         <!--Cache Animation Control for when simulation is running-->
         <md-content layout="row" layout-align="space-around center" ng-hide="!$ctrl.hide">
             <md-button class="md-icon-button"><i class="material-icons">skip_previous</i></md-button>
@@ -169,6 +173,10 @@
             </md-tabs>
         </md-content>
         <!--Cache Animation Control-->
+        <md-content layout="row" layout-align="space-around center">
+            <md-subheader class="md-no-sticky">{{$ctrl.fileName}}</md-subheader>
+            <md-button class="md-primary md-raised" ng-hide="$ctrl.hide" ng-click="$ctrl.handleUpload()" ng-disabled="$ctrl.fileName.length != 0" type="submit" style="margin-right: 0;">Upload</md-button>
+        </md-content>
         <md-content layout="row" layout-align="space-around center" ng-hide="$ctrl.hide">
             <md-button class="md-icon-button"><i class="material-icons">skip_previous</i></md-button>
             <md-button class="md-icon-button" ng-click= "$ctrl.showSideBar();"><i class="material-icons">pause</i></md-button>
@@ -184,10 +192,6 @@
             </md-slider>
         </md-content>
         <!--Trace file uploader and parcer-->
-        <md-content layout="row" layout-align="space-around center">
-            <md-subheader class="md-no-sticky">{{$ctrl.fileName}}</md-subheader>
-            <md-button class="md-primary md-raised" ng-click="$ctrl.handleUpload()" ng-disabled="$ctrl.fileName.length != 0" type="submit" style="margin-right: 0;">Upload</md-button>
-        </md-content>
         <md-list>
             <md-subheader class="md-no-sticky">Memory Access Queue</md-subheader>
             <md-list-item ng-repeat="item in $ctrl.memQueue | limitTo:10">
