@@ -99,8 +99,13 @@
     <!--Cache Input-->
     <body ng-app="angularResizable">
         <section resizable r-directions="['right']">
+            <!--Cache Animation Control for when simulation runs-->
             <md-content layout="column" md-theme="docs-dark" class="md-inline-form" flex>
-                <md-content layout="column">
+                <md-content layout="row" layout-align="space-around center" ng-show="$ctrl.hide">
+                    <md-subheader class="md-no-sticky">{{$ctrl.fileName}}</md-subheader>
+                    <md-button class="md-primary md-raised" ng-click="$ctrl.handleUpload()" ng-disabled="$ctrl.fileName.length != 0" type="submit" style="margin-right: 0;">Upload</md-button>
+                </md-content>
+                <md-content layout="column" ng-show="!$ctrl.hide">
                     <md-input-container>
                         <label>Replacement Policy</label>
                         <md-select ng-model="$ctrl.policy" placeholder="Select a Policy" ng-change="$ctrl.setPolicy()">
@@ -110,7 +115,7 @@
                         </md-select>
                     </md-input-container>
 
-                    <md-input-container>
+                    <md-input-container ng-show="!$ctrl.hide">
                         <label>Block Size</label>
                         <md-select ng-model="$ctrl.blockSize" ng-change="$ctrl.setBlockSize()" placeholder="Select a Block Size">
                             <md-option ng-repeat="size in blockSizes" value="{{size}}">
@@ -121,19 +126,19 @@
                 </md-content>
 
                 <md-content>
-                    <md-tabs md-selected="selectedIndex" md-border-bottom md-autoselect>
-                        <md-tab ng-disabled="$ctrl.caches.length === 3">
+                    <md-tabs md-selected="selectedIndex" md-border-bottom md-autoselect ng-hide="$ctrl.hide">
+                        <md-tab ng-disabled="$ctrl.caches.length === 3" ng-hide="$ctrl.hide">
                             <md-tab-label class="add-button">
-                                <md-button class="md-icon-button" ng-click="$ctrl.addCache()"><i class="material-icons">add</i></md-button>
+                                <md-button class="md-icon-button" ng-click="$ctrl.addCache()" ng-hide="$ctrl.hide"><i class="material-icons">add</i></md-button>
                             </md-tab-label>
                         </md-tab>
-                        <md-tab ng-repeat="tab in $ctrl.caches" label="{{tab.title}}">
+                        <md-tab ng-repeat="tab in $ctrl.caches" label="{{tab.title}}" ng-hide="$ctrl.hide">
                             <div class="tab{{$index%4}}" style="padding: 25px; text-align: center;">
                                 <md-content layout="column">
                                     <md-input-container>
                                         <label>Cache Size</label>
                                         <md-select ng-model="tab.cacheSize" placeholder="Select a Cache Size"
-                                                   ng-change="updateCache(tab.cacheSize, $index%4, 'size')" ng-disabled="!($ctrl.policySet && $ctrl.blockSizeSet)">
+                                                   ng-change="updateCache(tab.cacheSize, $index%4, 'size')" ng-disabled="!($ctrl.policySet && $ctrl.blockSizeSet)" ng-hide="$ctrl.hide">
                                             <md-option ng-repeat="size in cacheSizes" value="{{size}}">
                                                 {{size}}
                                             </md-option>
@@ -143,7 +148,7 @@
                                     <md-input-container>
                                         <label>Associativity</label>
                                         <md-select ng-model="tab.Associativity" placeholder="Select an Associativity"
-                                                   ng-change="updateCache(tab.Associativity, $index%4, 'associativity')" ng-disabled="!($ctrl.policySet && $ctrl.blockSizeSet)">
+                                                   ng-change="updateCache(tab.Associativity, $index%4, 'associativity')" ng-disabled="!($ctrl.policySet && $ctrl.blockSizeSet)" ng-hide="$ctrl.hide">
                                             <md-option ng-repeat="associativity in $ctrl.caches[$index%4].associativities" value="{{associativity}}">
                                                 {{associativity}}
                                             </md-option>
@@ -156,9 +161,24 @@
                 </md-content>
 
                 <!-- Memory Access Queue -->
-                <md-content layout="row" layout-align="space-around center">
+                <md-content layout="row" layout-align="space-around center" ng-hide="$ctrl.hide">
                     <md-subheader class="md-no-sticky">{{$ctrl.fileName}}</md-subheader>
-                    <md-button class="md-primary md-raised" ng-click="$ctrl.handleUpload()" ng-disabled="$ctrl.fileName.length != 0" type="submit" style="margin-right: 0;">Upload</md-button>
+                    <md-button class="md-primary md-raised" ng-click="$ctrl.handleUpload()" ng-hide="$ctrl.hide" ng-disabled="$ctrl.fileName.length != 0" type="submit" style="margin-right: 0;">Upload</md-button>
+                </md-content>
+                <!-- Control Flow Buttons -->
+                <md-content layout="row" layout-align="space-around center">
+                    <md-button class="md-icon-button"><i class="material-icons">skip_previous</i></md-button>
+                    <md-button class="md-icon-button" ng-click= "$ctrl.showSideBar();"><i class="material-icons">pause</i></md-button>
+                    <md-button class="md-icon-button" ng-click= "$ctrl.hideSideBar();"><i class="material-icons">play_arrow</i></md-button>
+                    <md-button class="md-icon-button"><i class="material-icons">skip_next</i></md-button>
+                    <md-button class="md-icon-button"><i class="material-icons">replay</i></md-button>
+                </md-content>
+                <md-content layout="row" layout-align="center" style="padding-top: 25px; padding-right: 10px;">
+                    <div layout layout-align="center center">
+                        <span class="md-body-1">Speed</span>
+                    </div>
+                    <md-slider flex class="md-primary" md-discrete ng-model="$ctrl.speedRating" step="1" min="1" max="5" aria-label="rating">
+                    </md-slider>
                 </md-content>
                 <md-subheader class="md-no-sticky">Memory Access Queue</md-subheader>
                 <md-table-container style="height:150px">
@@ -181,22 +201,6 @@
                         </tbody>
                     </table>
                 </md-table-container>
-
-                <!-- Control Flow Buttons -->
-                <md-content layout="row" layout-align="space-around center">
-                    <md-button class="md-icon-button"><i class="material-icons">skip_previous</i></md-button>
-                    <md-button class="md-icon-button"><i class="material-icons">pause</i></md-button>
-                    <md-button class="md-icon-button"><i class="material-icons">play_arrow</i></md-button>
-                    <md-button class="md-icon-button"><i class="material-icons">skip_next</i></md-button>
-                    <md-button class="md-icon-button"><i class="material-icons">replay</i></md-button>
-                </md-content>
-                <md-content layout="row" layout-align="center" style="padding-top: 25px; padding-right: 10px;">
-                    <div layout layout-align="center center">
-                        <span class="md-body-1">Speed</span>
-                    </div>
-                    <md-slider flex class="md-primary" md-discrete ng-model="$ctrl.speedRating" step="1" min="1" max="5" aria-label="rating">
-                    </md-slider>
-                </md-content>
             </md-content>
         </section>
     </body>
