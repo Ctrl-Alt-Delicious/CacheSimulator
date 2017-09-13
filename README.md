@@ -2,15 +2,15 @@
 Copyright (c) 2017, Ctrl+Alt+Delicious (Ricky Barillas, Ryan Berst, Eduardo Mestanza, Kevin Rose, Will Thompson)
 
 #### Run the two commands to start the application:
-    <p>     npm install       (only the first time)
-    <p>     npm start
+	npm install       (only the first time)
+	npm start
 
 
 ## The development process
-When developing this application there are certain routines that need to be followed to help ensure productivty and a clean stress-free dev process.
+When developing this application there are certain routines that need to be followed to help ensure productivity and a clean stress-free dev process.
 
 ### Starting a feature
-When starting a feature, you must checkout a new branch. Since all features are listed on our Zen Board it is easy to find a concise name for this branch since all issues are given a number. Creating a new branch should follow this pattern. `git checkout -b issue-<#> origin/master` where the placeholder `<#>` should be replaced with the issue number for the feature you are working on. Also note that the base for this new branch is `origin/master`, this way our new branch is the most up to date, so we need to fetch the lastest remote master first. In summary creating a new branch for some issue number 7 would look like this:
+When starting a feature, you must checkout a new branch. Since all features are listed on our Zen Board it is easy to find a concise name for this branch since all issues are given a number. Creating a new branch should follow this pattern. `git checkout -b issue-<#> origin/master` where the placeholder `<#>` should be replaced with the issue number for the feature you are working on. Also note that the base for this new branch is `origin/master`, this way our new branch is the most up to date, so we need to fetch the latest remote master first. In summary creating a new branch for some issue number 7 would look like this:
 
 	git fetch
 	git checkout -b issue-7 origin/master
