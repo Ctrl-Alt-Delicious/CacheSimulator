@@ -1,8 +1,8 @@
 <div ng-cloak layout="row" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"
-     xmlns="http://www.w3.org/1999/html" flex="100">
+     xmlns="http://www.w3.org/1999/html">
 
     <!--Cache Display-->
-    <md-content layout="column" layout-padding md-theme="docs-dark" flex="75">
+    <md-content layout="column" layout-padding md-theme="docs-dark" flex>
 
         <!--Less code, but puts all cache levels in one column-->
 
@@ -97,62 +97,58 @@
     </md-content>
 
     <!--Cache Input-->
-    <section resizable r-directions="['left']" r-flex="true">
-        <md-content layout="column" md-theme="docs-dark" class="md-inline-form" flex>
-            <md-content layout="column">
-                <md-input-container>
-                    <label>Replacement Policy</label>
-                    <md-select ng-model="$ctrl.policy" placeholder="Select a Policy" ng-change="$ctrl.setPolicy()">
-                        <md-option ng-repeat="policy in policies" value="{{policy}}">
-                            {{policy}}
-                        </md-option>
-                    </md-select>
-                </md-input-container>
+    <section resizable r-directions="['left']" r-flex="true" style="max-width: 500px">
+        <md-content layout="column" layout-padding md-theme="docs-dark" class="md-inline-form" flex>
+            <md-input-container>
+                <label>Replacement Policy</label>
+                <md-select ng-model="$ctrl.policy" placeholder="Select a Policy" ng-change="$ctrl.setPolicy()">
+                    <md-option ng-repeat="policy in policies" value="{{policy}}">
+                        {{policy}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
 
-                <md-input-container>
-                    <label>Block Size</label>
-                    <md-select ng-model="$ctrl.blockSize" ng-change="$ctrl.setBlockSize()" placeholder="Select a Block Size">
-                        <md-option ng-repeat="size in blockSizes" value="{{size}}">
-                            {{size}}
-                        </md-option>
-                    </md-select>
-                </md-input-container>
-            </md-content>
+            <md-input-container>
+                <label>Block Size</label>
+                <md-select ng-model="$ctrl.blockSize" ng-change="$ctrl.setBlockSize()" placeholder="Select a Block Size">
+                    <md-option ng-repeat="size in blockSizes" value="{{size}}">
+                        {{size}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
 
-            <md-content>
-                <md-tabs md-selected="selectedIndex" md-border-bottom md-autoselect>
-                    <md-tab ng-disabled="$ctrl.caches.length === 3">
-                        <md-tab-label class="add-button">
-                            <md-button class="md-icon-button" ng-click="$ctrl.addCache()"><i class="material-icons">add</i></md-button>
-                        </md-tab-label>
-                    </md-tab>
-                    <md-tab ng-repeat="tab in $ctrl.caches" label="{{tab.title}}">
-                        <div class="tab{{$index%4}}" style="padding: 25px; text-align: center;">
-                            <md-content layout="column">
-                                <md-input-container>
-                                    <label>Cache Size</label>
-                                    <md-select ng-model="tab.cacheSize" placeholder="Select a Cache Size"
-                                               ng-change="updateCache(tab.cacheSize, $index%4, 'size')" ng-disabled="!($ctrl.policySet && $ctrl.blockSizeSet)">
-                                        <md-option ng-repeat="size in cacheSizes" value="{{size}}">
-                                            {{size}}
-                                        </md-option>
-                                    </md-select>
-                                </md-input-container>
+            <md-tabs md-selected="selectedIndex" md-border-bottom md-autoselect>
+                <md-tab ng-disabled="$ctrl.caches.length === 3">
+                    <md-tab-label class="add-button">
+                        <md-button class="md-icon-button" ng-click="$ctrl.addCache()"><i class="material-icons">add</i></md-button>
+                    </md-tab-label>
+                </md-tab>
+                <md-tab ng-repeat="tab in $ctrl.caches" label="{{tab.title}}">
+                    <div class="tab{{$index%4}}" style="padding: 25px; text-align: center;">
+                        <md-content layout="column">
+                            <md-input-container>
+                                <label>Cache Size</label>
+                                <md-select ng-model="tab.cacheSize" placeholder="Select a Cache Size"
+                                           ng-change="updateCache(tab.cacheSize, $index%4, 'size')" ng-disabled="!($ctrl.policySet && $ctrl.blockSizeSet)">
+                                    <md-option ng-repeat="size in cacheSizes" value="{{size}}">
+                                        {{size}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
 
-                                <md-input-container>
-                                    <label>Associativity</label>
-                                    <md-select ng-model="tab.Associativity" placeholder="Select an Associativity"
-                                               ng-change="updateCache(tab.Associativity, $index%4, 'associativity')" ng-disabled="!($ctrl.policySet && $ctrl.blockSizeSet)">
-                                        <md-option ng-repeat="associativity in $ctrl.caches[$index%4].associativities" value="{{associativity}}">
-                                            {{associativity}}
-                                        </md-option>
-                                    </md-select>
-                                </md-input-container>
-                            </md-content>
-                        </div>
-                    </md-tab>
-                </md-tabs>
-            </md-content>
+                            <md-input-container>
+                                <label>Associativity</label>
+                                <md-select ng-model="tab.Associativity" placeholder="Select an Associativity"
+                                           ng-change="updateCache(tab.Associativity, $index%4, 'associativity')" ng-disabled="!($ctrl.policySet && $ctrl.blockSizeSet)">
+                                    <md-option ng-repeat="associativity in $ctrl.caches[$index%4].associativities" value="{{associativity}}">
+                                        {{associativity}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </md-content>
+                    </div>
+                </md-tab>
+            </md-tabs>
 
             <!-- Memory Access Queue -->
             <md-content layout="row" layout-align="space-around center">
