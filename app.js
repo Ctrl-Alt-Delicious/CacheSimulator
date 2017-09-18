@@ -1,10 +1,13 @@
-angular.module('Simulator', ['ngMaterial', 'md.data.table'])
-    .config(function($mdThemingProvider) {
+var simulator = angular.module('Simulator', ['ngMaterial', 'md.data.table', 'angularResizable']);
+
+simulator.config(function($mdThemingProvider) {
         $mdThemingProvider.theme('docs-dark')
             .primaryPalette('blue')
             .accentPalette('blue-grey')
             .dark();
-    }).controller('IndexController', ['$scope', function($scope) {
+    });
+
+simulator.controller('IndexController', ['$scope', function($scope) {
         var ctrl = this;
 
         $scope.navs = [{
