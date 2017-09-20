@@ -40,6 +40,10 @@ function CacheDisplayController($scope, simDriver, fileParser) {
         S: 1
     }];
 
+    ctrl.clickCache = function(index) {
+        $scope.$parent.changeView(index)
+    }
+
     ctrl.addCache = function() {
         if (ctrl.caches.length < 3) {
             ctrl.caches.push({
