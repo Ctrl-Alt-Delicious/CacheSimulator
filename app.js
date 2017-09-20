@@ -5,6 +5,10 @@ simulator.config(function($mdThemingProvider) {
             .primaryPalette('blue')
             .accentPalette('blue-grey')
             .dark();
+
+        $mdThemingProvider.theme('docs-light')
+            .primaryPalette('blue')
+            .accentPalette('blue-grey');
     });
 
 simulator.controller('IndexController', ['$scope', function($scope) {
