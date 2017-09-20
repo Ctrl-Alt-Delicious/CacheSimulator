@@ -60,18 +60,22 @@ function CacheDisplayController($scope, simDriver, fileParser) {
         }
     };
 
-    ctrl.removeCache = function(index) {
-        if (ctrl.caches.length > 1) {
-            ctrl.caches.splice(index, 1);
-            $scope.showCache[ctrl.caches.length] = false;
-            for(var i = 1; i <= ctrl.caches.length; i++) {
-                ctrl.caches[i-1].title = "L" + i;
+    ctrl.removeCache = function(index, event) {
+        if (event) {
+            event.stopPropagation();
+            event.preventDefault();
+            if (ctrl.caches.length > 1) {
+                ctrl.caches.splice(index, 1);
+                $scope.showCache[ctrl.caches.length] = false;
+                for(var i = 1; i <= ctrl.caches.length; i++) {
+                    ctrl.caches[i-1].title = "L" + i;
+                }
             }
+            if (ctrl.caches.length === 1) {
+                ctrl.disableDeleteCache = true;
+            }
+            $scope.$emit('updatedCacheList', ctrl.caches);
         }
-        if (ctrl.caches.length === 1) {
-            ctrl.disableDeleteCache = true;
-        }
-        $scope.$emit('updatedCacheList', ctrl.caches);
     };
 
     ctrl.handleUpload = function() {

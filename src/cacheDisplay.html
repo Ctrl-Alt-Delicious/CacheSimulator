@@ -46,7 +46,7 @@
                     <md-card-title-media>
                         <div class="md-media-lg card-media"></div>
                     </md-card-title-media>
-                    <md-button ng-click="$ctrl.removeCache(0)" ng-disabled="$ctrl.disableDeleteCache"><i class="material-icons">delete</i></md-button>
+                    <md-button ng-click="$ctrl.removeCache(0, $event)" ng-disabled="$ctrl.disableDeleteCache"><i class="material-icons">delete</i></md-button>
 
                 </md-card-title>
             </md-card>
@@ -69,7 +69,7 @@
                     <md-card-title-media>
                         <div class="md-media-lg card-media"></div>
                     </md-card-title-media>
-                    <md-button ng-click="$ctrl.removeCache(1)"><i class="material-icons">delete</i></md-button>
+                    <md-button ng-click="$ctrl.removeCache(1, $event)"><i class="material-icons">delete</i></md-button>
                 </md-card-title>
             </md-card>
 
@@ -92,7 +92,7 @@
                     <md-card-title-media>
                         <div class="md-media-lg card-media"></div>
                     </md-card-title-media>
-                    <md-button ng-click="$ctrl.removeCache(2)"><i class="material-icons">delete</i></md-button>
+                    <md-button ng-click="$ctrl.removeCache(2, $event)"><i class="material-icons">delete</i></md-button>
                 </md-card-title>
             </md-card>
         </div>
