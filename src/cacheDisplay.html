@@ -28,9 +28,9 @@
         <!--</div>-->
 
         <!--Mode code, but cache levels are different sizes-->
-        <div layout="inline">
+        <div ng-app="Simulator" ng-controller="IndexController" layout="inline">
             <!--L1-->
-            <md-card ng-show="showCache[0]" flex="40">
+            <md-card ng-show="showCache[0]" ng-click="$ctrl.clickCache(1)" flex="40">
                 <md-card-title layout="column">
                     <md-card-title-text>
                         <div layout="row" layout-align="space-between">
@@ -51,7 +51,7 @@
             </md-card>
 
             <!--L2-->
-            <md-card ng-show="showCache[1]" flex>
+            <md-card ng-show="showCache[1]" ng-click="$ctrl.clickCache(2)" flex>
                 <md-card-title layout="column">
                     <md-card-title-text>
                         <div layout="row" layout-align="space-between">
@@ -72,11 +72,11 @@
                 </md-card-title>
             </md-card>
         </div>
-        <div layout="column">
+        <div ng-controller="IndexController" layout="column">
             <!--L3-->
             <md-card ng-show="showCache[2]">
                 <md-card-title layout="column">
-                    <md-card-title-text>
+                    <md-card ng-show="showCache[2]" ng-click="$ctrl.clickCache(3)">
                         <div layout="row" layout-align="space-between">
                             <div>
                                 <span class="md-headline">{{$ctrl.caches[2].title}}</span>
