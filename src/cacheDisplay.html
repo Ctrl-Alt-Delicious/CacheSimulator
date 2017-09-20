@@ -28,9 +28,9 @@
         <!--</div>-->
 
         <!--Mode code, but cache levels are different sizes-->
-        <div ng-app="Simulator" ng-controller="IndexController" layout="inline">
+        <div layout="inline">
             <!--L1-->
-            <md-card ng-show="showCache[0]" ng-click="$ctrl.clickCache(1)" flex="40">
+            <md-card ng-show="showCache[0]" flex="40">
                 <md-card-title layout="column">
                     <md-card-title-text>
                         <div layout="row" layout-align="space-between">
@@ -47,12 +47,11 @@
                         <div class="md-media-lg card-media"></div>
                     </md-card-title-media>
                     <md-button ng-click="$ctrl.removeCache(0)" ng-disabled="$ctrl.disableDeleteCache"><i class="material-icons">delete</i></md-button>
-
                 </md-card-title>
             </md-card>
 
             <!--L2-->
-            <md-card ng-show="showCache[1]" ng-click="$ctrl.clickCache(2)" flex>
+            <md-card ng-show="showCache[1]" flex>
                 <md-card-title layout="column">
                     <md-card-title-text>
                         <div layout="row" layout-align="space-between">
@@ -72,11 +71,10 @@
                     <md-button ng-click="$ctrl.removeCache(1)"><i class="material-icons">delete</i></md-button>
                 </md-card-title>
             </md-card>
-
         </div>
-        <div ng-controller="IndexController" layout="column">
+        <div layout="column">
             <!--L3-->
-            <md-card ng-show="showCache[2]" ng-click="$ctrl.clickCache(3)">
+            <md-card ng-show="showCache[2]">
                 <md-card-title layout="column">
                     <md-card-title-text>
                         <div layout="row" layout-align="space-between">
@@ -157,6 +155,8 @@
                 <md-subheader class="md-no-sticky">{{$ctrl.fileName}}</md-subheader>
                 <md-button class="md-primary md-raised" ng-click="$ctrl.handleUpload()" ng-disabled="$ctrl.fileName.length != 0" type="submit" style="margin-right: 0;">Upload</md-button>
             </md-content>
+        </md-content>
+        <md-content layout="column" layout-padding class="md-inline-form" flex>
             <md-subheader class="md-no-sticky">Memory Access Queue</md-subheader>
             <md-table-container style="height:150px">
                 <table md-table>
@@ -178,7 +178,8 @@
                     </tbody>
                 </table>
             </md-table-container>
-
+        </md-content>
+        <md-content layout="column" layout-padding class="md-inline-form" md-theme="docs-dark" flex>
             <!-- Control Flow Buttons -->
             <md-content layout="row" layout-align="space-around center">
                 <md-button class="md-icon-button"><i class="material-icons">skip_previous</i></md-button>
