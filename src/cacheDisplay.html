@@ -74,9 +74,9 @@
         </div>
         <div ng-controller="IndexController" layout="column">
             <!--L3-->
-            <md-card ng-show="showCache[2]">
+            <md-card ng-show="showCache[2]" ng-click="$ctrl.clickCache(3)">
                 <md-card-title layout="column">
-                    <md-card ng-show="showCache[2]" ng-click="$ctrl.clickCache(3)">
+                    <md-card-title-text>
                         <div layout="row" layout-align="space-between">
                             <div>
                                 <span class="md-headline">{{$ctrl.caches[2].title}}</span>
