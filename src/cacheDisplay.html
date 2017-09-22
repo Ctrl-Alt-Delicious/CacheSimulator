@@ -100,7 +100,7 @@
 
     <!--Cache Input-->
     <section resizable r-directions="['left']" r-flex="true" style="max-width: 700px">
-        <md-content layout="column" layout-padding md-theme="docs-dark" class="md-inline-form" flex>
+        <md-content layout="column" layout-padding md-theme="docs-light" class="md-inline-form" flex>
             <md-input-container>
                 <label>Replacement Policy</label>
                 <md-select ng-model="$ctrl.policy" placeholder="Select a Policy" ng-change="$ctrl.setPolicy()">
@@ -192,7 +192,7 @@
                     <span class="md-body-1">Speed</span>
                 </div>
                 <div style="width:100%;padding:10px">
-                	<md-slider flex class="md-primary" md-discrete ng-model="$ctrl.speedRating" step="1" min="1" max="5" aria-label="rating">
+                    <md-slider flex class="md-primary" md-discrete ng-model="$ctrl.speedRating" step="1" min="1" max="5" aria-label="rating">
                 </div>
                 </md-slider>
             </md-content>
