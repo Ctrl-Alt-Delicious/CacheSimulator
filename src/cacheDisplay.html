@@ -169,7 +169,7 @@
                       </tr>
                     </thead>
                     <tbody md-body>
-                      <tr md-row ng-repeat="item in $ctrl.memQueue">
+                      <tr md-row ng-repeat="item in $ctrl.memQueue" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index)">
                         <td md-cell>{{item.address}}</td>
                         <td md-cell>{{item.tag}}</td>
                         <td md-cell>{{item.index}}</td>
@@ -178,6 +178,12 @@
                     </tbody>
                 </table>
             </md-table-container>
+            <style>
+                .selected {
+                    background-color:#d9d9d9;
+                    font-weight:bold;
+                }
+            </style>
 
             <!-- Control Flow Buttons -->
             <md-content layout="row" layout-align="space-around center">

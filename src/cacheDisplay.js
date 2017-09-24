@@ -169,5 +169,9 @@ function CacheDisplayController($scope, simDriver, fileParser) {
         }
     }
 
+    $scope.selectedRow = null;
+    $scope.setClickedRow = function(index){  //function that sets the value of selectedRow to current index
+        $scope.selectedRow = index;
+    }
 
 }
