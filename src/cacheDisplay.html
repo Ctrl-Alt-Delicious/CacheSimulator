@@ -1,3 +1,7 @@
+<head>
+    <link rel="stylesheet" href="src/cacheDisplay.css">
+</head>
+
 <div ng-cloak layout="row" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"
      xmlns="http://www.w3.org/1999/html">
 
@@ -169,7 +173,7 @@
                       </tr>
                     </thead>
                     <tbody md-body>
-                      <tr md-row ng-repeat="item in $ctrl.memQueue">
+                      <tr md-row ng-repeat="item in $ctrl.memQueue" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index)">
                         <td md-cell>{{item.address}}</td>
                         <td md-cell>{{item.tag}}</td>
                         <td md-cell>{{item.index}}</td>
