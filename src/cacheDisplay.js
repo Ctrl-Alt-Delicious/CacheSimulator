@@ -19,6 +19,7 @@ function CacheDisplayController($scope, simDriver, fileParser) {
     ctrl.policySet = false;
     ctrl.blockSizeSet = false;
     ctrl.disableDeleteCache = true;
+    ctrl.hide = false;
 
     var B_min = 3, B_max = 7;
 
@@ -39,6 +40,14 @@ function CacheDisplayController($scope, simDriver, fileParser) {
         C: 1,
         S: 1
     }];
+
+    ctrl.hideSideBar = function() {
+        ctrl.hide = true;
+    }
+
+    ctrl.showSideBar = function() {
+        ctrl.hide = false;
+    }
 
     ctrl.clickCache = function(index) {
         $scope.$parent.changeView(index)
