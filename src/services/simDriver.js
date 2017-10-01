@@ -2,10 +2,10 @@
 
 angular.module('Simulator').factory('SimDriver', function SimDriverService() {
 
-    var ctrl = this;
+    let ctrl = this;
     //contains pause/play/etc api for the views to use
 
-    var queue = [];
+    let queue = [];
 
     ctrl.getMemAcceses = function() {
         return queue;
@@ -13,19 +13,23 @@ angular.module('Simulator').factory('SimDriver', function SimDriverService() {
 
     ctrl.setQueue = function(parsedData) {
         //mem queue template object
-        var newLine = {
+        let newLine = {
             address: "",
             tag: "0x4FFF",
             index: "0x4490A",
             offset: "0x1002"
-        }
-        for (var line of parsedData) {
-            var l = {};
-            Object.assign(l, newLine)
-            l.address = line
+        };
+        for (let line of parsedData) {
+            let l = {};
+            Object.assign(l, newLine);
+            l.address = line;
             queue.push(l)
         }
-    }
+    };
+
+    ctrl.addToQueue = function(item) {
+        queue.push(item);
+    };
 
     return ctrl;
 });
