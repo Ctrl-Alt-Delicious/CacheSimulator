@@ -50,10 +50,10 @@ angular.module('Simulator').factory('FileParser', ['SimDriver', '$rootScope', fu
     function parseLineToAddress(line, C, S, B) {
         let address = parseInt(line, 16);
         return {
-            address: address,
-            tag: getTag(address, C, S),
-            index: getIndex(address, C, S, B),
-            offset: getOffset(address, B),
+            address: parseHexToString(address),
+            tag: parseHexToString(getTag(address, C, S)),
+            index: parseHexToString(getIndex(address, C, S, B)),
+            offset: parseHexToString(getOffset(address, B)),
         };
 
     }
@@ -102,6 +102,10 @@ angular.module('Simulator').factory('FileParser', ['SimDriver', '$rootScope', fu
      */
     function getTag(address, C, S) {
         return (address >> C - S) & mask(31 - C - S);
+    }
+
+    function parseHexToString(hex) {
+        return "0x" + hex.toString(16);
     }
 
     return ctrl;
