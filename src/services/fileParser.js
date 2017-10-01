@@ -104,6 +104,11 @@ angular.module('Simulator').factory('FileParser', ['SimDriver', '$rootScope', fu
         return (address >> C - S) & mask(31 - C - S);
     }
 
+    /**
+     * parses the input (integer) into a string repr of hex and prepends '0x'
+     * @param hex
+     * @returns {string}
+     */
     function parseHexToString(hex) {
         return "0x" + hex.toString(16);
     }
