@@ -1,207 +1,77 @@
 <head>
     <link rel="stylesheet" href="src/cacheDisplay.css">
 </head>
-
-<div ng-cloak layout="row" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"
-     xmlns="http://www.w3.org/1999/html">
-
-    <!--Cache Display-->
-    <md-content layout="column" layout-padding md-theme="docs-dark" flex>
-
-        <!--Less code, but puts all cache levels in one column-->
-
-        <!--<div layout="column">-->
-            <!--<md-card ng-repeat="cache in $ctrl.caches" ng-show="showCache[$index%4]" flex="40">-->
-                <!--<md-card-title layout="column">-->
-                    <!--<md-card-title-text>-->
-                        <!--<div layout="row" layout-align="space-between">-->
-                            <!--<div>-->
-                                <!--<span class="md-headline">{{cache.title}}</span>-->
-                                <!--<span class="md-subhead"><br />-->
-                                        <!--Size: {{cache.size}}<br />-->
-                                        <!--Associativity: {{cache.associativity}}-->
-                                    <!--</span>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</md-card-title-text>-->
-                    <!--<md-card-title-media>-->
-                        <!--<div class="md-media-lg card-media"></div>-->
-                    <!--</md-card-title-media>-->
-                <!--</md-card-title>-->
-            <!--</md-card>-->
-        <!--</div>-->
-
-        <!--More code, but cache levels are different sizes-->
-        <div ng-app="Simulator" ng-controller="IndexController" layout="row" flex>
-            <!--L1-->
-            <md-card ng-show="showCache[0]" ng-click="$ctrl.clickCache(1)" flex>
-                <md-card-title layout="column">
-                    <md-card-title-text>
-                        <div layout="row" layout-align="space-between">
-                            <div>
-                                <span class="md-headline">{{$ctrl.caches[0].title}}</span>
-                                <span class="md-subhead"><br />
-                                    Size: {{$ctrl.caches[0].size}}<br />
-                                    Associativity: {{$ctrl.caches[0].associativity}}
-                                </span>
+<body>
+    <!-- <div ng-cloak xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"> -->
+    <div ng-cloak>
+        <!--Cache Display-->
+        <md-content layout="column" layout-padding md-theme="docs-dark">
+            <div ng-app="Simulator" ng-controller="IndexController" layout="row">
+                <!--L1-->
+                <md-card ng-show="showCache[0]" ng-click="$ctrl.clickCache(1)" flex>
+                    <md-card-title layout="column">
+                        <md-card-title-text>
+                            <div layout="row" layout-align="space-between">
+                                <div>
+                                    <span class="md-headline">{{$ctrl.caches[0].title}}</span>
+                                    <span class="md-subhead"><br />
+                                        Size: {{$ctrl.caches[0].size}}<br />
+                                        Associativity: {{$ctrl.caches[0].associativity}}
+                                    </span>
+                                </div>
                             </div>
-                        </div>
-                    </md-card-title-text>
-                    <md-card-title-media>
-                        <div class="md-media-lg card-media"></div>
-                    </md-card-title-media>
-                    <md-button ng-click="$ctrl.removeCache(0, $event)" ng-disabled="$ctrl.disableDeleteCache"><i class="material-icons">delete</i></md-button>
+                        </md-card-title-text>
+                        <md-card-title-media>
+                            <div class="md-media-lg card-media"></div>
+                        </md-card-title-media>
+                        <md-button ng-click="$ctrl.removeCache(0, $event)" ng-disabled="$ctrl.disableDeleteCache"><i class="material-icons">delete</i></md-button>
 
-                </md-card-title>
-            </md-card>
-            <!--L2-->
-            <md-card ng-show="showCache[1]" ng-click="$ctrl.clickCache(2)" flex="60">
-                <md-card-title layout="column">
-                    <md-card-title-text>
-                        <div layout="row" layout-align="space-between">
-                            <div>
-                                <span class="md-headline">{{$ctrl.caches[1].title}}</span>
-                                <span class="md-subhead"><br />
-                                    Size: {{$ctrl.caches[1].size}}<br />
-                                    Associativity: {{$ctrl.caches[1].associativity}}
-                                </span>
+                    </md-card-title>
+                </md-card>
+                <!--L2-->
+                <md-card ng-show="showCache[1]" ng-click="$ctrl.clickCache(2)" flex="60">
+                    <md-card-title layout="column">
+                        <md-card-title-text>
+                            <div layout="row" layout-align="space-between">
+                                <div>
+                                    <span class="md-headline">{{$ctrl.caches[1].title}}</span>
+                                    <span class="md-subhead"><br />
+                                        Size: {{$ctrl.caches[1].size}}<br />
+                                        Associativity: {{$ctrl.caches[1].associativity}}
+                                    </span>
+                                </div>
                             </div>
-                        </div>
-                    </md-card-title-text>
+                        </md-card-title-text>
 
-                    <md-card-title-media>
-                        <div class="md-media-lg card-media"></div>
-                    </md-card-title-media>
-                    <md-button ng-click="$ctrl.removeCache(1, $event)"><i class="material-icons">delete</i></md-button>
-                </md-card-title>
-            </md-card>
-        </div>
-        <div ng-controller="IndexController" layout="column">
-            <!--L3-->
-            <md-card ng-show="showCache[2]" ng-click="$ctrl.clickCache(3)">
-                <md-card-title layout="column">
-                    <md-card-title-text>
-                        <div layout="row" layout-align="space-between">
-                            <div>
-                                <span class="md-headline">{{$ctrl.caches[2].title}}</span>
-                                <span class="md-subhead"><br />
-                                    Size: {{$ctrl.caches[2].size}}<br />
-                                    Associativity: {{$ctrl.caches[2].associativity}}
-                                </span>
+                        <md-card-title-media>
+                            <div class="md-media-lg card-media"></div>
+                        </md-card-title-media>
+                        <md-button ng-click="$ctrl.removeCache(1, $event)"><i class="material-icons">delete</i></md-button>
+                    </md-card-title>
+                </md-card>
+            </div>
+            <div ng-controller="IndexController" layout="column">
+                <!--L3-->
+                <md-card ng-show="showCache[2]" ng-click="$ctrl.clickCache(3)">
+                    <md-card-title layout="column">
+                        <md-card-title-text>
+                            <div layout="row" layout-align="space-between">
+                                <div>
+                                    <span class="md-headline">{{$ctrl.caches[2].title}}</span>
+                                    <span class="md-subhead"><br />
+                                        Size: {{$ctrl.caches[2].size}}<br />
+                                        Associativity: {{$ctrl.caches[2].associativity}}
+                                    </span>
+                                </div>
                             </div>
-                        </div>
-                    </md-card-title-text>
-                    <md-card-title-media>
-                        <div class="md-media-lg card-media"></div>
-                    </md-card-title-media>
-                    <md-button ng-click="$ctrl.removeCache(2, $event)"><i class="material-icons">delete</i></md-button>
-                </md-card-title>
-            </md-card>
-        </div>
-    </md-content>
-
-    <!--Cache Input-->
-    <section resizable r-directions="['left']" r-flex="true" style="max-width: 700px">
-        <md-content layout="column" layout-padding md-theme="docs-light" class="md-inline-form" flex>
-            <md-input-container ng-hide="$ctrl.hide">
-                <label>Replacement Policy</label>
-                <md-select ng-model="$ctrl.policy" placeholder="Select a Policy" ng-change="$ctrl.setPolicy()">
-                    <md-option ng-repeat="policy in policies" value="{{policy}}">
-                        {{policy}}
-                    </md-option>
-                </md-select>
-            </md-input-container>
-
-            <md-input-container ng-hide="$ctrl.hide">
-                <label>Block Size</label>
-                <md-select ng-model="$ctrl.blockSize" ng-change="$ctrl.setBlockSize()" placeholder="Select a Block Size">
-                    <md-option ng-repeat="size in blockSizes" value="{{size}}">
-                        {{size}}
-                    </md-option>
-                </md-select>
-            </md-input-container>
-
-            <md-tabs md-selected="selectedIndex" md-border-bottom md-autoselect ng-hide="$ctrl.hide">
-                <md-tab ng-disabled="$ctrl.caches.length === 3" ng-hide="$ctrl.hide">
-                    <md-tab-label class="add-button">
-                        <md-button class="md-icon-button" ng-click="$ctrl.addCache()" ng-hide="$ctrl.hide"><i class="material-icons">add</i></md-button>
-                    </md-tab-label>
-                </md-tab>
-                <md-tab ng-repeat="tab in $ctrl.caches" label="{{tab.title}}" ng-hide="$ctrl.hide">
-                    <div class="tab{{$index%4}}" style="padding: 25px; text-align: center;">
-                        <md-content layout="column">
-                            <md-input-container>
-                                <label>Cache Size</label>
-                                <md-select ng-model="tab.cacheSize" placeholder="Select a Cache Size"
-                                           ng-change="updateCache(tab.cacheSize, $index%4, 'size')" ng-disabled="!($ctrl.policySet && $ctrl.blockSizeSet)" ng-hide="$ctrl.hide">
-                                    <md-option ng-repeat="size in cacheSizes" value="{{size}}">
-                                        {{size}}
-                                    </md-option>
-                                </md-select>
-                            </md-input-container>
-
-                            <md-input-container>
-                                <label>Associativity</label>
-                                <md-select ng-model="tab.Associativity" placeholder="Select an Associativity"
-                                           ng-change="updateCache(tab.Associativity, $index%4, 'associativity')" ng-disabled="!($ctrl.policySet && $ctrl.blockSizeSet)" ng-hide="$ctrl.hide">
-                                    <md-option ng-repeat="associativity in $ctrl.caches[$index%4].associativities" value="{{associativity}}">
-                                        {{associativity}}
-                                    </md-option>
-                                </md-select>
-                            </md-input-container>
-                        </md-content>
-                    </div>
-                </md-tab>
-            </md-tabs>
-
-            <!-- Memory Access Queue -->
-            <md-content layout="row" layout-align="space-around center">
-                <md-subheader class="md-no-sticky">{{$ctrl.fileName}}</md-subheader>
-                <md-button class="md-primary md-raised" ng-click="$ctrl.handleUpload()" type="submit" style="margin-right: 0;">Upload</md-button>
-            </md-content>
-
-            <!-- Control Flow Buttons -->
-            <md-content layout="row" layout-align="space-around center">
-                <md-button class="md-icon-button" ng-disabled="$ctrl.fileName.length == 0"><i class="material-icons">skip_previous</i></md-button>
-                <md-button class="md-icon-button" ng-disabled="$ctrl.fileName.length == 0" ng-click= "$ctrl.showSideBar();"><i class="material-icons">pause</i></md-button>
-                <md-button class="md-icon-button" ng-disabled="$ctrl.fileName.length == 0" ng-click= "$ctrl.hideSideBar();"><i class="material-icons">play_arrow</i></md-button>
-                <md-button class="md-icon-button" ng-disabled="$ctrl.fileName.length == 0"><i class="material-icons">skip_next</i></md-button>
-                <md-button class="md-icon-button" ng-disabled="$ctrl.fileName.length == 0"><i class="material-icons">replay</i></md-button>
-            </md-content>
-            <md-content layout="row" layout-align="center" style="padding-top: 25px; padding-right: 10px;">
-                <div layout layout-align="center center">
-                    <span class="md-body-1">Speed</span>
-                </div>
-                <div style="width:100%;padding:10px">
-                    <md-slider flex class="md-primary" md-discrete ng-model="$ctrl.speedRating" step="1" min="1" max="5" aria-label="rating" ng-disabled="$ctrl.fileName.length == 0">
-                </div>
-                </md-slider>
-            </md-content>
-
-            <!-- Memory Acess Queue -->
-            <md-subheader class="md-no-sticky">Memory Access Queue</md-subheader>
-            <md-table-container style="height:150px">
-                <table md-table>
-                    <thead md-head>
-                      <tr md-row>
-                        <th md-column md-numeric>Address</th>
-                        <th md-column md-numeric>Tag</th>
-                        <th md-column md-numeric>Index</th>
-                        <th md-column md-numeric>Offset</th>
-                      </tr>
-                    </thead>
-                    <tbody md-body>
-                      <tr md-row ng-repeat="item in $ctrl.memQueue" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index)">
-                        <td md-cell>{{item.address}}</td>
-                        <td md-cell>{{item.tag}}</td>
-                        <td md-cell>{{item.index}}</td>
-                        <td md-cell>{{item.offset}}</td>
-                      </tr>
-                    </tbody>
-                </table>
-            </md-table-container>
+                        </md-card-title-text>
+                        <md-card-title-media>
+                            <div class="md-media-lg card-media"></div>
+                        </md-card-title-media>
+                        <md-button ng-click="$ctrl.removeCache(2, $event)"><i class="material-icons">delete</i></md-button>
+                    </md-card-title>
+                </md-card>
+            </div>
         </md-content>
-        <div style="min-height: 430px" ng-hide="!$ctrl.hide">
-        </div>
-    </section>
-</div>
+    </div>
+</body>
