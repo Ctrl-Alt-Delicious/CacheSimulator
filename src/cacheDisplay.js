@@ -35,6 +35,93 @@ function CacheDisplayController($scope, simDriver, fileParser) {
         associativity: Math.pow(2, initL1S)
     }];
 
+    //Display of the canvas for the general overview
+    //canvas1 holds L1 and L2, changes to the display
+    //of these caches are to be done to L1 and L2 directly
+    //canvas2 has L3 in it and changes to the cache display
+    //will be done directly to L3
+    let canvas1 = document.getElementById("canvas1");
+    canvas1.style.flex = "auto";
+
+    let canvas2 = document.getElementById("canvas2");
+    canvas2.style.flex = "";
+
+    let l1 = document.getElementById("L1");
+    l1.style.flex = 1;
+    let l2 = document.getElementById("L2");
+    l2.style.flex = 1;
+    let l3 = document.getElementById("L3");
+    l3.style.flex = 1;
+
+    $scope.showL3 = function() {
+        canvas2.style.flex = "auto";
+        canvas2.style.height = "40%";
+    };
+
+    $scope.updateCacheCanvas = function() {
+        if (ctrl.caches.length === 1) {
+            l1.style.flex = 1;
+            l2.style.flex = 1;
+            canvas2.style.flex = "";
+            canvas2.style.height = "0%";
+        }
+        if (ctrl.caches.length === 2) {
+            canvas2.style.flex = "";
+            canvas2.style.height = "0%";
+            if (ctrl.caches[0].size !== "Not Set" && ctrl.caches[1].size !== "Not Set") {
+                let l1Size = ctrl.caches[0].size;
+                let l2Size = ctrl.caches[1].size;
+                let ratio = l2Size / l1Size;
+                if (ratio < 0.3) {
+                    ratio = 0.3;
+                } else if (ratio > 3) {
+                    ratio = 3
+                }
+                l1.style.flex = 1;
+                l2.style.flex = ratio;
+            }
+        }
+        if (ctrl.caches.length === 3) {
+            if (ctrl.caches[0].size !== "Not Set" && ctrl.caches[1].size !== "Not Set" && ctrl.caches[1].size === "Not Set") {
+                let l1Size = ctrl.caches[0].size;
+                let l2Size = ctrl.caches[1].size;
+                let ratio = l2Size / l1Size;
+                if (ratio < 0.3) {
+                    ratio = 0.3;
+                } else if (ratio > 3) {
+                    ratio = 3
+                }
+
+                l1.style.flex = 1;
+                l2.style.flex = ratio;
+            } else if (ctrl.caches[0].size !== "Not Set" && ctrl.caches[1].size !== "Not Set" && ctrl.caches[1].size !== "Not Set") {
+                canvas2.style.flex = "";
+                let l1Size = ctrl.caches[0].size;
+                let l2Size = ctrl.caches[1].size;
+                let l3Size = ctrl.caches[2].size;
+                let canvas1Ratio = l2Size / l1Size;
+                if (canvas1Ratio < 0.3) {
+                    canvas1Ratio = 0.3;
+                } else if (canvas1Ratio > 3) {
+                    canvas1Ratio = 3
+                }
+                let ratioSize = parseInt(l1Size) + parseInt(l2Size);
+                let canvas2Ratio = l3Size / ratioSize;
+
+                canvas2Ratio = canvas2Ratio * 40;
+                l1.style.flex = 1;
+                l2.style.flex = canvas1Ratio;
+                if (canvas2Ratio < 30) {
+                    canvas2Ratio = 30;
+                }
+                if (canvas2Ratio > 90) {
+                    canvas2Ratio = 90;
+                }
+                canvas2.style.height = canvas2Ratio.toString() + "%";
+            }
+        }
+    };
+
     ctrl.hideSideBar = function () {
         ctrl.hide = true;
     };
@@ -55,6 +142,9 @@ function CacheDisplayController($scope, simDriver, fileParser) {
                 associativity: "Not Set"
             });
             $scope.showCache[ctrl.caches.length - 1] = true;
+            if (ctrl.caches.length === 3) {
+                $scope.showL3();
+            }
             //Emit sends an event to the parent controller/component
             $scope.$emit('updatedCacheList', ctrl.caches);
         }
@@ -77,6 +167,7 @@ function CacheDisplayController($scope, simDriver, fileParser) {
             if (ctrl.caches.length === 1) {
                 ctrl.disableDeleteCache = true;
             }
+            $scope.updateCacheCanvas();
             $scope.$emit('updatedCacheList', ctrl.caches);
         }
     };
@@ -122,9 +213,6 @@ function CacheDisplayController($scope, simDriver, fileParser) {
     //Constants
     $scope.policies = ["FIFO", "LRU", "LFU"];
     $scope.blockSizes = [];
-    for (let i = B_min; i <= B_max; i++) {
-        $scope.blockSizes.push(Math.pow(2, i));
-    }
     $scope.cacheSizes = [];
     //$scope.associativities = []
 
@@ -139,12 +227,18 @@ function CacheDisplayController($scope, simDriver, fileParser) {
         } else if (setting === "associativity") {
             c.associativity = item;
         }
+        $scope.updateCacheCanvas();
     };
 
-    let setCacheSize = function (index) {
+    let setCacheSize = function(index) {
         ctrl.caches[index].C = Math.log(ctrl.cacheSize) / Math.log(2);
         setAssocOptions(index);
     };
+
+    for (let i = B_min; i <= B_max; i++) {
+        $scope.blockSizes.push(Math.pow(2, i));
+    }
+
 
     let setCacheSizeOptions = function () {
 
