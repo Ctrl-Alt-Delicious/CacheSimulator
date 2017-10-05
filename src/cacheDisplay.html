@@ -8,7 +8,7 @@
         <md-content layout="column" layout-padding md-theme="docs-dark">
             <div ng-app="Simulator" ng-controller="IndexController" layout="row">
                 <!--L1-->
-                <md-card ng-show="showCache[0]" ng-click="$ctrl.clickCache(1)" flex>
+                <md-card ng-show="$ctrl.showCache[0]" ng-click="$ctrl.clickCache(1)" flex>
                     <md-card-title layout="column">
                         <md-card-title-text>
                             <div layout="row" layout-align="space-between">
@@ -29,7 +29,7 @@
                     </md-card-title>
                 </md-card>
                 <!--L2-->
-                <md-card ng-show="showCache[1]" ng-click="$ctrl.clickCache(2)" flex="60">
+                <md-card ng-show="$ctrl.showCache[1]" ng-click="$ctrl.clickCache(2)" flex="60">
                     <md-card-title layout="column">
                         <md-card-title-text>
                             <div layout="row" layout-align="space-between">
@@ -52,7 +52,7 @@
             </div>
             <div ng-controller="IndexController" layout="column">
                 <!--L3-->
-                <md-card ng-show="showCache[2]" ng-click="$ctrl.clickCache(3)">
+                <md-card ng-show="$ctrl.showCache[2]" ng-click="$ctrl.clickCache(3)">
                     <md-card-title layout="column">
                         <md-card-title-text>
                             <div layout="row" layout-align="space-between">

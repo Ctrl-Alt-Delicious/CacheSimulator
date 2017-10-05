@@ -25,21 +25,18 @@ function CacheInputController($scope, simDriver, fileParser) {
 
     ctrl.caches = [{
         title: "L1",
-        policy: "",
-        cacheSize: "",
-        associativity: "",
-        C: "",
-        S: ""
-    }];
-
-    ctrl.caches = [{
-        title: "L1",
         size: "Not Set",
         associativity: "Not Set",
         associativities: [],
         C: 1,
         S: 1
     }];
+
+    //Constants
+    $scope.policies = ["FIFO", "LRU", "LFU"]
+    $scope.blockSizes = []
+    $scope.cacheSizes = []
+    //$scope.associativities = []
 
     ctrl.hideSideBar = function() {
         ctrl.hide = true;
@@ -60,7 +57,7 @@ function CacheInputController($scope, simDriver, fileParser) {
                 size: "Not Set",
                 associativity: "Not Set"
             });
-            $scope.showCache[ctrl.caches.length - 1] = true;
+            $scope.$parent.showCache[ctrl.caches.length - 1] = true;
             //Emit sends an event to the parent controller/component
             $scope.$emit('updatedCacheList', ctrl.caches);
         }
@@ -75,7 +72,7 @@ function CacheInputController($scope, simDriver, fileParser) {
             event.preventDefault();
             if (ctrl.caches.length > 1) {
                 ctrl.caches.splice(index, 1);
-                $scope.showCache[ctrl.caches.length] = false;
+                $scope.$parent.showCache[ctrl.caches.length] = false;
                 for(var i = 1; i <= ctrl.caches.length; i++) {
                     ctrl.caches[i-1].title = "L" + i;
                 }
@@ -130,14 +127,6 @@ function CacheInputController($scope, simDriver, fileParser) {
 
     })
 
-    //Constants
-    $scope.policies = ["FIFO", "LRU", "LFU"]
-    $scope.blockSizes = []
-    $scope.cacheSizes = []
-    //$scope.associativities = []
-
-    $scope.showCache = [true, false, false];
-
     $scope.updateCache = function(item, index, setting) {
         var c = ctrl.caches[index];
         if (setting === "size") {
@@ -147,6 +136,7 @@ function CacheInputController($scope, simDriver, fileParser) {
         } else if (setting === "associativity") {
             c.associativity = item;
         }
+        $scope.$emit('updatedCacheList', ctrl.caches);
     }
     
     for (var i = B_min; i <= B_max; i++) {
@@ -162,6 +152,8 @@ function CacheInputController($scope, simDriver, fileParser) {
         for (var i = C_min; i <= C_max; i++) {
             $scope.cacheSizes.push(Math.pow(2, i));
         }
+
+        // $scope.$emit('updatedCacheList', ctrl.caches);
     }
 
     var setAssocOptions = function(index) {
@@ -176,6 +168,7 @@ function CacheInputController($scope, simDriver, fileParser) {
         for (var i = S_min; i <= S_max; i++) {
             ctrl.caches[index].associativities.push(Math.pow(2, i));
         }
+        $scope.$emit('updatedCacheList', ctrl.caches);
     }
 
     $scope.selectedRow = null;

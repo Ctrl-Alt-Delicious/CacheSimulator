@@ -24,6 +24,14 @@ simulator.controller('IndexController', ['$scope', function($scope) {
             }
         ];
 
+        $scope.caches = [];
+
+        //Constants
+        $scope.policies = ["FIFO", "LRU", "LFU"]
+        $scope.blockSizes = []
+        $scope.cacheSizes = []
+        $scope.showCache = [true, false, false];
+
         $scope.changeView = function(index) {
             for (var i = 0; i < $scope.navs.length; i++) {
                 if (index === i) {
@@ -45,9 +53,13 @@ simulator.controller('IndexController', ['$scope', function($scope) {
             }];
             var i = 1;
             for (cache of data) {
-                $scope.navs[i++] = {
+                $scope.navs[i] = {
                     buttonTitle: cache.title
                 }
+                $scope.caches[i-1] = cache;
+                i++;
             }
+            $scope.$broadcast('updatedCaches', $scope.caches);
+            $scope.$broadcast('updateShowCache', $scope.showCache);
         });
     }]);
