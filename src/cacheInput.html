@@ -2,38 +2,38 @@
 <div ng-cloak id="sidebar">
     <!--Cache Input-->
     <div layout="column" layout-padding md-theme="docs-light" class="md-inline-form">
-        <md-input-container ng-hide="$ctrl.hide">
+        <md-input-container ng-hide="hide">
             <label>Replacement Policy</label>
-            <md-select ng-model="$ctrl.policy" placeholder="Select a Policy" ng-change="$ctrl.setPolicy()">
-                <md-option ng-repeat="policy in policies" value="{{policy}}">
+            <md-select ng-model="policy" placeholder="Select a Policy" ng-change="$ctrl.setPolicy()">
+                <md-option ng-repeat="policy in $ctrl.cacheInfo.policies" value="{{policy}}">
                     {{policy}}
                 </md-option>
             </md-select>
         </md-input-container>
 
-        <md-input-container ng-hide="$ctrl.hide">
+        <md-input-container ng-hide="hide">
             <label>Block Size</label>
-            <md-select ng-model="$ctrl.blockSize" ng-change="$ctrl.setBlockSize()" placeholder="Select a Block Size">
-                <md-option ng-repeat="size in blockSizes" value="{{size}}">
+            <md-select ng-model="blockSize" ng-change="$ctrl.setBlockSize()" placeholder="Select a Block Size">
+                <md-option ng-repeat="size in $ctrl.cacheInfo.blockSizes" value="{{size}}">
                     {{size}}
                 </md-option>
             </md-select>
         </md-input-container>
 
         <md-tabs md-selected="selectedIndex" md-border-bottom md-autoselect ng-hide="$ctrl.hide">
-            <md-tab ng-disabled="$ctrl.caches.length === 3" ng-hide="$ctrl.hide">
+            <md-tab ng-disabled="$ctrl.cacheInfo.caches.length === 3" ng-hide="$ctrl.hide">
                 <md-tab-label class="add-button">
-                    <md-button class="md-icon-button" ng-click="$ctrl.addCache()" ng-hide="$ctrl.hide"><i class="material-icons">add</i></md-button>
+                    <md-button class="md-icon-button" ng-click="$ctrl.addCache()" ng-hide="$ctrl.hideSidebar"><i class="material-icons">add</i></md-button>
                 </md-tab-label>
             </md-tab>
-            <md-tab ng-repeat="tab in $ctrl.caches" label="{{tab.title}}" ng-hide="$ctrl.hide">
+            <md-tab ng-repeat="tab in $ctrl.cacheInfo.caches" label="{{tab.title}}" ng-hide="$ctrl.hideSidebar">
                 <div class="tab{{$index%4}}" style="padding: 25px; text-align: center;">
                     <md-content layout="column">
                         <md-input-container>
                             <label>Cache Size</label>
                             <md-select ng-model="tab.cacheSize" placeholder="Select a Cache Size"
-                                       ng-change="updateCache(tab.cacheSize, $index%4, 'size')" ng-disabled="!($ctrl.policySet && $ctrl.blockSizeSet)" ng-hide="$ctrl.hide">
-                                <md-option ng-repeat="size in cacheSizes" value="{{size}}">
+                                       ng-change="updateCache(tab.cacheSize, $index%4, 'size')" ng-disabled="!($ctrl.cacheInfo.policySet && $ctrl.cacheInfo.blockSizeSet)" ng-hide="$ctrl.hide">
+                                <md-option ng-repeat="size in $ctrl.cacheInfo.cacheSizes" value="{{size}}">
                                     {{size}}
                                 </md-option>
                             </md-select>
@@ -42,8 +42,8 @@
                         <md-input-container>
                             <label>Associativity</label>
                             <md-select ng-model="tab.Associativity" placeholder="Select an Associativity"
-                                       ng-change="updateCache(tab.Associativity, $index%4, 'associativity')" ng-disabled="!($ctrl.policySet && $ctrl.blockSizeSet)" ng-hide="$ctrl.hide">
-                                <md-option ng-repeat="associativity in $ctrl.caches[$index%4].associativities" value="{{associativity}}">
+                                       ng-change="updateCache(tab.Associativity, $index%4, 'associativity')" ng-disabled="!($ctrl.cacheInfo.policySet && $ctrl.cacheInfo.blockSizeSet)" ng-hide="$ctrl.hideSidebar">
+                                <md-option ng-repeat="associativity in $ctrl.cacheInfo.caches[$index%4].associativities" value="{{associativity}}">
                                     {{associativity}}
                                 </md-option>
                             </md-select>
@@ -100,6 +100,6 @@
             </table>
         </md-table-container>
     </div>
-    <div style="min-height: 430px" ng-hide="!$ctrl.hide">
+    <div style="min-height: 430px" ng-hide="!$ctrl.hideSidebar">
     </div>
 </div>

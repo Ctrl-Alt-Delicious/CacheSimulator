@@ -8,15 +8,15 @@
         <md-content layout="column" layout-padding md-theme="docs-dark">
             <div ng-app="Simulator" ng-controller="IndexController" layout="row">
                 <!--L1-->
-                <md-card ng-show="$ctrl.showCache[0]" ng-click="$ctrl.clickCache(1)" flex>
+                <md-card ng-show="$ctrl.cacheInfo.caches[0].active" ng-click="$ctrl.clickCache(1)" flex>
                     <md-card-title layout="column">
                         <md-card-title-text>
                             <div layout="row" layout-align="space-between">
                                 <div>
-                                    <span class="md-headline">{{$ctrl.caches[0].title}}</span>
+                                    <span class="md-headline">{{$ctrl.cacheInfo.caches[0].title}}</span>
                                     <span class="md-subhead"><br />
-                                        Size: {{$ctrl.caches[0].size}}<br />
-                                        Associativity: {{$ctrl.caches[0].associativity}}
+                                        Size: {{$ctrl.cacheInfo.caches[0].size}}<br />
+                                        Associativity: {{$ctrl.cacheInfo.caches[0].associativity}}
                                     </span>
                                 </div>
                             </div>
@@ -29,15 +29,15 @@
                     </md-card-title>
                 </md-card>
                 <!--L2-->
-                <md-card ng-show="$ctrl.showCache[1]" ng-click="$ctrl.clickCache(2)" flex="60">
+                <md-card ng-show="$ctrl.cacheInfo.caches[1].active" ng-click="$ctrl.clickCache(2)" flex="60">
                     <md-card-title layout="column">
                         <md-card-title-text>
                             <div layout="row" layout-align="space-between">
                                 <div>
-                                    <span class="md-headline">{{$ctrl.caches[1].title}}</span>
+                                    <span class="md-headline">{{$ctrl.cacheInfo.caches[1].title}}</span>
                                     <span class="md-subhead"><br />
-                                        Size: {{$ctrl.caches[1].size}}<br />
-                                        Associativity: {{$ctrl.caches[1].associativity}}
+                                        Size: {{$ctrl.cacheInfo.caches[1].size}}<br />
+                                        Associativity: {{$ctrl.cacheInfo.caches[1].associativity}}
                                     </span>
                                 </div>
                             </div>
@@ -52,15 +52,15 @@
             </div>
             <div ng-controller="IndexController" layout="column">
                 <!--L3-->
-                <md-card ng-show="$ctrl.showCache[2]" ng-click="$ctrl.clickCache(3)">
+                <md-card ng-show="$ctrl.cacheInfo.caches[2].active" ng-click="$ctrl.clickCache(3)">
                     <md-card-title layout="column">
                         <md-card-title-text>
                             <div layout="row" layout-align="space-between">
                                 <div>
-                                    <span class="md-headline">{{$ctrl.caches[2].title}}</span>
+                                    <span class="md-headline">{{$ctrl.cacheInfo.caches[2].title}}</span>
                                     <span class="md-subhead"><br />
-                                        Size: {{$ctrl.caches[2].size}}<br />
-                                        Associativity: {{$ctrl.caches[2].associativity}}
+                                        Size: {{$ctrl.cacheInfo.caches[2].size}}<br />
+                                        Associativity: {{$ctrl.cacheInfo.caches[2].associativity}}
                                     </span>
                                 </div>
                             </div>

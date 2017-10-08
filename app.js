@@ -24,42 +24,57 @@ simulator.controller('IndexController', ['$scope', function($scope) {
             }
         ];
 
-        $scope.caches = [];
+        ctrl.cacheInfo = {
+            policy:  "",
+            blockSize:  1,
+            fileName:  "",
+            B:  "",
+            policySet:  false,
+            blockSizeSet:  false,
+            disableDeleteCache:  true,
+            policies: ["FIFO", "LRU", "LFU"],
+            blockSizes: [],
+            cacheSizes: [],
+            caches: [{
+                title: "L1",
+                size: "Not Set",
+                associativity: "Not Set",
+                C: 1,
+                S: 1,
+                active: true
+            }]
+        };
 
-        //Constants
-        $scope.policies = ["FIFO", "LRU", "LFU"]
-        $scope.blockSizes = []
-        $scope.cacheSizes = []
-        $scope.showCache = [true, false, false];
+        $scope.initialCacheInfo = ctrl.cacheInfo;
+
 
         $scope.changeView = function(index) {
             for (var i = 0; i < $scope.navs.length; i++) {
                 if (index === i) {
                     $scope.navs[i].active = true;
                     //Broadcast sends an event to child controllers/components
-                    $scope.$broadcast('updatedCaches', $scope.navs[i])
+                    $scope.$broadcast('updatedNavs', $scope.navs[i]);
                 } else {
-                    $scope.navs[i].active = false
+                    $scope.navs[i].active = false;
                 }
             }
             //Pass the updated cache list to cacheDetail template to change its model
         };
 
-        //Listens for an event emitted from a child controller/component
-        $scope.$on('updatedCacheList', function(event, data) {
+        $scope.$on('updateCacheInfo', function(event, data) {
             $scope.navs = [{
                 buttonTitle: "Overview",
                 active: true
             }];
-            var i = 1;
-            for (cache of data) {
+            ctrl.cacheInfo = data;
+            let i = 1;
+            for (cache of ctrl.cacheInfo.caches) {
                 $scope.navs[i] = {
-                    buttonTitle: cache.title
+                    buttonTitle: cache.title,
+                    active: true
                 }
-                $scope.caches[i-1] = cache;
                 i++;
             }
-            $scope.$broadcast('updatedCaches', $scope.caches);
-            $scope.$broadcast('updateShowCache', $scope.showCache);
+            $scope.$broadcast('cacheInfoUpdated', ctrl.cacheInfo);
         });
     }]);

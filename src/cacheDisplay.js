@@ -1,6 +1,6 @@
 'use strict';
 
-const {ipcRenderer} = require('electron')
+// const {ipcRenderer} = require('electron')
 
 angular.module('Simulator').component('cacheDisplay', {
     templateUrl: 'src/cacheDisplay.html',
@@ -12,78 +12,55 @@ angular.module('Simulator').component('cacheDisplay', {
 function CacheDisplayController($scope, simDriver, fileParser) {
 
     var ctrl = this;
-    ctrl.policy = "";
-    ctrl.blockSize = 1;
-    ctrl.fileName = ""
-    ctrl.B = ""
-    ctrl.policySet = false;
-    ctrl.blockSizeSet = false;
-    ctrl.disableDeleteCache = true;
-    ctrl.hide = false;
 
-    var B_min = 3, B_max = 7;
-
-    ctrl.caches = [{
-        title: "L1",
-        size: "Not Set",
-        associativity: "Not Set",
-        associativities: [],
-        C: 1,
-        S: 1
-    }];
-
-    ctrl.showCache = [true, false, false];
-
-    //$scope.associativities = []
-
-    ctrl.hideSideBar = function() {
-        ctrl.hide = true;
-    }
-
-    ctrl.showSideBar = function() {
-        ctrl.hide = false;
-    }
-
+    ctrl.cacheInfo = $scope.$parent.initialCacheInfo;
+    
     ctrl.clickCache = function(index) {
         $scope.$parent.changeView(index)
     }
 
-
-    ipcRenderer.on('fileNameReceived', (e, fPath) => {
-        //Use node's functions for parsing file path to base name on all native OS
-        ctrl.fileName = path.basename(fPath)
-        //This forces the angular rendering lifecycle to update the value
-        $scope.$digest();
-    })
-
-    //subscribe to fileParser notifications when file is parsed
-    fileParser.subscribe($scope, () => {
-        //ask for new mem traces in queue
-        console.log("updating traces")
-        ctrl.memQueue = simDriver.getMemAcceses()
-    })
-
-    ipcRenderer.on('fileDataReceived', (e, fData) => {
-        fileParser.parseFile(fData)
-        //This forces the angular rendering lifecycle to update the value
-        $scope.$digest();
-
-    })
-
-    $scope.$on('updatedCaches', function(event, data) {
-        var i = 0;
-        for (cache of data) {
-            ctrl.caches[i] = cache;
-            i++;
+    ctrl.removeCache = function(index, event) {
+        let caches = ctrl.cacheInfo.caches;
+        if (event) {
+            event.stopPropagation();
+            event.preventDefault();
+            if (caches.length > 1) {
+                ctrl.cacheInfo.caches[caches.length - 1].active = false;
+                caches.splice(index, 1);
+                for(var i = 1; i <= caches.length; i++) {
+                    caches[i-1].title = "L" + i;
+                }
+            }
+            if (caches.length === 1) {
+                ctrl.cacheInfo.disableDeleteCache = true;
+            }
+            ctrl.cacheInfo.caches = caches;
         }
-    });
+        $scope.emit('updateCacheInfo', ctrl.cacheInfo);
+    };
 
-    $scope.$on('updateShowCache', function(event, data) {
-        var i = 0;
-        for (var showCache of data) {
-            ctrl.showCache[i] = showCache;
-            i++;
-        }
-    });
+    // ipcRenderer.on('fileNameReceived', (e, fPath) => {
+    //     //Use node's functions for parsing file path to base name on all native OS
+    //     ctrl.fileName = path.basename(fPath)
+    //     //This forces the angular rendering lifecycle to update the value
+    //     $scope.$digest();
+    // })
 
+    // //subscribe to fileParser notifications when file is parsed
+    // fileParser.subscribe($scope, () => {
+    //     //ask for new mem traces in queue
+    //     console.log("updating traces")
+    //     ctrl.memQueue = simDriver.getMemAcceses()
+    // })
+
+    // ipcRenderer.on('fileDataReceived', (e, fData) => {
+    //     fileParser.parseFile(fData)
+    //     //This forces the angular rendering lifecycle to update the value
+    //     $scope.$digest();
+
+    // })
+
+    $scope.$on('cacheInfoUpdated', function(event, data) {
+        ctrl.cacheInfo = data;
+    });
 }

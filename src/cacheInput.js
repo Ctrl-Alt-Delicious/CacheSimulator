@@ -1,6 +1,6 @@
 'use strict';
 
-// const {ipcRenderer} = require('electron')
+const {ipcRenderer} = require('electron')
 
 angular.module('Simulator').component('cacheInput', {
     templateUrl: 'src/cacheInput.html',
@@ -12,76 +12,39 @@ angular.module('Simulator').component('cacheInput', {
 function CacheInputController($scope, simDriver, fileParser) {
 
     var ctrl = this;
-    ctrl.policy = "";
-    ctrl.blockSize = 1;
-    ctrl.fileName = ""
-    ctrl.B = ""
-    ctrl.policySet = false;
-    ctrl.blockSizeSet = false;
-    ctrl.disableDeleteCache = true;
-    ctrl.hide = false;
 
-    var B_min = 3, B_max = 7;
+    ctrl.hideSidebar = false;
 
-    ctrl.caches = [{
-        title: "L1",
-        size: "Not Set",
-        associativity: "Not Set",
-        associativities: [],
-        C: 1,
-        S: 1
-    }];
+    ctrl.cacheInfo = $scope.$parent.initialCacheInfo;
 
-    //Constants
-    $scope.policies = ["FIFO", "LRU", "LFU"]
-    $scope.blockSizes = []
-    $scope.cacheSizes = []
-    //$scope.associativities = []
+    let B_min = 3, B_max = 7;
 
     ctrl.hideSideBar = function() {
-        ctrl.hide = true;
+        ctrl.hideSidebar = true;
     }
 
     ctrl.showSideBar = function() {
-        ctrl.hide = false;
+        ctrl.hideSidebar = false;
     }
 
-    // ctrl.clickCache = function(index) {
-    //     $scope.$parent.changeView(index)
-    // }
-
     ctrl.addCache = function() {
-        if (ctrl.caches.length < 3) {
-            ctrl.caches.push({
-                title: "L" + (ctrl.caches.length + 1),
+        let caches = ctrl.cacheInfo.caches;
+        if (caches.length < 3) {
+            caches.push({
+                title: "L" + (caches.length + 1),
                 size: "Not Set",
-                associativity: "Not Set"
+                associativity: "Not Set",
+                active: true,
+                C: 1,
+                S: 1
             });
-            $scope.$parent.showCache[ctrl.caches.length - 1] = true;
-            //Emit sends an event to the parent controller/component
-            $scope.$emit('updatedCacheList', ctrl.caches);
         }
-        if (ctrl.caches.length > 1) {
-            ctrl.disableDeleteCache = false;
+        ctrl.cacheInfo.caches = caches;
+        if (caches.length > 1) {
+            ctrl.cacheInfo.disableDeleteCache = false;
         }
-    };
-
-    ctrl.removeCache = function(index, event) {
-        if (event) {
-            event.stopPropagation();
-            event.preventDefault();
-            if (ctrl.caches.length > 1) {
-                ctrl.caches.splice(index, 1);
-                $scope.$parent.showCache[ctrl.caches.length] = false;
-                for(var i = 1; i <= ctrl.caches.length; i++) {
-                    ctrl.caches[i-1].title = "L" + i;
-                }
-            }
-            if (ctrl.caches.length === 1) {
-                ctrl.disableDeleteCache = true;
-            }
-            $scope.$emit('updatedCacheList', ctrl.caches);
-        }
+        //Emit sends an event to the parent controller/component
+        $scope.$emit('updateCacheInfo', ctrl.cacheInfo);
     };
 
     ctrl.handleUpload = function() {
@@ -91,24 +54,27 @@ function CacheInputController($scope, simDriver, fileParser) {
     };
 
     var setCacheSize = function(index) {
-        ctrl.caches[index].C = Math.log(ctrl.cacheSize) / Math.log(2);
+        ctrl.cacheInfo.caches[index].C = Math.log(ctrl.cacheInfo.caches[index].cacheSize) / Math.log(2);
         setAssocOptions(index);
+        $scope.$emit('updateCacheInfo', ctrl.cacheInfo);
     };
 
     ctrl.setBlockSize = function() {
-        ctrl.B = Math.log(ctrl.blockSize) / Math.log(2);
+        ctrl.cacheInfo.B = Math.log(ctrl.cacheInfo.blockSize) / Math.log(2);
         setCacheSizeOptions();
-        ctrl.blockSizeSet = true;
+        ctrl.cacheInfo.blockSizeSet = true;
+        $scope.$emit('updateCacheInfo', ctrl.cacheInfo);
     };
 
     ctrl.setPolicy = function() {
-        ctrl.policySet = true;
+        ctrl.cacheInfo.policySet = true;
+        $scope.$emit('updateCacheInfo', ctrl.cacheInfo);
     }
 
 
     ipcRenderer.on('fileNameReceived', (e, fPath) => {
         //Use node's functions for parsing file path to base name on all native OS
-        ctrl.fileName = path.basename(fPath)
+        $scope.$parent.fileName = path.basename(fPath)
         //This forces the angular rendering lifecycle to update the value
         $scope.$digest();
     })
@@ -117,7 +83,7 @@ function CacheInputController($scope, simDriver, fileParser) {
     fileParser.subscribe($scope, () => {
         //ask for new mem traces in queue
         console.log("updating traces")
-        ctrl.memQueue = simDriver.getMemAcceses()
+        $scope.$parent.memQueue = simDriver.getMemAcceses()
     })
 
     ipcRenderer.on('fileDataReceived', (e, fData) => {
@@ -128,47 +94,47 @@ function CacheInputController($scope, simDriver, fileParser) {
     })
 
     $scope.updateCache = function(item, index, setting) {
-        var c = ctrl.caches[index];
+        var c = ctrl.cacheInfo.caches[index];
         if (setting === "size") {
             c.size = item;
-            ctrl.cacheSize = item;
+            $scope.$parent.cacheSize = item;
             setCacheSize(index);
         } else if (setting === "associativity") {
             c.associativity = item;
         }
-        $scope.$emit('updatedCacheList', ctrl.caches);
+        ctrl.cacheInfo.caches[index] = c;
+        $scope.$emit('updateCacheInfo', ctrl.cacheInfo);
     }
     
     for (var i = B_min; i <= B_max; i++) {
-        $scope.blockSizes.push(Math.pow(2, i));
+        ctrl.cacheInfo.blockSizes.push(Math.pow(2, i));
     }
 
     var setCacheSizeOptions = function() {
 
-        var C_min = ctrl.B;
-        var C_max = 30;
+        let C_min = ctrl.cacheInfo.B;
+        let C_max = 30;
 
-        $scope.cacheSizes = [];
-        for (var i = C_min; i <= C_max; i++) {
-            $scope.cacheSizes.push(Math.pow(2, i));
+        ctrl.cacheInfo.cacheSizes = [];
+        for (let i = C_min; i <= C_max; i++) {
+            ctrl.cacheInfo.cacheSizes.push(Math.pow(2, i));
         }
-
-        // $scope.$emit('updatedCacheList', ctrl.caches);
     }
 
     var setAssocOptions = function(index) {
+        let caches = ctrl.cacheInfo.caches;
 
-        var C = ctrl.caches[index].C;
-        var B = ctrl.B;
+        var C = caches[index].C;
+        var B = ctrl.cacheInfo.B;
 
         var S_min = 0;
         var S_max = C - B;
 
-        ctrl.caches[index].associativities = [];
+        caches[index].associativities = [];
         for (var i = S_min; i <= S_max; i++) {
-            ctrl.caches[index].associativities.push(Math.pow(2, i));
+            caches[index].associativities.push(Math.pow(2, i));
         }
-        $scope.$emit('updatedCacheList', ctrl.caches);
+        ctrl.cacheInfo.caches = caches;
     }
 
     $scope.selectedRow = null;
@@ -176,4 +142,11 @@ function CacheInputController($scope, simDriver, fileParser) {
         $scope.selectedRow = index;
     }
 
+    // var emitCacheInfo = function() {
+    //     $scope.emit('updateCacheInfo', ctrl.cacheInfo);
+    // }
+
+    $scope.$on('cacheInfoUpdated', function(event, data) {
+        ctrl.cacheInfo = data;
+    });
 }
