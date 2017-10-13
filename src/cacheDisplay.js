@@ -17,7 +17,7 @@ function CacheDisplayController($scope, simDriver, fileParser) {
     
     ctrl.clickCache = function(index) {
         $scope.$parent.changeView(index)
-    }
+    };
 
     ctrl.removeCache = function(index, event) {
         let caches = ctrl.cacheInfo.caches;
@@ -57,7 +57,6 @@ function CacheDisplayController($scope, simDriver, fileParser) {
     //     fileParser.parseFile(fData)
     //     //This forces the angular rendering lifecycle to update the value
     //     $scope.$digest();
-
     // })
 
     $scope.$on('cacheInfoUpdated', function(event, data) {
