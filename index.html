@@ -22,19 +22,25 @@
     <script src="app.js"></script>
     <script src="src/cacheDisplay.js"></script>
     <script src="src/cacheDetail.js"></script>
+    <script src="src/cacheInput.js"></script>
     <script src="src/services/simDriver.js"></script>
     <script src="src/services/fileParser.js"></script>
-
 </head>
 
 <body ng-app="Simulator">
     <div ng-controller="IndexController" layout="column">
         <div layout="space-between">
-            <md-button ng-repeat="nav in navs" ng-click="changeView($index)">{{nav.buttonTitle}}</md-button>
+            <md-button ng-repeat="nav in navs" ng-show="navs[$index].active" ng-click="changeView($index)">{{nav.buttonTitle}}</md-button>
         </div>
         <cache-detail ng-show="!navs[0].active"></cache-detail>
-        <cache-display ng-show="navs[0].active"></cache-display>
+        <div id=display-container layout="row">
+            <!-- <section id="main-display"> -->
+                <cache-display ng-show="navs[0].active" flex></cache-display>
+            <!-- </section> -->
+            <div id="sidebar" resizable r-directions="['left']" r-flex="true" style="max-width: 60%">
+                <cache-input ng-show="navs[0].active"></cache-input>
+            </div>
+        </div>
     </div>
-
 </body>
 </html>
