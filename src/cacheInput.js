@@ -53,6 +53,26 @@ function CacheInputController($scope, simDriver, fileParser) {
         ipcRenderer.send('uploadFile')
     };
 
+    ctrl.stepBackward = function() {
+        ipcRenderer.send('stepBackward')
+    };
+
+    ctrl.pauseSimulation = function() {
+        ipcRenderer.send('pauseSimulation')
+    };
+
+    ctrl.runSimulation = function() {
+        ipcRenderer.send('runSimulation')
+    };
+
+    ctrl.stepForward = function() {
+        ipcRenderer.send('stepForward')
+    };
+
+    ctrl.resetSimulation = function() {
+        ipcRenderer.send('resetSimulation')
+    };
+
     var setCacheSize = function(index) {
         ctrl.cacheInfo.caches[index].C = Math.log(ctrl.cacheInfo.caches[index].cacheSize) / Math.log(2);
         setAssocOptions(index);
