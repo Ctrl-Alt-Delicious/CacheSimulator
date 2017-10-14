@@ -7,7 +7,7 @@ const url = require('url')
 //const $ = require('jQuery')
 const fs = require('fs')
 
-const sim = require('./simulation');
+const sim = require('./src/sim/simulation');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -28,32 +28,10 @@ function createWindow() {
     }))
 
     // Open the DevTools.
-    // win.webContents.openDevTools()
+    win.webContents.openDevTools()
 
     // Maximize Browser Window
     win.maximize()
-
-    //Add event handler for upload functionality - listens to ipcRenderer from angular components
-    ipcMain.on('uploadFile', (event) => {
-        dialog.showOpenDialog({
-            filters: [{
-                name: 'All Files',
-                extensions: ['trace']
-            }]
-        }, (fileNames) => {
-            if (fileNames === undefined) return;
-            var fileName = fileNames[0];
-            win.webContents.send('fileNameReceived', fileName)
-            fs.readFile(fileName, 'utf-8', function(err, data) {
-                win.webContents.send('fileDataReceived', data);
-            });
-        });
-    })
-
-  ipcMain.on('stepForward', (event) => {
-    let value = sim.stepForward();
-    // send it back
-  })
 
     // Emitted when the window is closed.
     win.on('closed', () => {
@@ -63,6 +41,32 @@ function createWindow() {
         win = null
     })
 }
+
+function ipcListeners() {
+  //Add event handler for upload functionality - listens to ipcRenderer from angular components
+  ipcMain.on('uploadFile', (event) => {
+    dialog.showOpenDialog({
+      filters: [{
+        name: 'All Files',
+        extensions: ['trace']
+      }]
+    }, (fileNames) => {
+      if (fileNames === undefined) return;
+      let fileName = fileNames[0];
+      win.webContents.send('fileNameReceived', fileName)
+      fs.readFile(fileName, 'utf-8', function(err, data) {
+        win.webContents.send('fileDataReceived', data);
+      });
+    });
+  });
+
+  ipcMain.on('simAction', (event, action) => {
+    sim.init();
+    let returnValue = sim[action]();
+  });
+
+}
+
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -84,7 +88,6 @@ app.on('activate', () => {
     if (win === null) {
         createWindow()
     }
-    sim.main();
 })
 
 // In this file you can include the rest of your app's specific main process

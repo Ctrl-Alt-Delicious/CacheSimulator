@@ -3,7 +3,7 @@
 const {ipcRenderer} = require('electron')
 
 angular.module('Simulator').component('cacheInput', {
-    templateUrl: 'src/cacheInput.html',
+    templateUrl: 'src/browser/cacheInput.html',
     //add any dependencies below
     controller: ['$scope', 'SimDriver', 'FileParser', CacheInputController],
     bindings: {}
@@ -54,23 +54,23 @@ function CacheInputController($scope, simDriver, fileParser) {
     };
 
     ctrl.stepBackward = function() {
-        ipcRenderer.send('stepBackward')
+        let returnVal = ipcRenderer.sendSync('simAction', 'stepBackward');
     };
 
     ctrl.pauseSimulation = function() {
-        ipcRenderer.send('pauseSimulation')
+        let returnVal = ipcRenderer.sendSync('simAction', 'pauseSimulation');
     };
 
     ctrl.runSimulation = function() {
-        ipcRenderer.send('runSimulation')
+        let returnVal = ipcRenderer.sendSync('simAction', 'runSimulation');
     };
 
     ctrl.stepForward = function() {
-        ipcRenderer.send('stepForward')
+        let returnVal = ipcRenderer.sendSync('simAction', 'stepForward');
     };
 
     ctrl.resetSimulation = function() {
-        ipcRenderer.send('resetSimulation')
+        let returnVal = ipcRenderer.sendSync('simAction', 'resetSimulation');
     };
 
     var setCacheSize = function(index) {
@@ -106,9 +106,9 @@ function CacheInputController($scope, simDriver, fileParser) {
         $scope.$parent.memQueue = simDriver.getMemAcceses()
     })
 
-    ipcRenderer.on('fileDataReceived', (e, fData) => {
-        fileParser.parseFile(fData)
-        //This forces the angular rendering lifecycle to update the value
+    ipcRenderer.on('fileDataReceived', (err, fileData) => {
+        fileParser.parseFile(fileData);
+        // This forces the angular rendering lifecycle to update the value
         $scope.$digest();
 
     })
