@@ -1,11 +1,13 @@
+let stateMachine = require('./stateMachine');
 'use strict';
 
-angular.module('Simulator').factory('simulation', function() {
+const { ipcMain } = require('electron');
 
-    var ctrl = this;
+let i = 0;
 
-    ctrl.getNextMem = function() {
-        return "0x100044322"
-    };
 
-});
+function stepForward() {
+    console.log("stepping forward", ++i);
+}
+
+exports.stepForward = stepForward;
