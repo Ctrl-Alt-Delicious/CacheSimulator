@@ -3,7 +3,7 @@
 const {ipcRenderer} = require('electron')
 
 angular.module('Simulator').component('cacheInput', {
-    templateUrl: 'src/cacheInput.html',
+    templateUrl: 'src/browser/cacheInput.html',
     //add any dependencies below
     controller: ['$scope', 'SimDriver', 'FileParser', CacheInputController],
     bindings: {}

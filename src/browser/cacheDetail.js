@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('Simulator').component('cacheDetail', {
-    templateUrl: 'src/cacheDetail.html',
+    templateUrl: 'src/browser/cacheDetail.html',
     controller: ['$scope', 'SimDriver', CacheDetailController],
     bindings: {}
 });
