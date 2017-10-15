@@ -50,7 +50,7 @@ function CacheInputController($scope, simDriver, fileParser) {
     ctrl.handleUpload = function() {
         //Sends an asynchronous event to the main process (main.js)
         //Can add arguments if necessary
-        ipcRenderer.send('uploadFile')
+        ipcRenderer.send('uploadFile');
     };
 
     var setCacheSize = function(index) {
@@ -82,7 +82,6 @@ function CacheInputController($scope, simDriver, fileParser) {
     //subscribe to fileParser notifications when file is parsed
     fileParser.subscribe($scope, () => {
         //ask for new mem traces in queue
-        console.log("updating traces")
         $scope.$parent.memQueue = simDriver.getMemAcceses()
     })
 

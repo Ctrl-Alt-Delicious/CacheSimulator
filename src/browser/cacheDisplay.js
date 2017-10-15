@@ -53,8 +53,8 @@ function CacheDisplayController($scope, simDriver, fileParser) {
     //     ctrl.memQueue = simDriver.getMemAcceses()
     // })
 
-    // ipcRenderer.on('fileDataReceived', (e, fData) => {
-    //     fileParser.parseFile(fData)
+    // ipcRenderer.on('fileDataReceived', (err, fileData) => {
+    //     fileParser.parseFile(fileData);
     //     //This forces the angular rendering lifecycle to update the value
     //     $scope.$digest();
     // })
