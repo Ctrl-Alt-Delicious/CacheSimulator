@@ -25,6 +25,11 @@ In short if you have a branch with many commits, some of which are part of the s
 	
 NOTE: If you do this after already pushing your branch to remote then you need to do a force push, `git push --force`. This is a scary command since it has the capability to undermine another person's work on the same remote branch. A safer alternative is to use `git push --force-with-lease`. For more info on why this is considered safer and a better alternative to `git push --force` please read [this](https://developer.atlassian.com/blog/2015/04/force-with-lease/)
 
+### Linting your code
+Part of the development process should be making sure your style meets the guidelines of the project. Our project uses eslint as a code parser and the rules are defined in .eslint.json. Run the linter by using the npm script `npm run lint` and you can also use eslint to autofix some of your code `npm run lint-fix`
+
+If you think some rules of the linter should change then make the appropiate changed in the config file and submit a PR
+
 ### Getting ready for a Pull Request (PR)
 
 So you wrote your code and it looks fine and dandy, good. You open up the app and the feature is doing what you expect, also good. But now we have to make sure our version control is good so the review process is stress free and clear.

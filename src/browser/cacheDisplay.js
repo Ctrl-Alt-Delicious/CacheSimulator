@@ -9,14 +9,14 @@ angular.module('Simulator').component('cacheDisplay', {
     bindings: {}
 });
 
-function CacheDisplayController($scope, simDriver, fileParser) {
+function CacheDisplayController($scope) {
 
-    var ctrl = this;
+    let ctrl = this;
 
     ctrl.cacheInfo = $scope.$parent.initialCacheInfo;
     
     ctrl.clickCache = function(index) {
-        $scope.$parent.changeView(index)
+        $scope.$parent.changeView(index);
     };
 
     ctrl.removeCache = function(index, event) {
@@ -27,8 +27,8 @@ function CacheDisplayController($scope, simDriver, fileParser) {
             if (caches.length > 1) {
                 ctrl.cacheInfo.caches[caches.length - 1].active = false;
                 caches.splice(index, 1);
-                for(var i = 1; i <= caches.length; i++) {
-                    caches[i-1].title = "L" + i;
+                for(let i = 1; i <= caches.length; i++) {
+                    caches[i-1].title = 'L' + i;
                 }
             }
             if (caches.length === 1) {
@@ -53,8 +53,8 @@ function CacheDisplayController($scope, simDriver, fileParser) {
     //     ctrl.memQueue = simDriver.getMemAcceses()
     // })
 
-    // ipcRenderer.on('fileDataReceived', (e, fData) => {
-    //     fileParser.parseFile(fData)
+    // ipcRenderer.on('fileDataReceived', (err, fileData) => {
+    //     fileParser.parseFile(fileData);
     //     //This forces the angular rendering lifecycle to update the value
     //     $scope.$digest();
     // })
