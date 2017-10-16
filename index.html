@@ -30,7 +30,7 @@
 <body ng-app="Simulator">
     <div ng-controller="IndexController" layout="column">
         <div layout="space-between">
-            <md-button ng-repeat="nav in navs" ng-show="navs[$index].active" ng-click="changeView($index)">{{nav.buttonTitle}}</md-button>
+            <md-button ng-repeat="nav in navs"" ng-click="changeView($index)">{{nav.buttonTitle}}</md-button>
         </div>
         <cache-detail ng-show="!navs[0].active"></cache-detail>
         <div id=display-container layout="row">

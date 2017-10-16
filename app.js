@@ -71,7 +71,6 @@ simulator.controller('IndexController', ['$scope', function($scope) {
             for (cache of ctrl.cacheInfo.caches) {
                 $scope.navs[i] = {
                     buttonTitle: cache.title,
-                    active: true
                 }
                 i++;
             }
