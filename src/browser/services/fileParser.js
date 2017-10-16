@@ -35,7 +35,6 @@ angular.module('Simulator').factory('FileParser', ['SimDriver', '$rootScope', fu
               action: splitLine[1],
             });
         }
-        simDriver.setQueue(lines); // Is this asynchronous?
         ctrl.notify();
     };
 
