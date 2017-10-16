@@ -6,11 +6,11 @@ angular.module('Simulator').component('cacheDetail', {
     bindings: {}
 });
 
-function CacheDetailController($scope, simDriver) {
+function CacheDetailController($scope) {
 
-    var ctrl = this;
+    let ctrl = this;
 
-    ctrl.activeCache = "L1";
+    ctrl.activeCache = 'L1';
 
     $scope.$on('updatedNavs', function(event, data) {
         ctrl.activeCache = data.buttonTitle;

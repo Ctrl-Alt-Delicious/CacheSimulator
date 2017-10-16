@@ -9,7 +9,7 @@ angular.module('Simulator').factory('FileParser', ['SimDriver', '$rootScope', fu
     //Used as a helper for when uploading a trace file
     //TODO
 
-    let lines = "";
+    let lines = '';
 
     ctrl.subscribe = function(scope, callback) {
         let handler = $rootScope.$on('fileParsed', callback);
@@ -24,15 +24,15 @@ angular.module('Simulator').factory('FileParser', ['SimDriver', '$rootScope', fu
         //use node's value for native OS end of line
         lines = input.split(os.EOL);
         //many text editors end in a new line char
-        if (lines[lines.length - 1] === "") {
-            lines.splice(lines.length - 1)
+        if (lines[lines.length - 1] === '') {
+            lines.splice(lines.length - 1);
         }
 
         for (let line of lines) {
-            let splitLine = line.split(",");
+            let splitLine = line.split(',');
             simDriver.addToQueue({
-              address: splitLine[0],
-              action: splitLine[1],
+                address: splitLine[0],
+                action: splitLine[1],
             });
         }
         ctrl.notify();
@@ -113,7 +113,7 @@ angular.module('Simulator').factory('FileParser', ['SimDriver', '$rootScope', fu
      * @returns {string}
      */
     function parseHexToString(hex) {
-        return "0x" + hex.toString(16);
+        return '0x' + hex.toString(16);
     }
 
     return ctrl;
