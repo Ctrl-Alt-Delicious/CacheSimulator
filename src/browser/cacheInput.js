@@ -21,10 +21,14 @@ function CacheInputController($scope, simDriver, fileParser) {
 
     ctrl.hideSideBar = function() {
         ctrl.hideSidebar = true;
+        let maq = document.getElementById('maq');
+        maq.style.height = '420px';
     };
 
     ctrl.showSideBar = function() {
         ctrl.hideSidebar = false;
+        let maq = document.getElementById('maq');
+        maq.style.height = '150px';
     };
 
     ctrl.addCache = function() {
