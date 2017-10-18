@@ -1,0 +1,26 @@
+#cache-levels {
+	padding: 25px;
+	text-align: center;
+}
+
+#upload-button {
+	margin-right: 0;
+}
+
+#speed-controls {
+	padding-top: 25px;
+	padding-right: 10px;
+}
+
+#speed-slider {
+	width: 100%;
+	padding: 10px;
+}
+
+#maq {
+	height: 150px; /* This should eventually be a dynamic value based on sidebar height */
+}
+
+#hide-sidebar {
+	min-height: 430px;
+}
