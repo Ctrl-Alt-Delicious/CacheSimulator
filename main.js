@@ -6,6 +6,9 @@ const url = require('url');
 //const $ = require('jQuery')
 const fs = require('fs');
 
+const sim = require('./src/sim/simulation');
+
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win;
@@ -30,23 +33,6 @@ function createWindow() {
     // Maximize Browser Window
     win.maximize();
 
-    //Add event handler for upload functionality - listens to ipcRenderer from angular components
-    ipcMain.on('uploadFile', (event) => {
-        dialog.showOpenDialog({
-            filters: [{
-                name: 'All Files',
-                extensions: ['trace']
-            }]
-        }, (fileNames) => {
-            if (fileNames === undefined) return;
-            let fileName = fileNames[0];
-            win.webContents.send('fileNameReceived', fileName);
-            fs.readFile(fileName, 'utf-8', function(err, data) {
-                win.webContents.send('fileDataReceived', data);
-            });
-        });
-    });
-
     // Emitted when the window is closed.
     win.on('closed', () => {
         // Dereference the window object, usually you would store windows
@@ -54,6 +40,31 @@ function createWindow() {
         // when you should delete the corresponding element.
         win = null;
     });
+}
+
+function ipcListeners() {
+  //Add event handler for upload functionality - listens to ipcRenderer from angular components
+  ipcMain.on('uploadFile', (event) => {
+    dialog.showOpenDialog({
+      filters: [{
+        name: 'All Files',
+        extensions: ['trace']
+      }]
+    }, (fileNames) => {
+      if (fileNames === undefined) return;
+      let fileName = fileNames[0];
+      win.webContents.send('fileNameReceived', fileName)
+      fs.readFile(fileName, 'utf-8', function(err, data) {
+        win.webContents.send('fileDataReceived', data);
+      });
+    });
+  });
+
+  ipcMain.on('simAction', (event, action) => {
+    sim.init();
+    let returnValue = sim[action]();
+  });
+
 }
 
 // This method will be called when Electron has finished
@@ -75,6 +86,7 @@ app.on('activate', () => {
     // dock icon is clicked and there are no other windows open.
     if (win === null) {
         createWindow();
+        ipcListeners();
     }
 });
 
