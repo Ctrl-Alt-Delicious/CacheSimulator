@@ -64,11 +64,11 @@
 
             <!-- Control Flow Buttons -->
             <md-content layout="row" layout-align="space-around center">
-                <md-button class="md-icon-button" ng-disabled="$ctrl.fileName.length == 0"><i class="material-icons">skip_previous</i></md-button>
-                <md-button class="md-icon-button" ng-disabled="$ctrl.fileName.length == 0" ng-click= "$ctrl.showSideBar();"><i class="material-icons">pause</i></md-button>
-                <md-button class="md-icon-button" ng-disabled="$ctrl.fileName.length == 0" ng-click= "$ctrl.hideSideBar();"><i class="material-icons">play_arrow</i></md-button>
-                <md-button class="md-icon-button" ng-disabled="$ctrl.fileName.length == 0"><i class="material-icons">skip_next</i></md-button>
-                <md-button class="md-icon-button" ng-disabled="$ctrl.fileName.length == 0"><i class="material-icons">replay</i></md-button>
+                <md-button class="md-icon-button" ng-disabled="$ctrl.fileName.length == 0" ng-click= "$ctrl.stepBackward();"><i class="material-icons">skip_previous</i></md-button>
+                <md-button class="md-icon-button" ng-disabled="$ctrl.fileName.length == 0" ng-click= "$ctrl.pauseSimulation(); $ctrl.showSideBar();"><i class="material-icons">pause</i></md-button>
+                <md-button class="md-icon-button" ng-disabled="$ctrl.fileName.length == 0" ng-click= "$ctrl.runSimulation(); $ctrl.hideSideBar();"><i class="material-icons">play_arrow</i></md-button>
+                <md-button class="md-icon-button" ng-disabled="$ctrl.fileName.length == 0" ng-click= "$ctrl.stepForward();"><i class="material-icons">skip_next</i></md-button>
+                <md-button class="md-icon-button" ng-disabled="$ctrl.fileName.length == 0" ng-click= "$ctrl.resetSimulation();"><i class="material-icons">replay</i></md-button>
             </md-content>
             <md-content id="speed-controls" layout="row" layout-align="center">
                 <div layout layout-align="center center">

@@ -1,7 +1,5 @@
-let stateMachine = require('./stateMachine');
 'use strict';
-
-const { ipcMain } = require('electron');
+let stateMachine = require('./stateMachine');
 
 const ADDR_SIZE = 32;
 
@@ -35,6 +33,7 @@ function configureCache(cacheTable, C, B, S) {
 
 function stepForward() {
     console.log('stepping forward', ++i);
+    return i;
 }
 
 exports.stepForward = stepForward;
