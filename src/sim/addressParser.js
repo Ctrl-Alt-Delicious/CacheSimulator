@@ -7,14 +7,14 @@
  * @returns {{address: Number, tag: number, index: number, offset: number}}
  */
 exports.parseAddress = (line, C, S, B) => {
-  let address = parseInt(line, 16);
-  return {
-    address: address,
-    tag: getTag(address, C, S),
-    index: getIndex(address, C, S, B),
-    offset: getOffset(address, B),
-  };
-}
+    let address = parseInt(line, 16);
+    return {
+        address: address,
+        tag: getTag(address, C, S),
+        index: getIndex(address, C, S, B),
+        offset: getOffset(address, B),
+    };
+};
 
 /**
  * Returns the lower B bits of address
@@ -23,7 +23,7 @@ exports.parseAddress = (line, C, S, B) => {
  * @returns number offset
  */
 function getOffset(address, B) {
-  return address & mask(B);
+    return address & mask(B);
 }
 
 /**
@@ -35,7 +35,7 @@ function getOffset(address, B) {
  * @returns {number}
  */
 function getIndex(address, C, S, B) {
-  return (address >> B - 1) & mask(C - S - B);
+    return (address >> B - 1) & mask(C - S - B);
 }
 
 /**
@@ -47,7 +47,7 @@ function getIndex(address, C, S, B) {
  * @returns number with the lower n bits on and the rest off
  */
 function mask(n) {
-  return Math.pow(2, n) - 1;
+    return Math.pow(2, n) - 1;
 }
 
 /**
@@ -58,7 +58,7 @@ function mask(n) {
  * @returns {number}
  */
 function getTag(address, C, S) {
-  return (address >> C - S) & mask(31 - C - S);
+    return (address >> C - S) & mask(31 - C - S);
 }
 
 /**
@@ -67,5 +67,5 @@ function getTag(address, C, S) {
  * @returns {string}
  */
 function parseHexToString(hex) {
-  return "0x" + hex.toString(16);
+    return '0x' + hex.toString(16);
 }

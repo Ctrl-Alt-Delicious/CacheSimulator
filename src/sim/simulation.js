@@ -34,7 +34,7 @@ function configureCache(cacheTable, C, B, S) {
 
 
 function stepForward() {
-    console.log("stepping forward", ++i);
+    console.log('stepping forward', ++i);
 }
 
 exports.stepForward = stepForward;
