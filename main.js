@@ -43,26 +43,26 @@ function createWindow() {
 }
 
 function ipcListeners() {
-  //Add event handler for upload functionality - listens to ipcRenderer from angular components
-  ipcMain.on('uploadFile', (event) => {
-    dialog.showOpenDialog({
-      filters: [{
-        name: 'All Files',
-        extensions: ['trace']
-      }]
-    }, (fileNames) => {
-      if (fileNames === undefined) return;
-      let fileName = fileNames[0];
-      win.webContents.send('fileNameReceived', fileName)
-      fs.readFile(fileName, 'utf-8', function(err, data) {
-        win.webContents.send('fileDataReceived', data);
-      });
+    //Add event handler for upload functionality - listens to ipcRenderer from angular components
+    ipcMain.on('uploadFile', (event) => {
+        dialog.showOpenDialog({
+            filters: [{
+                name: 'All Files',
+                extensions: ['trace']
+            }]
+        }, (fileNames) => {
+            if (fileNames === undefined) return;
+            let fileName = fileNames[0];
+            win.webContents.send('fileNameReceived', fileName);
+            fs.readFile(fileName, 'utf-8', function(err, data) {
+                win.webContents.send('fileDataReceived', data);
+            });
+        });
     });
-  });
 
-  ipcMain.on('simAction', (event, action) => {
-    event.returnValue = sim[action]();
-  });
+    ipcMain.on('simAction', (event, action) => {
+        event.returnValue = sim[action]();
+    });
 
 }
 

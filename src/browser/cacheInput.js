@@ -150,22 +150,23 @@ function CacheInputController($scope, simDriver, fileParser) {
     });
 
     ctrl.stepBackward = function() {
-        console.log("stepBackward return value:", ipcRenderer.sendSync('simAction', 'stepBackward'));
+        console.log('stepBackward return value:', ipcRenderer.sendSync('simAction', 'stepBackward'));
     };
 
     ctrl.pauseSimulation = function() {
-        console.log("pauseSimulation return value:", ipcRenderer.sendSync('simAction', 'pauseSimulation'));
+        console.log('pauseSimulation return value:', ipcRenderer.sendSync('simAction', 'pauseSimulation'));
     };
 
     ctrl.runSimulation = function() {
-        console.log("runSimulation return value:", ipcRenderer.sendSync('simAction', 'runSimulation'));
+        console.log('runSimulation return value:', ipcRenderer.sendSync('simAction', 'runSimulation'));
     };
 
     ctrl.stepForward = function() {
-        console.log("stepForward return value:", ipcRenderer.sendSync('simAction', 'stepForward'));
+        let val = ipcRenderer.sendSync('simAction', 'stepForward');
+        console.log('stepForward return value:', val);
     };
 
     ctrl.resetSimulation = function() {
-        console.log("resetSimulation return value:", ipcRenderer.sendSync('simAction', 'resetSimulation'));
+        console.log('resetSimulation return value:', ipcRenderer.sendSync('simAction', 'resetSimulation'));
     };
 }

@@ -1,5 +1,6 @@
 'use strict';
 let stateMachine = require('./stateMachine');
+let mockSim = require('./mockSim');
 
 const ADDR_SIZE = 32;
 
@@ -36,4 +37,4 @@ function stepForward() {
     return i;
 }
 
-exports.stepForward = stepForward;
+exports.stepForward = mockSim.mockStepForward;
