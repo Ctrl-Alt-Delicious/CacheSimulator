@@ -44,6 +44,7 @@ function CacheInputController($scope, simDriver, fileParser) {
             ctrl.cacheInfo.disableDeleteCache = false;
         }
         //Emit sends an event to the parent controller/component
+        $scope.$emit('inputUpdateCanvas', ctrl.cacheInfo);
         $scope.$emit('updateCacheInfo', ctrl.cacheInfo);
     };
 
@@ -102,6 +103,7 @@ function CacheInputController($scope, simDriver, fileParser) {
             c.associativity = item;
         }
         ctrl.cacheInfo.caches[index] = c;
+        $scope.$emit('inputUpdateCanvas', ctrl.cacheInfo);
         $scope.$emit('updateCacheInfo', ctrl.cacheInfo);
     };
     
