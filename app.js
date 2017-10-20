@@ -76,4 +76,8 @@ simulator.controller('IndexController', ['$scope', function($scope) {
         }
         $scope.$broadcast('cacheInfoUpdated', ctrl.cacheInfo);
     });
+
+    $scope.$on('inputUpdateCanvas', function(event, data) {
+        $scope.$broadcast('displayUpdateCanvas');
+    });
 }]);
