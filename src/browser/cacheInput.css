@@ -18,7 +18,9 @@
 }
 
 #maq {
-	height: 150px; /* This should eventually be a dynamic value based on sidebar height */
+	height: 150px;
+	font-family: "Courier New", Courier, monospace;
+	font-weight: bold;
 }
 
 #hide-sidebar {
