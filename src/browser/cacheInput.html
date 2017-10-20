@@ -5,7 +5,7 @@
     <div ng-cloak id="sidebar">
         <!--Cache Input-->
         <div layout="column" layout-padding md-theme="docs-light" class="md-inline-form">
-            <md-input-container ng-hide="hide">
+            <md-input-container ng-hide="$ctrl.hideSidebar">
                 <label>Replacement Policy</label>
                 <md-select ng-model="policy" placeholder="Select a Policy" ng-change="$ctrl.setPolicy()">
                     <md-option ng-repeat="policy in $ctrl.cacheInfo.policies" value="{{policy}}">
@@ -14,8 +14,8 @@
                 </md-select>
             </md-input-container>
 
-            <md-input-container ng-hide="hide">
-                <label>Block Size</label>
+            <md-input-container ng-hide="$ctrl.hideSidebar">
+                <label ng-hide="$ctrl.hideSidebar">Block Size</label>
                 <md-select ng-model="blockSize" ng-change="$ctrl.setBlockSize()" placeholder="Select a Block Size">
                     <md-option ng-repeat="size in $ctrl.cacheInfo.blockSizes" value="{{size}}">
                         {{size}}
@@ -23,8 +23,8 @@
                 </md-select>
             </md-input-container>
 
-            <md-tabs md-selected="selectedIndex" md-border-bottom md-autoselect ng-hide="$ctrl.hide">
-                <md-tab ng-disabled="$ctrl.cacheInfo.caches.length === 3" ng-hide="$ctrl.hide">
+            <md-tabs md-selected="selectedIndex" md-border-bottom md-autoselect ng-hide="$ctrl.hideSidebar">
+                <md-tab ng-disabled="$ctrl.cacheInfo.caches.length === 3" ng-hide="$ctrl.hideSidebar">
                     <md-tab-label class="add-button">
                         <md-button class="md-icon-button" ng-click="$ctrl.addCache()" ng-hide="$ctrl.hideSidebar"><i class="material-icons">add</i></md-button>
                     </md-tab-label>
@@ -35,7 +35,7 @@
                             <md-input-container>
                                 <label>Cache Size</label>
                                 <md-select ng-model="tab.cacheSize" placeholder="Select a Cache Size"
-                                           ng-change="updateCache(tab.cacheSize, $index%4, 'size')" ng-disabled="!($ctrl.cacheInfo.policySet && $ctrl.cacheInfo.blockSizeSet)" ng-hide="$ctrl.hide">
+                                           ng-change="updateCache(tab.cacheSize, $index%4, 'size')" ng-disabled="!($ctrl.cacheInfo.policySet && $ctrl.cacheInfo.blockSizeSet)" ng-hide="$ctrl.hideSidebar">
                                     <md-option ng-repeat="size in $ctrl.cacheInfo.cacheSizes" value="{{size}}">
                                         {{size}}
                                     </md-option>
@@ -98,8 +98,5 @@
                     </tbody>
                 </table>
             </md-table-container>
-        </div>
-        <div id="hide-sidebar" ng-hide="!$ctrl.hideSidebar">
-        </div>
     </div>
 </body>
