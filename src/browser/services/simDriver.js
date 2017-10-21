@@ -13,6 +13,7 @@ angular.module('Simulator').factory('SimDriver', function SimDriverService() {
 
     ctrl.setQueue = function(parsedData) {
         //mem queue template object
+        let returnQueue = [];
         let newLine = {
             address: '',
             tag: '0x4FFF',
@@ -22,9 +23,10 @@ angular.module('Simulator').factory('SimDriver', function SimDriverService() {
         for (let line of parsedData) {
             let l = {};
             Object.assign(l, newLine);
-            l.address = line;
-            queue.push(l);
+            l.address = line.address;
+            returnQueue.push(l);
         }
+        return returnQueue;
     };
 
     ctrl.addToQueue = function(item) {

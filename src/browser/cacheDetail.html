@@ -15,7 +15,8 @@
       </tr>
     </thead>
     <tbody md-body>
-      <tr md-row md-select="memoryAddress" md-select-id="name" md-auto-select ng-repeat="memoryAddress in $ctrl.memQueue">
+      <tr md-row md-select="memoryAddress" md-select-id="name" md-auto-select ng-repeat="memoryAddress in $ctrl.maq">
+        <td md-cell>{{memoryAddress.address}}</td>
         <td md-cell>{{memoryAddress.tag}}</td>
         <td md-cell>{{memoryAddress.index}}</td>
         <td md-cell>{{memoryAddress.offset}}</td>
