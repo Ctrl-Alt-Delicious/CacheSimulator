@@ -7,7 +7,6 @@
 <md-table-container>
   <table>
     <tr>
-    <!-- Find way to inject current cache being clicked into this getIndex() -->
       <td ng-repeat="x in [].constructor($ctrl.getAssociativity()) track by $index">
         <table md-table md-row-select multiple ng-model="selected" md-progress="promise">
           <thead md-head md-order="query.order">
@@ -19,7 +18,8 @@
             </tr>
           </thead>
           <tbody md-body>
-            <tr md-row md-select="memoryAddress" md-select-id="name" md-auto-select ng-repeat="memoryAddress in $ctrl.memQueue">
+            <tr md-row md-select="memoryAddress" md-select-id="name" md-auto-select ng-repeat="memoryAddress in $ctrl.maq">
+              <td md-cell>{{memoryAddress.address}}</td>
               <td md-cell>{{memoryAddress.tag}}</td>
               <td md-cell>{{memoryAddress.index}}</td>
               <td md-cell>{{memoryAddress.offset}}</td>
