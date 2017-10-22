@@ -1,27 +1,33 @@
+<!-- Below is from a demo, need to change content -->
 <md-toolbar class="md-table-toolbar md-default">
   <div class="md-toolbar-tools">
     <span>{{$ctrl.activeCache}}</span>
   </div>
 </md-toolbar>
-
 <md-table-container>
-  <table md-table md-row-select multiple ng-model="selected" md-progress="promise">
-    <thead md-head md-order="query.order">
-      <tr md-row>
-        <th md-column>Address</th>
-        <th md-column>Tag</th>
-        <th md-column>Index</th>
-        <th md-column>Offset</th>
-      </tr>
-    </thead>
-    <tbody md-body>
-      <tr md-row md-select="memoryAddress" md-select-id="name" md-auto-select ng-repeat="memoryAddress in $ctrl.maq">
-        <td md-cell>{{memoryAddress.address}}</td>
-        <td md-cell>{{memoryAddress.tag}}</td>
-        <td md-cell>{{memoryAddress.index}}</td>
-        <td md-cell>{{memoryAddress.offset}}</td>
-      </tr>
-    </tbody>
+  <table>
+    <tr>
+      <td ng-repeat="x in [].constructor($ctrl.getAssociativity()) track by $index">
+        <table md-table md-row-select multiple ng-model="selected" md-progress="promise">
+          <thead md-head md-order="query.order">
+            <tr md-row>
+              <th md-column>Address</th>
+              <th md-column>Tag</th>
+              <th md-column>Index</th>
+              <th md-column>Offset</th>
+            </tr>
+          </thead>
+          <tbody md-body>
+            <tr md-row md-select="memoryAddress" md-select-id="name" md-auto-select ng-repeat="memoryAddress in $ctrl.maq">
+              <td md-cell>{{memoryAddress.address}}</td>
+              <td md-cell>{{memoryAddress.tag}}</td>
+              <td md-cell>{{memoryAddress.index}}</td>
+              <td md-cell>{{memoryAddress.offset}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
   </table>
 </md-table-container>
 

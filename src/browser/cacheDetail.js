@@ -10,12 +10,23 @@ function CacheDetailController($scope, SimDriver) {
 
     let ctrl = this;
 
-    ctrl.activeCache = 'L1';
-    ctrl.maq = SimDriver.getMemAcceses();
-    ctrl.a = SimDriver;
+    ctrl.cacheInfo = $scope.$parent.initialCacheInfo;
 
-    $scope.$on('updatedNavs', function(event, data) {
+    ctrl.activeCache = 'L1';
+    ctrl.maq = [];
+    ctrl.index = 0;
+
+    $scope.$on('updatedNavs', function(event, data, index) {
         ctrl.activeCache = data.buttonTitle;
         ctrl.maq = SimDriver.setQueue(SimDriver.getMemAcceses());
+        ctrl.index = index;
     });
+
+    $scope.$on('cacheInfoUpdated', function(event, data) {
+        ctrl.cacheInfo = data;
+    });
+
+    ctrl.getAssociativity = function(event, index) {
+        return parseInt(ctrl.cacheInfo.caches[ctrl.index].associativity);
+    }
 }
