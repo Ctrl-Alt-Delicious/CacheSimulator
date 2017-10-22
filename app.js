@@ -53,7 +53,7 @@ simulator.controller('IndexController', ['$scope', function($scope) {
             if (index === i) {
                 $scope.navs[i].active = true;
                 //Broadcast sends an event to child controllers/components
-                $scope.$broadcast('updatedNavs', $scope.navs[i]);
+                $scope.$broadcast('updatedNavs', $scope.navs[i], index-1);
             } else {
                 $scope.navs[i].active = false;
             }
