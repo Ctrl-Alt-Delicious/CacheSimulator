@@ -5,24 +5,21 @@
   </div>
 </md-toolbar>
 <md-table-container>
-  <table>
+  <table width="100%">
     <tr>
       <td ng-repeat="x in [].constructor($ctrl.getAssociativity()) track by $index">
-        <table md-table md-row-select multiple ng-model="selected" md-progress="promise">
+        <table md-table md-row-select multiple ng-model="selected" md-progress="promise" border=".5">
           <thead md-head md-order="query.order">
             <tr md-row>
-              <th md-column>Address</th>
-              <th md-column>Tag</th>
-              <th md-column>Index</th>
-              <th md-column>Offset</th>
+              <th md-column width="10%" align="center">Index</th>
+              <th md-column align="center">Tag</th>
             </tr>
           </thead>
           <tbody md-body>
-            <tr md-row md-select="memoryAddress" md-select-id="name" md-auto-select ng-repeat="memoryAddress in $ctrl.maq">
-              <td md-cell>{{memoryAddress.address}}</td>
-              <td md-cell>{{memoryAddress.tag}}</td>
-              <td md-cell>{{memoryAddress.index}}</td>
-              <td md-cell>{{memoryAddress.offset}}</td>
+            <tr md-row ng-repeat="x in [].constructor($ctrl.getIndex()) track by $index">
+              <td md-cell width="10%" align="center"> {{$index}} </td>
+              <!-- Determine how tag will be passed into the cell below -->
+              <td md-cell align="center"> &nbsp; </td>
             </tr>
           </tbody>
         </table>
