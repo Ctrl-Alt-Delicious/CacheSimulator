@@ -28,7 +28,7 @@ function CacheDetailController($scope, SimDriver) {
 
     ctrl.getAssociativity = function(event) {
         return parseInt(ctrl.cacheInfo.caches[ctrl.index].associativity);
-    }
+    };
 
     ctrl.getIndicesSize = function(event) {
         let cache = ctrl.cacheInfo.caches[ctrl.index];
@@ -36,5 +36,5 @@ function CacheDetailController($scope, SimDriver) {
         let S = cache.S;
         let B = ctrl.cacheInfo.B;
         return Math.pow(2,C-S-B);
-    }
+    };
 }
