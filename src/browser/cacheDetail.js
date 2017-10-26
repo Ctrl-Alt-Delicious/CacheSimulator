@@ -34,7 +34,7 @@ function CacheDetailController($scope, SimDriver) {
         let cache = ctrl.cacheInfo.caches[ctrl.index];
         let C = cache.C;
         let S = cache.S;
-        let B = parseInt(ctrl.cacheInfo.B);
-        return C-S-B;
+        let B = ctrl.cacheInfo.B;
+        return Math.pow(2,C-S-B);
     }
 }

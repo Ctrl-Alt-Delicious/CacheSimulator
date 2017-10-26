@@ -64,14 +64,26 @@ function CacheInputController($scope, simDriver, fileParser) {
         $scope.$emit('updateCacheInfo', ctrl.cacheInfo);
     };
 
-    ctrl.setBlockSize = function() {
-        ctrl.cacheInfo.B = Math.log(ctrl.cacheInfo.blockSize) / Math.log(2);
+    let setAssociativity = function(index, item) {
+        let assoc = parseInt(item);
+        if (assoc == 1) {
+            ctrl.cacheInfo.caches[index].S = 0;
+        } else {
+            ctrl.cacheInfo.caches[index].S = Math.log(assoc) / Math.log(2);
+        }
+        $scope.$emit('updateCacheInfo', ctrl.cacheInfo);
+    }
+
+    ctrl.setBlockSize = function(blockSize) {
+        ctrl.cacheInfo.blockSize = blockSize;
+        ctrl.cacheInfo.B = Math.log(blockSize) / Math.log(2);
         setCacheSizeOptions();
         ctrl.cacheInfo.blockSizeSet = true;
         $scope.$emit('updateCacheInfo', ctrl.cacheInfo);
     };
 
-    ctrl.setPolicy = function() {
+    ctrl.setPolicy = function(policy) {
+        ctrl.cacheInfo.policy = policy;
         ctrl.cacheInfo.policySet = true;
         $scope.$emit('updateCacheInfo', ctrl.cacheInfo);
     };
@@ -105,6 +117,7 @@ function CacheInputController($scope, simDriver, fileParser) {
             setCacheSize(index);
         } else if (setting === 'associativity') {
             c.associativity = item;
+            setAssociativity(index, item);
         }
         ctrl.cacheInfo.caches[index] = c;
         $scope.$emit('inputUpdateCanvas', ctrl.cacheInfo);

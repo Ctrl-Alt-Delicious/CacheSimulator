@@ -7,7 +7,7 @@
         <div layout="column" layout-padding md-theme="docs-light" class="md-inline-form">
             <md-input-container ng-hide="$ctrl.hideSidebar">
                 <label>Replacement Policy</label>
-                <md-select ng-model="policy" placeholder="Select a Policy" ng-change="$ctrl.setPolicy()">
+                <md-select ng-model="policy" placeholder="Select a Policy" ng-change="$ctrl.setPolicy(policy)">
                     <md-option ng-repeat="policy in $ctrl.cacheInfo.policies" value="{{policy}}">
                         {{policy}}
                     </md-option>
@@ -16,7 +16,7 @@
 
             <md-input-container ng-hide="$ctrl.hideSidebar">
                 <label ng-hide="$ctrl.hideSidebar">Block Size</label>
-                <md-select ng-model="blockSize" ng-change="$ctrl.setBlockSize()" placeholder="Select a Block Size">
+                <md-select ng-model="blockSize" ng-change="$ctrl.setBlockSize(blockSize)" placeholder="Select a Block Size">
                     <md-option ng-repeat="size in $ctrl.cacheInfo.blockSizes" value="{{size}}">
                         {{size}}
                     </md-option>
