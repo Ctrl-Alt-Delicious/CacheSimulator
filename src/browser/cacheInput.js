@@ -55,9 +55,7 @@ function CacheInputController($scope, simDriver, fileParser) {
         $scope.$emit('updateCacheInfo', ctrl.cacheInfo);
     };
 
-    ctrl.handleUpload = function() {
-        //Sends an asynchronous event to the main process (main.js)
-        //Can add arguments if necessary
+    ctrl.handleUpload = () => {
         ipcRenderer.send('uploadFile');
     };
 
@@ -92,9 +90,8 @@ function CacheInputController($scope, simDriver, fileParser) {
     };
 
 
-    ipcRenderer.on('fileNameReceived', (e, fPath) => {
-        //Use node's functions for parsing file path to base name on all native OS
-        ctrl.cacheInfo.fileName = path.basename(fPath);
+    ipcRenderer.on('fileNameReceived', (err, fileName) => {
+        ctrl.cacheInfo.fileName = fileName;
         $scope.$emit('updateCacheInfo', ctrl.cacheInfo);
         //This forces the angular rendering lifecycle to update the value
         $scope.$digest();
@@ -114,17 +111,17 @@ function CacheInputController($scope, simDriver, fileParser) {
 
     });
 
-    $scope.updateCache = function(item, index, setting) {
-        let c = ctrl.cacheInfo.caches[index];
-        if (setting === 'size') {
-            c.size = item;
-            $scope.$parent.cacheSize = item;
-            setCacheSize(index);
-        } else if (setting === 'associativity') {
-            c.associativity = item;
-            setAssociativity(index, item);
+    $scope.updateCache = function(value, cacheNum, attribute) {
+        let cache = ctrl.cacheInfo.caches[cacheNum];
+        if (attribute === 'size') {
+            cache.size = value;
+            $scope.$parent.cacheSize = value;
+            setCacheSize(cacheNum);
+        } else if (attribute === 'associativity') {
+            cache.associativity = value;
+            setAssociativity(cacheNum, value);
         }
-        ctrl.cacheInfo.caches[index] = c;
+        ctrl.cacheInfo.caches[cacheNum] = cache;
         $scope.$emit('inputUpdateCanvas', ctrl.cacheInfo);
         $scope.$emit('updateCacheInfo', ctrl.cacheInfo);
     };
@@ -136,7 +133,7 @@ function CacheInputController($scope, simDriver, fileParser) {
     let setCacheSizeOptions = function() {
 
         let C_min = ctrl.cacheInfo.B;
-        let C_max = 30;
+        let C_max = 11;
 
         ctrl.cacheInfo.cacheSizes = [];
         for (let i = C_min; i <= C_max; i++) {
@@ -159,6 +156,16 @@ function CacheInputController($scope, simDriver, fileParser) {
         }
         ctrl.cacheInfo.caches = caches;
     };
+
+    function init() {
+        /**
+         +     * We call these functions to set up all the default values
+         +     */
+        ctrl.setPolicy();
+        ctrl.setBlockSize();
+        $scope.updateCache(ctrl.caches[0].cacheSize, 0, 'size');
+        $scope.updateCache(ctrl.caches[0].associativity, 0, 'associativity');
+    }
 
     $scope.selectedRow = null;
     $scope.setClickedRow = function(index){  //function that sets the value of selectedRow to current index
@@ -202,4 +209,6 @@ function CacheInputController($scope, simDriver, fileParser) {
     ctrl.resetSimulation = function() {
         console.log('resetSimulation return value:', ipcRenderer.sendSync('simAction', 'reset'));
     };
+
+    init();
 }

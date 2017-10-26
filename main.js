@@ -80,7 +80,7 @@ function createWindow() {
 
 function ipcListeners() {
     //Add event handler for upload functionality - listens to ipcRenderer from angular components
-    ipcMain.on('uploadFile', (event) => {
+    ipcMain.on('uploadFile', () => {
         dialog.showOpenDialog({
             filters: [{
                 name: 'All Files',
@@ -88,7 +88,7 @@ function ipcListeners() {
             }]
         }, (fileNames) => {
             if (fileNames === undefined) return;
-            let fileName = fileNames[0];
+            let fileName = path.basename(fileNames[0]);
             win.webContents.send('fileNameReceived', fileName);
             fs.readFile(fileName, 'utf-8', (err, data) => {
                 if (err) {
