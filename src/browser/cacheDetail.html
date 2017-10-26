@@ -1,25 +1,28 @@
 <!-- Below is from a demo, need to change content -->
+<head>
+    <link href="src/browser/cacheDetail.css" rel="stylesheet">
+</head>
 <md-toolbar class="md-table-toolbar md-default">
   <div class="md-toolbar-tools">
     <span>{{$ctrl.activeCache}}</span>
   </div>
 </md-toolbar>
 <md-table-container>
-  <table width="100%">
+  <table id="fillWidth">
     <tr>
       <td ng-repeat="x in [].constructor($ctrl.getAssociativity()) track by $index">
-        <table md-table md-row-select multiple ng-model="selected" md-progress="promise" border=".5">
+        <table class="tableCollapse" md-table md-row-select multiple ng-model="selected" md-progress="promise">
           <thead md-head md-order="query.order">
             <tr md-row>
-              <th md-column width="10%" align="center">Index</th>
-              <th md-column align="center">Tag</th>
+              <th class="index" md-column>Index</th>
+              <th class="center" md-column>Tag</th>
             </tr>
           </thead>
           <tbody md-body>
-            <tr md-row ng-repeat="x in [].constructor($ctrl.getIndex()) track by $index">
-              <td md-cell width="10%" align="center"> {{$index}} </td>
+            <tr md-row ng-repeat="x in [].constructor($ctrl.getIndicesSize()) track by $index">
+              <td class="index" md-cell> {{$index}} </td>
               <!-- Determine how tag will be passed into the cell below -->
-              <td md-cell align="center"> &nbsp; </td>
+              <td md-cell> &nbsp; </td>
             </tr>
           </tbody>
         </table>
