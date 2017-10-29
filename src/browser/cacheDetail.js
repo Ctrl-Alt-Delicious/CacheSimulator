@@ -37,7 +37,6 @@ function CacheDetailController($scope, SimDriver) {
         let B = ctrl.cacheInfo.B;
         return Math.pow(2,C-S-B);
     }
-
     var modal;
     var span;
     var activeCache;
