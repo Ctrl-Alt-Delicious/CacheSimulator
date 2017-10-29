@@ -37,10 +37,9 @@ function CacheDetailController($scope, SimDriver) {
         let B = ctrl.cacheInfo.B;
         return Math.pow(2,C-S-B);
     }
-
-    var modal;
-    var span;
-    var activeCache;
+    let modal;
+    let span;
+    let activeCache;
     ctrl.openModal = function(event, id, info) {
         modal = document.getElementById(id);
         span = document.getElementsByClassName("close")[0];
