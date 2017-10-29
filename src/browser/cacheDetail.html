@@ -41,7 +41,7 @@
                               <th class="center" md-column>Offset</th>
                             </tr>
                             <tbody>
-                              <tr md-row ng-repeat="x in [].constructor($ctrl.getIndicesSize()) track by $index"> 
+                              <tr md-row ng-repeat="x in [].constructor($ctrl.getBlockSize()) track by $index"> 
                                 <td> Address </td>
                                 <td> Index </td>
                                 <td> {{$index}} </td>
@@ -60,4 +60,3 @@
     </tr>
   </table>
 </md-table-container>
-<md-table-pagination md-limit="query.limit" md-limit-options="[5, 10, 15]" md-page="query.page" md-total="{{memoryAddresses.count}}" md-on-paginate="getMemoryAddresses" md-page-select></md-table-pagination>
