@@ -2,7 +2,7 @@
 <head>
     <link href="src/browser/cacheDetail.css" rel="stylesheet">
 </head>
-<md-toolbar class="md-table-toolbar md-default">
+<md-toolbar id="activeCacheBanner" class="md-table-toolbar md-default">
   <div class="md-toolbar-tools">
     <span>{{$ctrl.activeCache}}</span>
   </div>
@@ -21,8 +21,38 @@
           <tbody md-body>
             <tr md-row ng-repeat="x in [].constructor($ctrl.getIndicesSize()) track by $index">
               <td class="index" md-cell> {{$index}} </td>
-              <!-- Determine how tag will be passed into the cell below -->
-              <td md-cell> &nbsp; </td>
+              <td md-cell  ng-click="$ctrl.openModal($event,'modal-' + $parent.$index + $index, 'modal-' + $parent.$index + $index + -tag)">
+                <span ng-attr-id="{{ 'modal-' + $parent.$index + $index + 'tag'}}"> 0xDEADBEEF </span>
+                <!-- The Modal -->
+                  <div id="{{ 'modal-' + $parent.$index + $index}}" class="modal">
+                    <!-- Modal content -->
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <span class="close" ng-click="$ctrl.closeModalSpan()">&times;</span>
+                        <h2>{{$parent.$index}}{{$index}}</h2>
+                      </div>
+                      <div class="modal-body">
+                        <p>{{'modal-' + $parent.$index + $index + ': tag = 0xDEADBEEF'}}</p>
+                        <table id="fillWidthAndHeight">
+                          <thead md-head md-order="query.order">
+                            <tr md-row>
+                              <th class="index" md-column>Address</th>
+                              <th class="center" md-column>Index</th>
+                              <th class="center" md-column>Offset</th>
+                            </tr>
+                            <tbody>
+                              <tr md-row ng-repeat="x in [].constructor($ctrl.getIndicesSize()) track by $index"> 
+                                <td> Address </td>
+                                <td> Index </td>
+                                <td> {{$index}} </td>
+                              </tr>
+                            </tbody>
+                          </thead>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -30,5 +60,4 @@
     </tr>
   </table>
 </md-table-container>
-
 <md-table-pagination md-limit="query.limit" md-limit-options="[5, 10, 15]" md-page="query.page" md-total="{{memoryAddresses.count}}" md-on-paginate="getMemoryAddresses" md-page-select></md-table-pagination>
