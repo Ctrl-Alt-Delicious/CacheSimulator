@@ -37,6 +37,11 @@ function CacheDetailController($scope, SimDriver) {
         let B = ctrl.cacheInfo.B;
         return Math.pow(2,C-S-B);
     }
+
+    ctrl.getBlockSize = function(event) {
+        return Math.pow(2,ctrl.cacheInfo.B);
+    }
+
     let modal;
     let span;
     let activeCache;
