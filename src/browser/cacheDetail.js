@@ -45,23 +45,34 @@ function CacheDetailController($scope, SimDriver) {
     let modal;
     let span;
     let activeCache;
+    let modalOpen = false;
+
     ctrl.openModal = function(event, id, info) {
-        modal = document.getElementById(id);
-        span = document.getElementsByClassName("close")[0];
-        modal.style.display = "block";
-        activeCache = document.getElementById("activeCacheBanner");
-        activeCache.style.visibility = "hidden";
+        if (!modalOpen) {
+            modal = document.getElementById(id);
+            span = document.getElementsByClassName("close")[0];
+            modal.style.display = "block";
+            activeCache = document.getElementById("activeCacheBanner");
+            activeCache.style.visibility = "hidden";
+            modalOpen = true;
+        }
     }
 
     ctrl.closeModalSpan = function(event) {
-        modal.style.display = "none";
-        activeCache.style.visibility = "visible";
+        if (event) {
+            event.stopPropagation();
+            event.preventDefault();
+            modal.style.display = "none";
+            activeCache.style.visibility = "visible";
+            modalOpen = false;
+        }
     }
 
     window.onclick = function(event) {
         if (event.target == modal) {
             modal.style.display = "none";
             activeCache.style.visibility = "visible";
+            modalOpen = false;
         }
     }
 }
