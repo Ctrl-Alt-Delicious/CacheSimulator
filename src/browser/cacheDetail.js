@@ -68,27 +68,4 @@ function CacheDetailController($scope, SimDriver) {
     ctrl.getBlockSize = function(event) {
         return Math.pow(2,ctrl.cacheInfo.B);
     }
-
-    let modal;
-    let span;
-    let activeCache;
-    ctrl.openModal = function(event, id, info) {
-        modal = document.getElementById(id);
-        span = document.getElementsByClassName("close")[0];
-        modal.style.display = "block";
-        activeCache = document.getElementById("activeCacheBanner");
-        activeCache.style.visibility = "hidden";
-    }
-
-    ctrl.closeModalSpan = function(event) {
-        modal.style.display = "none";
-        activeCache.style.visibility = "visible";
-    }
-
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-            activeCache.style.visibility = "visible";
-        }
-    }
 }
