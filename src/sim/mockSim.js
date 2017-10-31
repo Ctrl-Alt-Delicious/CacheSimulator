@@ -33,3 +33,19 @@ let gen = nextInstructionGen();
 exports.mockStepForward = () => {
     return gen.next().value;
 };
+
+exports.mockStepBackward = () => {
+    return 'stepping back';
+};
+
+exports.mockPlay = () => {
+    return 'playing';
+};
+
+exports.mockPause = () => {
+    return 'pausing';
+};
+
+exports.mockReset = () => {
+    return 'reset';
+};
