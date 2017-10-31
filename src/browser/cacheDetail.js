@@ -64,8 +64,4 @@ function CacheDetailController($scope, SimDriver) {
             activeCache.style.visibility = "visible";
         }
     }
-
-    ctrl.getBlockSize = function(event) {
-        return Math.pow(2,ctrl.cacheInfo.B);
-    }
 }
