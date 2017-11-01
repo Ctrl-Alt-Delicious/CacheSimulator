@@ -91,7 +91,8 @@ function CacheInputController($scope, simDriver, fileParser) {
 
     ipcRenderer.on('fileNameReceived', (e, fPath) => {
         //Use node's functions for parsing file path to base name on all native OS
-        $scope.$parent.fileName = path.basename(fPath);
+        ctrl.cacheInfo.fileName = path.basename(fPath);
+        $scope.$emit('updateCacheInfo', ctrl.cacheInfo);
         //This forces the angular rendering lifecycle to update the value
         $scope.$digest();
     });
