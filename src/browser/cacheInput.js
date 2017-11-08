@@ -171,7 +171,6 @@ function CacheInputController($scope, simDriver, fileParser) {
 
     ctrl.runSimulation = function() {
         ipcRenderer.send('runSimulation', ctrl.cacheInfo);
-        console.log('runSimulation return value:', val);
     };
 
     ctrl.stepForward = function() {
