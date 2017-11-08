@@ -49,3 +49,8 @@ exports.mockPause = () => {
 exports.mockReset = () => {
     return 'reset';
 };
+
+exports.mockRun = () => {
+    console.log('Not returning anything because I am just a trigger for the simulation to run its course.' +
+      'Nothing will be given to the front end until play or step is triggered.');
+};

@@ -64,10 +64,10 @@ function ipcListeners() {
         event.returnValue = sim[action]();
     });
 
-    ipcMain.on('runSimulation', (event, action) => {
-        console.log('running simulation....');
-        // TODO: trigger the start of the simulation here
-        // event.sender.send(arrayOfStatesFromSimulator)
+    ipcMain.on('runSimulation', () => {
+        console.log('running simulation.... After the simulation is run then the user can hit play or step and' +
+            'get back states from the back end. This event only runs the simulation in the backend');
+        sim.run();
     });
 }
 
