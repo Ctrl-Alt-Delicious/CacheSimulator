@@ -174,8 +174,7 @@ function CacheInputController($scope, simDriver, fileParser) {
     });
 
     ctrl.runSimulation = function() {
-        let val = ipcRenderer.send('runSimulation', ctrl.cacheInfo);
-        console.log('runSimulation return value:', val);
+        ipcRenderer.send('runSimulation', ctrl.cacheInfo);
         ctrl.hideControlButtons = false;
         document.getElementById("upload-button").disabled = "disabled";
     };
