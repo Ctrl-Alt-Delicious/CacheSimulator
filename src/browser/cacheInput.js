@@ -14,6 +14,9 @@ function CacheInputController($scope, simDriver, fileParser) {
     let ctrl = this;
 
     ctrl.hideSidebar = false;
+    ctrl.hideRunSimButton = true;
+    ctrl.hideControlButtons = true;
+    ctrl.hideMAQ = true;
 
     ctrl.cacheInfo = $scope.$parent.initialCacheInfo;
 
@@ -105,6 +108,7 @@ function CacheInputController($scope, simDriver, fileParser) {
 
     ipcRenderer.on('fileDataReceived', (e, fData) => {
         fileParser.parseFile(fData);
+        ctrl.hideRunSimButton = false;
         //This forces the angular rendering lifecycle to update the value
         $scope.$digest();
 
@@ -171,6 +175,8 @@ function CacheInputController($scope, simDriver, fileParser) {
 
     ctrl.runSimulation = function() {
         ipcRenderer.send('runSimulation', ctrl.cacheInfo);
+        ctrl.hideControlButtons = false;
+        document.getElementById("upload-button").disabled = "disabled";
     };
 
     ctrl.stepForward = function() {
@@ -184,10 +190,13 @@ function CacheInputController($scope, simDriver, fileParser) {
 
     ctrl.pauseSimulation = function() {
         console.log('pauseSimulation return value:', ipcRenderer.sendSync('simAction', 'pause'));
+        ctrl.hideMAQ = true;
     };
 
     ctrl.playSimulation = function() {
         console.log('runSimulation return value:', ipcRenderer.sendSync('simAction', 'play'));
+        ctrl.hideRunSimButton = true;
+        ctrl.hideMAQ = false;
     };
 
     ctrl.resetSimulation = function() {
