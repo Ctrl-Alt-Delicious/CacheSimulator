@@ -72,7 +72,7 @@ function CacheInputController($scope, simDriver, fileParser) {
             ctrl.cacheInfo.caches[index].S = Math.log(assoc) / Math.log(2);
         }
         $scope.$emit('updateCacheInfo', ctrl.cacheInfo);
-    }
+    };
 
     ctrl.setBlockSize = function(blockSize) {
         ctrl.cacheInfo.blockSize = blockSize;
@@ -169,6 +169,10 @@ function CacheInputController($scope, simDriver, fileParser) {
         ctrl.cacheInfo = data;
     });
 
+    ctrl.runSimulation = function() {
+        ipcRenderer.send('runSimulation', ctrl.cacheInfo);
+    };
+
     ctrl.stepForward = function() {
         let val = ipcRenderer.sendSync('simAction', 'stepForward');
         console.log('stepForward return value:', val);
@@ -182,7 +186,7 @@ function CacheInputController($scope, simDriver, fileParser) {
         console.log('pauseSimulation return value:', ipcRenderer.sendSync('simAction', 'pause'));
     };
 
-    ctrl.runSimulation = function() {
+    ctrl.playSimulation = function() {
         console.log('runSimulation return value:', ipcRenderer.sendSync('simAction', 'play'));
     };
 

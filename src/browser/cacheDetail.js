@@ -40,7 +40,7 @@ function CacheDetailController($scope, SimDriver) {
 
     ctrl.getBlockSize = function(event) {
         return Math.pow(2,ctrl.cacheInfo.B);
-    }
+    };
 
     let modal;
     let span;
@@ -50,29 +50,29 @@ function CacheDetailController($scope, SimDriver) {
     ctrl.openModal = function(event, id, info) {
         if (!modalOpen) {
             modal = document.getElementById(id);
-            span = document.getElementsByClassName("close")[0];
-            modal.style.display = "block";
-            activeCache = document.getElementById("activeCacheBanner");
-            activeCache.style.visibility = "hidden";
+            span = document.getElementsByClassName('close')[0];
+            modal.style.display = 'block';
+            activeCache = document.getElementById('activeCacheBanner');
+            activeCache.style.visibility = 'hidden';
             modalOpen = true;
         }
-    }
+    };
 
     ctrl.closeModalSpan = function(event) {
         if (event) {
             event.stopPropagation();
             event.preventDefault();
-            modal.style.display = "none";
-            activeCache.style.visibility = "visible";
+            modal.style.display = 'none';
+            activeCache.style.visibility = 'visible';
             modalOpen = false;
         }
-    }
+    };
 
     window.onclick = function(event) {
         if (event.target == modal) {
-            modal.style.display = "none";
-            activeCache.style.visibility = "visible";
+            modal.style.display = 'none';
+            activeCache.style.visibility = 'visible';
             modalOpen = false;
         }
-    }
+    };
 }
