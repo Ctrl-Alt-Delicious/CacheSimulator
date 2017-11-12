@@ -6,6 +6,8 @@ const ADDR_SIZE = 32;
 const EXPONENTBASE = 1;
 const OSBIT = 32;
 
+let globalTimer = 1;
+
 let step = 0;
 
 let numCacheLevels;
@@ -102,6 +104,153 @@ function cacheInitLevel (config, C, B, S) {
     config.indexSize = C - S - B;
     config.tagSize = OSBIT - C + S;
     config.blockCapacity = EXPONENTBASE<<B;
+}
+
+/**
+ * Subroutine that simulates one cache event at a time.
+ * @param rw The type of access, READ or WRITE
+ * @param address The address that is being accessed
+ * @param stats The struct that you are supposed to store the stats in
+ */
+function cache_access (rw, address, stats) {
+
+    stats.accesses++;
+
+    let tagL1 = getTag(address, configL1.C1, configL1.B, 0);
+    let indexL1 = getIndex(address, configL1.C1, configL1.B, 0);
+
+    //stats
+    if(rw === 'READ'){
+        stats.reads++;
+    } else{
+        stats.writes++;
+    }
+
+    cacheTableL1[indexL1].lastAccess = globalTimer;
+    if(cacheTableL1[indexL1].tag === tagL1 && cacheTableL1[indexL1].valid){
+        if(rw === 'WRITE'){
+            cacheTableL1[indexL1].dirty = 1;
+        }
+
+        //update L2 LRU
+        let tagL2 = getTag(address, configL2.C2, configL2.B, configL2.S);
+        let indexL2 = getIndex(address, configL2.C2, configL2.B, configL2.S);
+        let setCapacity = (EXPONENTBASE<<(configL2.C2 - configL2.B - configL2.indexSize));
+        let setOffset = indexL2 * setCapacity;
+        for(let i = 0; i < setCapacity; i++){
+            if(cacheTableL2[setOffset + i].tag === tagL2 && cacheTableL2[setOffset + i].valid){
+                cacheTableL2[setOffset + i].lastAccess = globalTimer;
+                break;
+            }
+        }
+
+    } else{
+        //stats
+        if(rw === 'READ') {
+            stats.read_misses++;
+            stats.l1_read_misses++;
+            stats.misses++;
+        } else{
+            stats.write_misses++;
+            stats.l1_write_misses++;
+            stats.misses++;
+        }
+
+        let tagL2 = getTag(address, configL2.C2, configL2.B, configL2.S);
+        let indexL2 = getIndex(address, configL2.C2, configL2.B, configL2.S);
+        let successL2 = false;
+        let targetBlockL2 = -1;
+        let targetBlockEvictL2 = -1;
+        let setCapacity = (EXPONENTBASE<<(configL2.C2 - configL2.B - configL2.indexSize));
+        let setOffset = indexL2 * setCapacity;
+        let LRU = globalTimer;
+
+        for(let i = 0; i < setCapacity; i++){
+            if(cacheTableL2[setOffset + i].tag === tagL2 && cacheTableL2[setOffset + i].valid){
+                successL2 = true;
+                cacheTableL2[setOffset + i].lastAccess = globalTimer;
+                if(cacheTableL1[indexL1].dirty && cacheTableL1[indexL1].valid){
+                    //L1 writeback
+                    let evictL2tag = convertTag(tagL1, indexL1, configL1.C1, configL2.C2, configL1.B, configL1.S);
+                    let evictL2index;
+                    for(let j = 0; j < setCapacity; j++){
+                        if(cacheTableL2[setOffset + j].tag === evictL2tag){
+                            evictL2index = j;
+                            break;
+                        }
+                    }
+                    cacheTableL2[evictL2index].dirty = 1;
+                }
+                cacheTableL1[indexL1].valid = 1;
+                cacheTableL1[indexL1].dirty = 0;
+                cacheTableL1[indexL1].tag = tagL1;
+
+                //todo: successful l2 read
+                if(rw === 'WRITE') {
+                    cacheTableL1[indexL1].dirty = 1;
+                }
+                break;
+            } else if(cacheTableL2[setOffset + i].valid === 0 && targetBlockL2 === -1){
+                targetBlockL2 = setOffset + i;
+            } else if(cacheTableL2[setOffset + i].lastAccess < LRU){
+                targetBlockEvictL2 = setOffset + i;
+                LRU = cacheTableL2[setOffset + i].lastAccess;
+            }
+        }
+        if(!successL2){
+            //stats
+            if(rw === 'READ'){
+                stats.read_misses++;
+                stats.l2_read_misses++;
+                stats.misses++;
+            }else{
+                stats.write_misses++;
+                stats.l2_write_misses++;
+                stats.misses++;
+            }
+
+            if(targetBlockL2 === -1){
+                targetBlockL2 = targetBlockEvictL2;
+                let targetTagL1 = convertIndexL1(tagL2, indexL2, configL1.C1, configL2.C2, configL2.B, configL2.S);
+                let targetIndexL1 = convertTagL1(tagL2, indexL2, configL1.C1, configL2.C2, configL2.B, configL2.S);
+                if(cacheTableL1[targetIndexL1].dirty && cacheTableL1[targetIndexL1].valid){
+                    //L1 writeback
+                    cacheTableL2[targetBlockL2].dirty = 1;
+                    cacheTableL1[targetIndexL1].valid = 0;
+                }
+                if(cacheTableL2[targetBlockL2].dirty && cacheTableL2[targetBlockL2].valid){
+                    //L2 writeback
+                    stats.write_backs++;
+                    cacheTableL2[targetBlockL2].valid = 0;
+                }
+
+            }
+            cacheTableL2[targetBlockL2].lastAccess = globalTimer;
+            cacheTableL2[targetBlockL2].valid = 1;
+            cacheTableL2[targetBlockL2].tag = tagL2;
+            cacheTableL2[targetBlockL2].index = indexL2;
+            cacheTableL1[indexL1].valid = 1;
+            cacheTableL1[indexL1].lastAccess = globalTimer;
+            cacheTableL1[indexL1].tag = tagL1;
+            cacheTableL1[indexL1].index = indexL1;
+            if(rw === 'WRITE'){
+                cacheTableL1[indexL1].dirty = 1;
+            }
+
+        }
+    }
+
+    globalTimer++;
+}
+
+function cacheFinalize (stats) {
+    
+    stats.missRateL1 = stats.readMissesL1 + stats.writeMissesL1/stats.accesses;
+    stats.missRateL2 = stats.readMissesL2 + stats.writeMissesL2/stats.readMissesL1 + stats.writeMissesL1;
+    stats.missRate = stats.misses/stats.accesses;
+    stats.avgAccessTimeL2 = stats.accessTimeL2 + stats.missRateL2 * stats.memoryAccessTime;
+    stats.avgAccessTime = stats.accessTimeL1 + stats.missRateL1 * stats.avgAccessTimeL2;
+
 }
 
 /**
