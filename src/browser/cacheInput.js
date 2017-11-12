@@ -14,6 +14,9 @@ function CacheInputController($scope, simDriver, fileParser) {
     let ctrl = this;
 
     ctrl.hideSidebar = false;
+    ctrl.hideRunSimButton = true;
+    ctrl.hideControlButtons = true;
+    ctrl.hideMAQ = true;
 
     ctrl.cacheInfo = $scope.$parent.initialCacheInfo;
 
@@ -64,14 +67,26 @@ function CacheInputController($scope, simDriver, fileParser) {
         $scope.$emit('updateCacheInfo', ctrl.cacheInfo);
     };
 
-    ctrl.setBlockSize = function() {
-        ctrl.cacheInfo.B = Math.log(ctrl.cacheInfo.blockSize) / Math.log(2);
+    let setAssociativity = function(index, item) {
+        let assoc = parseInt(item);
+        if (assoc == 1) {
+            ctrl.cacheInfo.caches[index].S = 0;
+        } else {
+            ctrl.cacheInfo.caches[index].S = Math.log(assoc) / Math.log(2);
+        }
+        $scope.$emit('updateCacheInfo', ctrl.cacheInfo);
+    };
+
+    ctrl.setBlockSize = function(blockSize) {
+        ctrl.cacheInfo.blockSize = blockSize;
+        ctrl.cacheInfo.B = Math.log(blockSize) / Math.log(2);
         setCacheSizeOptions();
         ctrl.cacheInfo.blockSizeSet = true;
         $scope.$emit('updateCacheInfo', ctrl.cacheInfo);
     };
 
-    ctrl.setPolicy = function() {
+    ctrl.setPolicy = function(policy) {
+        ctrl.cacheInfo.policy = policy;
         ctrl.cacheInfo.policySet = true;
         $scope.$emit('updateCacheInfo', ctrl.cacheInfo);
     };
@@ -79,7 +94,8 @@ function CacheInputController($scope, simDriver, fileParser) {
 
     ipcRenderer.on('fileNameReceived', (e, fPath) => {
         //Use node's functions for parsing file path to base name on all native OS
-        $scope.$parent.fileName = path.basename(fPath);
+        ctrl.cacheInfo.fileName = path.basename(fPath);
+        $scope.$emit('updateCacheInfo', ctrl.cacheInfo);
         //This forces the angular rendering lifecycle to update the value
         $scope.$digest();
     });
@@ -92,6 +108,7 @@ function CacheInputController($scope, simDriver, fileParser) {
 
     ipcRenderer.on('fileDataReceived', (e, fData) => {
         fileParser.parseFile(fData);
+        ctrl.hideRunSimButton = false;
         //This forces the angular rendering lifecycle to update the value
         $scope.$digest();
 
@@ -105,6 +122,7 @@ function CacheInputController($scope, simDriver, fileParser) {
             setCacheSize(index);
         } else if (setting === 'associativity') {
             c.associativity = item;
+            setAssociativity(index, item);
         }
         ctrl.cacheInfo.caches[index] = c;
         $scope.$emit('inputUpdateCanvas', ctrl.cacheInfo);
@@ -155,16 +173,10 @@ function CacheInputController($scope, simDriver, fileParser) {
         ctrl.cacheInfo = data;
     });
 
-    ctrl.stepBackward = function() {
-        console.log('stepBackward return value:', ipcRenderer.sendSync('simAction', 'stepBackward'));
-    };
-
-    ctrl.pauseSimulation = function() {
-        console.log('pauseSimulation return value:', ipcRenderer.sendSync('simAction', 'pauseSimulation'));
-    };
-
     ctrl.runSimulation = function() {
-        console.log('runSimulation return value:', ipcRenderer.sendSync('simAction', 'runSimulation'));
+        ipcRenderer.send('runSimulation', ctrl.cacheInfo);
+        ctrl.hideControlButtons = false;
+        document.getElementById("upload-button").disabled = "disabled";
     };
 
     ctrl.stepForward = function() {
@@ -172,7 +184,22 @@ function CacheInputController($scope, simDriver, fileParser) {
         console.log('stepForward return value:', val);
     };
 
+    ctrl.stepBackward = function() {
+        console.log('stepBackward return value:', ipcRenderer.sendSync('simAction', 'stepBackward'));
+    };
+
+    ctrl.pauseSimulation = function() {
+        console.log('pauseSimulation return value:', ipcRenderer.sendSync('simAction', 'pause'));
+        ctrl.hideMAQ = true;
+    };
+
+    ctrl.playSimulation = function() {
+        console.log('runSimulation return value:', ipcRenderer.sendSync('simAction', 'play'));
+        ctrl.hideRunSimButton = true;
+        ctrl.hideMAQ = false;
+    };
+
     ctrl.resetSimulation = function() {
-        console.log('resetSimulation return value:', ipcRenderer.sendSync('simAction', 'resetSimulation'));
+        console.log('resetSimulation return value:', ipcRenderer.sendSync('simAction', 'reset'));
     };
 }

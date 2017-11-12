@@ -244,7 +244,7 @@ function cache_access (rw, address, stats) {
 }
 
 function cacheFinalize (stats) {
-    
+
     stats.missRateL1 = stats.readMissesL1 + stats.writeMissesL1/stats.accesses;
     stats.missRateL2 = stats.readMissesL2 + stats.writeMissesL2/stats.readMissesL1 + stats.writeMissesL1;
     stats.missRate = stats.misses/stats.accesses;
@@ -351,3 +351,7 @@ function convertIndexL1(tagL2, indexL2, C1, C2, B, S) {
 
 
 exports.stepForward = mockSim.mockStepForward;
+exports.stepBackward = mockSim.mockStepBackward;
+exports.play = mockSim.mockPlay;
+exports.pause = mockSim.mockPause;
+exports.reset = mockSim.mockReset;

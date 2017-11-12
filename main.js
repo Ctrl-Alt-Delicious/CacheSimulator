@@ -64,6 +64,11 @@ function ipcListeners() {
         event.returnValue = sim[action]();
     });
 
+    ipcMain.on('runSimulation', (event, action) => {
+        console.log('running simulation....');
+        // TODO: trigger the start of the simulation here
+        // event.sender.send(arrayOfStatesFromSimulator)
+    });
 }
 
 // This method will be called when Electron has finished

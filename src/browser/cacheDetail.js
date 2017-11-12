@@ -26,7 +26,53 @@ function CacheDetailController($scope, SimDriver) {
         ctrl.cacheInfo = data;
     });
 
-    ctrl.getAssociativity = function(event, index) {
+    ctrl.getAssociativity = function(event) {
         return parseInt(ctrl.cacheInfo.caches[ctrl.index].associativity);
-    }
+    };
+
+    ctrl.getIndicesSize = function(event) {
+        let cache = ctrl.cacheInfo.caches[ctrl.index];
+        let C = cache.C;
+        let S = cache.S;
+        let B = ctrl.cacheInfo.B;
+        return Math.pow(2,C-S-B);
+    };
+
+    ctrl.getBlockSize = function(event) {
+        return Math.pow(2,ctrl.cacheInfo.B);
+    };
+
+    let modal;
+    let span;
+    let activeCache;
+    let modalOpen = false;
+
+    ctrl.openModal = function(event, id, info) {
+        if (!modalOpen) {
+            modal = document.getElementById(id);
+            span = document.getElementsByClassName('close')[0];
+            modal.style.display = 'block';
+            activeCache = document.getElementById('activeCacheBanner');
+            activeCache.style.visibility = 'hidden';
+            modalOpen = true;
+        }
+    };
+
+    ctrl.closeModalSpan = function(event) {
+        if (event) {
+            event.stopPropagation();
+            event.preventDefault();
+            modal.style.display = 'none';
+            activeCache.style.visibility = 'visible';
+            modalOpen = false;
+        }
+    };
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = 'none';
+            activeCache.style.visibility = 'visible';
+            modalOpen = false;
+        }
+    };
 }

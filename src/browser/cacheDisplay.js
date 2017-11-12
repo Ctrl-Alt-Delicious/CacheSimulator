@@ -67,28 +67,28 @@ function CacheDisplayController($scope) {
 
 
     // Here is the code that updates the canvas based on cache sizes    
-    let canvas1 = document.getElementById("canvas1");
-    canvas1.style.height = "720px";
-    canvas1.style.flex = "auto";
+    let canvas1 = document.getElementById('canvas1');
+    canvas1.style.height = '720px';
+    canvas1.style.flex = 'auto';
 
-    let canvas2 = document.getElementById("canvas2");
-    canvas2.style.flex = "";
+    let canvas2 = document.getElementById('canvas2');
+    canvas2.style.flex = '';
 
-    let l1 = document.getElementById("L1");
+    let l1 = document.getElementById('L1');
     l1.style.flex = 1;
-    let l2 = document.getElementById("L2");
+    let l2 = document.getElementById('L2');
     l2.style.flex = 1;
-    let l3 = document.getElementById("L3");
+    let l3 = document.getElementById('L3');
     l3.style.flex = 1;
 
     $scope.showL3 = function() {
         if (ctrl.cacheInfo.caches.length === 3) {
-            canvas2.style.flex = "auto";
-            canvas2.style.height = "370px";
-            canvas1.style.height = "370px";
+            canvas2.style.flex = 'auto';
+            canvas2.style.height = '370px';
+            canvas1.style.height = '370px';
         }
         else {
-            canvas1.style.height = "720px";
+            canvas1.style.height = '720px';
         }
     };
 
@@ -101,40 +101,40 @@ function CacheDisplayController($scope) {
         if (ctrl.cacheInfo.caches.length === 1) {
             l1.style.flex = 1;
             l2.style.flex = 1;
-            canvas2.style.flex = "";
-            canvas2.style.height = "0%";
+            canvas2.style.flex = '';
+            canvas2.style.height = '0%';
         }
         if (ctrl.cacheInfo.caches.length === 2) {
-            canvas2.style.flex = "";
-            canvas2.style.height = "0%";
-            if (ctrl.cacheInfo.caches[0].size !== "Not Set" && ctrl.cacheInfo.caches[1].size !== "Not Set") {
+            canvas2.style.flex = '';
+            canvas2.style.height = '0%';
+            if (ctrl.cacheInfo.caches[0].size !== 'Not Set' && ctrl.cacheInfo.caches[1].size !== 'Not Set') {
                 let l1Size = ctrl.cacheInfo.caches[0].size;
                 let l2Size = ctrl.cacheInfo.caches[1].size;
                 let ratio = l2Size / l1Size;
                 if (ratio < 0.3) {
                     ratio = 0.3;
                 } else if (ratio > 3) {
-                    ratio = 3
+                    ratio = 3;
                 }
                 l1.style.flex = 1;
                 l2.style.flex = ratio;
             }
         }
         if (ctrl.cacheInfo.caches.length === 3) {
-            if (ctrl.cacheInfo.caches[0].size !== "Not Set" && ctrl.cacheInfo.caches[1].size !== "Not Set" && ctrl.cacheInfo.caches[1].size === "Not Set") {
+            if (ctrl.cacheInfo.caches[0].size !== 'Not Set' && ctrl.cacheInfo.caches[1].size !== 'Not Set' && ctrl.cacheInfo.caches[1].size === 'Not Set') {
                 let l1Size = ctrl.cacheInfo.caches[0].size;
                 let l2Size = ctrl.cacheInfo.caches[1].size;
                 let ratio = l2Size / l1Size;
                 if (ratio < 0.3) {
                     ratio = 0.3;
                 } else if (ratio > 3) {
-                    ratio = 3
+                    ratio = 3;
                 }
 
                 l1.style.flex = 1;
                 l2.style.flex = ratio;
-            } else if (ctrl.cacheInfo.caches[0].size !== "Not Set" && ctrl.cacheInfo.caches[1].size !== "Not Set" && ctrl.cacheInfo.caches[1].size !== "Not Set") {
-                canvas2.style.flex = "";
+            } else if (ctrl.cacheInfo.caches[0].size !== 'Not Set' && ctrl.cacheInfo.caches[1].size !== 'Not Set' && ctrl.cacheInfo.caches[1].size !== 'Not Set') {
+                canvas2.style.flex = '';
                 let l1Size = ctrl.cacheInfo.caches[0].size;
                 let l2Size = ctrl.cacheInfo.caches[1].size;
                 let l3Size = ctrl.cacheInfo.caches[2].size;
@@ -143,7 +143,7 @@ function CacheDisplayController($scope) {
                 if (canvas1widthRatio < 0.3) {
                     canvas1widthRatio = 0.3;
                 } else if (canvas1widthRatio > 3) {
-                    canvas1widthRatio = 3
+                    canvas1widthRatio = 3;
                 }
                 let ratioSize = parseInt(l1Size) + parseInt(l2Size);
                 let canvas2Ratio = l3Size / ratioSize;
@@ -166,8 +166,8 @@ function CacheDisplayController($scope) {
                     canvas2Ratio = 500;
                 }
                 canvas1heightRatio = 740 - canvas2Ratio;
-                canvas2.style.height = canvas2Ratio.toString() + "px";
-                canvas1.style.height = canvas1heightRatio.toString() + "px";
+                canvas2.style.height = canvas2Ratio.toString() + 'px';
+                canvas1.style.height = canvas1heightRatio.toString() + 'px';
             }
         }
     };
