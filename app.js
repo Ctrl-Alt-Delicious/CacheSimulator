@@ -25,11 +25,11 @@ simulator.controller('IndexController', ['$scope', function($scope) {
     ];
 
     ctrl.cacheInfo = {
-        policy:  '',
-        blockSize:  1,
+        policy:  'FIFO',
+        blockSize:  32,
         fileName:  '',
         B:  '',
-        policySet:  false,
+        policySet:  true,
         blockSizeSet:  false,
         disableDeleteCache:  true,
         policies: ['FIFO', 'LRU', 'LFU'],
@@ -37,10 +37,10 @@ simulator.controller('IndexController', ['$scope', function($scope) {
         cacheSizes: [],
         caches: [{
             title: 'L1',
-            size: 'Not Set',
+            cacheSize: 'Not Set',
             associativity: 'Not Set',
-            C: 1,
-            S: 1,
+            C: 10,
+            S: 0,
             active: true
         }]
     };

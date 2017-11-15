@@ -8,8 +8,6 @@ const fs = require('fs');
 
 const sim = require('./src/sim/simulation');
 
-const CONFIG_FILE = 'default-config.json';
-
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -41,7 +39,6 @@ app.on('activate', () => {
 
 function init() {
     ipcListeners();
-    loadDefaultCondfig();
     createWindow();
 }
 
@@ -109,15 +106,4 @@ function ipcListeners() {
         // TODO: trigger the start of the simulation here
         // event.sender.send(arrayOfStatesFromSimulator)
     });
-}
-
-function loadDefaultCondfig() {
-    fs.readFile(CONFIG_FILE, 'utf-8', (err, data) => {
-        if (err) {
-            console.error('an error has occurred while reading the config file:', err, '\nas a result we are not loading default values');
-            return;
-        }
-        win.webContents.send('configUploaded', JSON.parse(data));
-    });
-
 }
