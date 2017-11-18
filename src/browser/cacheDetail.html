@@ -22,7 +22,7 @@
             <tr md-row ng-repeat="x in [].constructor($ctrl.getIndicesSize()) track by $index">
               <td class="index" md-cell> {{$index}} </td>
               <td md-cell  ng-click="$ctrl.openModal($event,'modal-' + $parent.$index + $index, 'modal-' + $parent.$index + $index + -tag)">
-                <span ng-attr-id="{{ 'modal-' + $parent.$index + $index + 'tag'}}"> {{$ctrl.modals['modal-' + $parent.$index + $index]['tag']}}</span>
+                <span ng-attr-id="{{ 'modal-' + $parent.$index + $index + 'tag'}}"> {{$ctrl.modals[$ctrl.activeCache]['modal-' + $parent.$index + $index]['tag']}}</span>
                 <!-- The Modal -->
                   <div id="{{ 'modal-' + $parent.$index + $index}}" class="modal">
                     <!-- Modal content -->
@@ -32,7 +32,7 @@
                         <h2>{{$parent.$index}}{{$index}}</h2>
                       </div>
                       <div class="modal-body">
-                        <p>{{'modal-' + $parent.$index + $index + ': tag = ' + $ctrl.modals['modal-' + $parent.$index + $index]['tag']}}</p>
+                        <p>{{'modal-' + $parent.$index + $index + ': tag = ' + $ctrl.modals[$ctrl.activeCache]['modal-' + $parent.$index + $index]['tag']}}</p>
                         <table id="fillWidthAndHeight">
                           <thead md-head md-order="query.order">
                             <tr md-row>
@@ -41,7 +41,7 @@
                             </tr>
                             <tbody>
                               <tr md-row ng-repeat="x in [].constructor($ctrl.getBlockSize()) track by $index"> 
-                                <td> {{$ctrl.modals['modal-' + $parent.$parent.$index + $parent.$index]['block'][$index].toString(2)}} </td>
+                                <td> {{$ctrl.modals[$ctrl.activeCache]['modal-' + $parent.$parent.$index + $parent.$index]['block'][$index].toString(2)}} </td>
                                 <td> {{$index.toString(2)}} </td>
                               </tr>
                             </tbody>

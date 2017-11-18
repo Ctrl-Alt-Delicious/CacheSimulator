@@ -17,9 +17,17 @@ function CacheDetailController($scope, SimDriver) {
     ctrl.index = 0;
     //ctrl.modals = {};
     ctrl.modals = {
-        'modal-01' : {
-            'tag' : 10110,
-            'block' : [...Array(32).keys()].map(x => x+2000)
+        'L1' : {
+            'modal-01' : {
+                'tag' : 10110,
+                'block' : [...Array(32).keys()].map(x => x+2000)
+            }
+        },
+        'L2' : {
+            'modal-00' : {
+                'tag' : 11000,
+                'block' : [...Array(32).keys()].map(x => x+7000)
+            }
         }
     }
 
@@ -34,13 +42,16 @@ function CacheDetailController($scope, SimDriver) {
     });
 
     $scope.$on('updateModals', function (event, data) {
-        let way = data.way;
-        let index = data.index;
-        let tag = data.tag;
-        let block = data.block; //Array of memory addresses associated with given tag
-        ctrl.modals['modal-'+way+index] = {
-            'tag' : tag,
-            'block' : block
+        for (action in data) {
+            let cacheLevel = action.level;
+            let way = action.way;
+            let index = action.index;
+            let tag = action.tag;
+            let block = action.block; //Array of memory addresses associated with given tag
+            ctrl.modals[cacheLevel]['modal-'+way+index] = {
+                'tag' : tag,
+                'block' : block
+            }
         }
     })
 
