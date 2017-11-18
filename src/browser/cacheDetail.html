@@ -16,6 +16,8 @@
             <tr md-row>
               <th class="index" md-column>Index</th>
               <th class="center" md-column>Tag</th>
+              <th class="validDirty" md-column>Valid</th>
+              <th class="validDirty" md-column>Dirty</th>
             </tr>
           </thead>
           <tbody md-body>
@@ -29,10 +31,14 @@
                     <div class="modal-content">
                       <div class="modal-header">
                         <span class="close" ng-click="$ctrl.closeModalSpan($event)">&times;</span>
-                        <h2>{{$parent.$index}}{{$index}}</h2>
+                        <h2>Block associated with given tag: {{$ctrl.modals[$ctrl.activeCache]['modal-' + $parent.$index + $index]['tag']}}</h2>
                       </div>
                       <div class="modal-body">
-                        <p>{{'modal-' + $parent.$index + $index + ': tag = ' + $ctrl.modals[$ctrl.activeCache]['modal-' + $parent.$index + $index]['tag']}}</p>
+                        <p>
+                        Cache: {{$ctrl.activeCache}} <br>
+                        Way: {{$parent.$index}} <br>
+                        Index: {{$index}} 
+                        </p>
                         <table id="fillWidthAndHeight">
                           <thead md-head md-order="query.order">
                             <tr md-row>
@@ -51,6 +57,8 @@
                     </div>
                   </div>
               </td>
+              <td class = 'validDirty'>{{$ctrl.modals[$ctrl.activeCache]['modal-' + $parent.$index + $index]['valid']}}</td>
+              <td class = 'validDirty'>{{$ctrl.modals[$ctrl.activeCache]['modal-' + $parent.$index + $index]['dirty']}}</td>
             </tr>
           </tbody>
         </table>
