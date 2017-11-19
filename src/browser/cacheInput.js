@@ -55,7 +55,9 @@ function CacheInputController($scope, simDriver, fileParser) {
         $scope.$emit('updateCacheInfo', ctrl.cacheInfo);
     };
 
-    ctrl.handleUpload = () => {
+    ctrl.handleUpload = function() {
+        //Sends an asynchronous event to the main process (main.js)
+        //Can add arguments if necessary
         ipcRenderer.send('uploadFile');
     };
 
@@ -67,7 +69,7 @@ function CacheInputController($scope, simDriver, fileParser) {
 
     let setAssociativity = function(index, item) {
         let assoc = parseInt(item);
-        if (assoc === 1) {
+        if (assoc == 1) {
             ctrl.cacheInfo.caches[index].S = 0;
         } else {
             ctrl.cacheInfo.caches[index].S = Math.log(assoc) / Math.log(2);
@@ -90,10 +92,9 @@ function CacheInputController($scope, simDriver, fileParser) {
     };
 
 
-    ipcRenderer.on('fileNameReceived', (err, fileName) => {
-        $scope.$parent.fileName = fileName;
-        ctrl.fileName = fileName;
-        ctrl.cacheInfo.fileName = fileName;
+    ipcRenderer.on('fileNameReceived', (e, fPath) => {
+        //Use node's functions for parsing file path to base name on all native OS
+        ctrl.cacheInfo.fileName = path.basename(fPath);
         $scope.$emit('updateCacheInfo', ctrl.cacheInfo);
         //This forces the angular rendering lifecycle to update the value
         $scope.$digest();
@@ -113,16 +114,17 @@ function CacheInputController($scope, simDriver, fileParser) {
 
     });
 
-    $scope.updateCache = function(value, cacheNum, attribute) {
-        let cache = ctrl.cacheInfo.caches[cacheNum];
-        if (attribute === 'size') {
-            cache.cacheSize = value;
-            setCacheSize(cacheNum);
-        } else if (attribute === 'associativity') {
-            cache.associativity = value;
-            setAssociativity(cacheNum, value);
+    $scope.updateCache = function(item, index, setting) {
+        let c = ctrl.cacheInfo.caches[index];
+        if (setting === 'size') {
+            c.size = item;
+            $scope.$parent.cacheSize = item;
+            setCacheSize(index);
+        } else if (setting === 'associativity') {
+            c.associativity = item;
+            setAssociativity(index, item);
         }
-        ctrl.cacheInfo.caches[cacheNum] = cache;
+        ctrl.cacheInfo.caches[index] = c;
         $scope.$emit('inputUpdateCanvas', ctrl.cacheInfo);
         $scope.$emit('updateCacheInfo', ctrl.cacheInfo);
     };
@@ -134,22 +136,12 @@ function CacheInputController($scope, simDriver, fileParser) {
     let setCacheSizeOptions = function() {
 
         let C_min = ctrl.cacheInfo.B;
-        let C_max = 11;
+        let C_max = 30;
 
         ctrl.cacheInfo.cacheSizes = [];
         for (let i = C_min; i <= C_max; i++) {
             ctrl.cacheInfo.cacheSizes.push(Math.pow(2, i));
         }
-    };
-
-    let setC = function(C, cacheNum) {
-        let size = Math.pow(2, C);
-        $scope.updateCache(size, cacheNum, 'size');
-    };
-
-    let setS = function(S, cacheNum) {
-        let assoc = Math.pow(2, S);
-        $scope.updateCache(assoc, cacheNum, 'associativity');
     };
 
     let setAssocOptions = function(index) {
@@ -168,17 +160,6 @@ function CacheInputController($scope, simDriver, fileParser) {
         ctrl.cacheInfo.caches = caches;
     };
 
-    function init() {
-        /**
-         * We call these functions to set up all the default values
-         */
-        ctrl.setPolicy(ctrl.cacheInfo.policy);
-        ctrl.setBlockSize(ctrl.cacheInfo.blockSize);
-        setC(ctrl.cacheInfo.caches[0].C, 0);
-        setS(ctrl.cacheInfo.caches[0].S, 0);
-
-    }
-
     $scope.selectedRow = null;
     $scope.setClickedRow = function(index){  //function that sets the value of selectedRow to current index
         $scope.selectedRow = index;
@@ -195,7 +176,7 @@ function CacheInputController($scope, simDriver, fileParser) {
     ctrl.runSimulation = function() {
         ipcRenderer.send('runSimulation', ctrl.cacheInfo);
         ctrl.hideControlButtons = false;
-        document.getElementById('upload-button').disabled = 'disabled';
+        document.getElementById("upload-button").disabled = "disabled";
     };
 
     ctrl.stepForward = function() {
@@ -221,6 +202,4 @@ function CacheInputController($scope, simDriver, fileParser) {
     ctrl.resetSimulation = function() {
         console.log('resetSimulation return value:', ipcRenderer.sendSync('simAction', 'reset'));
     };
-
-    init();
 }
