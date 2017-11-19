@@ -47,7 +47,7 @@
                             </tr>
                             <tbody>
                               <tr md-row ng-repeat="x in [].constructor($ctrl.getBlockSize()) track by $index"> 
-                                <td> {{$ctrl.modals[$ctrl.activeCache]['modal-' + $parent.$parent.$index + $parent.$index]['block'][$index].toString(2)}} </td>
+                                <td> 0x{{$ctrl.modals[$ctrl.activeCache]['modal-' + $parent.$parent.$index + $parent.$index]['block'][$index].toString(16)}} </td>
                                 <td> {{$index.toString(2)}} </td>
                               </tr>
                             </tbody>
