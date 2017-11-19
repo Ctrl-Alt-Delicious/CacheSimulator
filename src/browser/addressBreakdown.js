@@ -1,7 +1,5 @@
 'use strict';
 
-const {ipcRenderer} = require('electron');
-
 angular.module('Simulator').component('addressBreakdown', {
     templateUrl: 'src/browser/addressBreakdown.html',
     //add any dependencies below
@@ -10,8 +8,12 @@ angular.module('Simulator').component('addressBreakdown', {
 });
 
 function AddressBreakdownController($scope) {
-	ctrl = this;
+	let ctrl = this;
 	ctrl.cacheInfo = $scope.$parent.initialCacheInfo;
+	ctrl.tag = [1,0,1,1,0,0,1,0,0,0,1,1,0,1];
+	ctrl.index = [1,0,0,0,1,1,0,1,0,0];
+	ctrl.offset = [0,0,0,1,1,0,0,1];
+
 	let C = ctrl.cacheInfo.C;
 	let B = ctrl.cacheInfo.B;
 	let S = ctrl.cacheInfo.S;

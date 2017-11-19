@@ -1,0 +1,13 @@
+table {
+	float : left;
+}
+
+#third {
+	width: 33%;
+}
+
+td {
+	background-color:#8a8a5c;
+    font-weight:bold;
+    font-color:black;
+}
