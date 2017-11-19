@@ -75,16 +75,15 @@ function CacheInputController($scope, simDriver, fileParser) {
         $scope.$emit('updateCacheInfo', ctrl.cacheInfo);
     };
 
-    ctrl.setBlockSize = function(blockSize) {
-        ctrl.cacheInfo.blockSize = blockSize;
+    ctrl.setBlockSize = () => {
+        let blockSize = ctrl.cacheInfo.blockSize;
         ctrl.cacheInfo.B = Math.log(blockSize) / Math.log(2);
         setCacheSizeOptions();
         ctrl.cacheInfo.blockSizeSet = true;
         $scope.$emit('updateCacheInfo', ctrl.cacheInfo);
     };
 
-    ctrl.setPolicy = function(policy) {
-        ctrl.cacheInfo.policy = policy;
+    ctrl.setPolicy = () => {
         ctrl.cacheInfo.policySet = true;
         $scope.$emit('updateCacheInfo', ctrl.cacheInfo);
     };
@@ -130,6 +129,8 @@ function CacheInputController($scope, simDriver, fileParser) {
     for (let i = B_min; i <= B_max; i++) {
         ctrl.cacheInfo.blockSizes.push(Math.pow(2, i));
     }
+    $scope.$emit('inputUpdateCanvas', ctrl.cacheInfo);
+    $scope.$emit('updateCacheInfo', ctrl.cacheInfo);
 
     let setCacheSizeOptions = function() {
 
@@ -172,8 +173,8 @@ function CacheInputController($scope, simDriver, fileParser) {
         /**
          * We call these functions to set up all the default values
          */
-        ctrl.setPolicy(ctrl.cacheInfo.policy);
-        ctrl.setBlockSize(ctrl.cacheInfo.blockSize);
+        ctrl.setPolicy();
+        ctrl.setBlockSize();
         setC(ctrl.cacheInfo.caches[0].C, 0);
         setS(ctrl.cacheInfo.caches[0].S, 0);
 
