@@ -16,35 +16,39 @@
             <tr md-row>
               <th class="index" md-column>Index</th>
               <th class="center" md-column>Tag</th>
+              <th class="validDirty" md-column>Valid</th>
+              <th class="validDirty" md-column>Dirty</th>
             </tr>
           </thead>
           <tbody md-body>
             <tr md-row ng-repeat="x in [].constructor($ctrl.getIndicesSize()) track by $index">
               <td class="index" md-cell> {{$index}} </td>
               <td md-cell  ng-click="$ctrl.openModal($event,'modal-' + $parent.$index + $index, 'modal-' + $parent.$index + $index + -tag)">
-                <span ng-attr-id="{{ 'modal-' + $parent.$index + $index + 'tag'}}"> 0xDEADBEEF </span>
+                <span ng-attr-id="{{ 'modal-' + $parent.$index + $index + 'tag'}}"> {{$ctrl.modals[$ctrl.activeCache]['modal-' + $parent.$index + $index]['tag']}}</span>
                 <!-- The Modal -->
                   <div id="{{ 'modal-' + $parent.$index + $index}}" class="modal">
                     <!-- Modal content -->
                     <div class="modal-content">
                       <div class="modal-header">
                         <span class="close" ng-click="$ctrl.closeModalSpan($event)">&times;</span>
-                        <h2>{{$parent.$index}}{{$index}}</h2>
+                        <h2>Block associated with given tag: {{$ctrl.modals[$ctrl.activeCache]['modal-' + $parent.$index + $index]['tag']}}</h2>
                       </div>
                       <div class="modal-body">
-                        <p>{{'modal-' + $parent.$index + $index + ': tag = 0xDEADBEEF'}}</p>
+                        <p>
+                        Cache: {{$ctrl.activeCache}} <br>
+                        Way: {{$parent.$index}} <br>
+                        Index: {{$index}} 
+                        </p>
                         <table id="fillWidthAndHeight">
                           <thead md-head md-order="query.order">
                             <tr md-row>
-                              <th class="index" md-column>Address</th>
-                              <th class="center" md-column>Index</th>
+                              <th class="address" md-column>Address</th>
                               <th class="center" md-column>Offset</th>
                             </tr>
                             <tbody>
                               <tr md-row ng-repeat="x in [].constructor($ctrl.getBlockSize()) track by $index"> 
-                                <td> Address </td>
-                                <td> Index </td>
-                                <td> {{$index}} </td>
+                                <td> 0x{{$ctrl.modals[$ctrl.activeCache]['modal-' + $parent.$parent.$index + $parent.$index]['block'][$index].toString(16)}} </td>
+                                <td> {{$index.toString(2)}} </td>
                               </tr>
                             </tbody>
                           </thead>
@@ -53,6 +57,8 @@
                     </div>
                   </div>
               </td>
+              <td class = 'validDirty'>{{$ctrl.modals[$ctrl.activeCache]['modal-' + $parent.$index + $index]['valid']}}</td>
+              <td class = 'validDirty'>{{$ctrl.modals[$ctrl.activeCache]['modal-' + $parent.$index + $index]['dirty']}}</td>
             </tr>
           </tbody>
         </table>

@@ -1,14 +1,17 @@
-.center {
-	text-align: center;
-}
-
 .tableCollapse {
 	border-collapse: collapse;
 }
 
 .index {
-	text-align: center;
 	width: 10%;
+}
+
+.address {
+    width : 60%;
+}
+
+.validDirty {
+    width : 5%;
 }
 
 td,th {

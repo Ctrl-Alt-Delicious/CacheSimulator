@@ -15,6 +15,25 @@ function CacheDetailController($scope, SimDriver) {
     ctrl.activeCache = 'L1';
     ctrl.maq = [];
     ctrl.index = 0;
+    //ctrl.modals = {};
+    ctrl.modals = {
+        'L1' : {
+            'modal-01' : {
+                'tag' : 10110,
+                'block' : [...Array(32).keys()].map(x => x+2000),
+                'valid' : 1,
+                'dirty' : 0
+            }
+        },
+        'L2' : {
+            'modal-00' : {
+                'tag' : 11000,
+                'block' : [...Array(32).keys()].map(x => x+7000),
+                'valid' : 1,
+                'dirty' : 0
+            }
+        }
+    }
 
     $scope.$on('updatedNavs', function(event, data, index) {
         ctrl.activeCache = data.buttonTitle;
@@ -25,6 +44,24 @@ function CacheDetailController($scope, SimDriver) {
     $scope.$on('cacheInfoUpdated', function(event, data) {
         ctrl.cacheInfo = data;
     });
+
+    $scope.$on('updateModals', function (event, data) {
+        for (action in data) {
+            let cacheLevel = action.level;
+            let way = action.way;
+            let index = action.index;
+            let tag = action.tag;
+            let block = action.block; //Array of memory addresses associated with given tag
+            let valid = action.valid;
+            let dirty = action.dirty;
+            ctrl.modals[cacheLevel]['modal-'+way+index] = {
+                'tag' : tag,
+                'block' : block,
+                'valid' : valid,
+                'dirty' : dirty
+            }
+        }
+    })
 
     ctrl.getAssociativity = function(event) {
         return parseInt(ctrl.cacheInfo.caches[ctrl.index].associativity);
