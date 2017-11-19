@@ -27,6 +27,9 @@
                         <md-button ng-click="$ctrl.removeCache(0, $event)" ng-disabled="$ctrl.cacheInfo.disableDeleteCache"><i class="material-icons">delete</i></md-button>
 
                     </md-card-title>
+                    <md-card-content>
+                        <address-breakdown> </address-breakdown>
+                    </md-card-content>
                 </md-card>
                 <!--L2-->
                 <md-card id="L2" ng-show="$ctrl.cacheInfo.caches[1]" ng-click="$ctrl.clickCache(2)" flex>

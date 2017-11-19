@@ -1,0 +1,35 @@
+<head>
+    <link href="src/browser/addressBreakdown.css" rel="stylesheet">
+</head>
+<body>
+	<table border=1>
+		<th>
+		Tag
+		</th>
+		<tr>
+			<td ng-repeat="x in [].constructor($ctrl.tagSize()) track by $index">
+			TEST
+			</td>
+		</tr>
+	</table>
+	<table border=1>
+		<th>
+		Index
+		</th>
+		<tr>
+			<td ng-repeat="x in [].constructor($ctrl.indexSize()) track by $index">
+			TEST
+			</td>
+		</tr>
+	</table>
+	<table border=1>
+		<th>
+		Offset
+		</th>
+		<tr>
+			<td ng-repeat="x in [].constructor($ctrl.offsetSize()) track by $index">
+			TEST
+			</td>
+		</tr>
+	</table>
+</body>
