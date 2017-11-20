@@ -29,8 +29,14 @@
 
 <body ng-app="Simulator">
     <div ng-controller="IndexController" layout="column">
-        <div layout="space-between">
-            <md-button ng-repeat="nav in navs"" ng-click="changeView($index)">{{nav.buttonTitle}}</md-button>
+        <div layout="row">
+            <div layout="space-between" flex="80">
+                <md-button ng-repeat="nav in navs"" ng-click="changeView($index)">{{nav.buttonTitle}}</md-button>
+            </div>
+            <div layout="space-between" style="float:right">
+                <md-button ng-disabled="true">Policy: {{initialCacheInfo.policy}}</md-button>
+                <md-button ng-disabled="true">Block Size: {{initialCacheInfo.blockSize}}</md-button>
+            </div>
         </div>
         <cache-detail ng-show="!navs[0].active"></cache-detail>
         <div id=display-container layout="row">
