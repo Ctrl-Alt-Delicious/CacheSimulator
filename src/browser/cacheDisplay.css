@@ -12,11 +12,16 @@ table {
 }
 
 #third {
-	width: 33%;
+	width: auto%;
 }
 
 td {
 	background-color:#8a8a5c;
     font-weight:bold;
     font-color:black;
+    width : 10px;
+}
+
+th {
+	width : 22px;
 }

@@ -33,7 +33,7 @@
                                 <tr>
                                     <td colspan="100%">
                                         <span>
-                                        Tag
+                                        Tag = {{$ctrl.tagSize(0)}} bits
                                         </span>
                                     </td>
                                 </tr>
@@ -47,7 +47,7 @@
                                 <tr>
                                     <td colspan="100%">
                                         <span>
-                                        Index
+                                        Index = {{$ctrl.indexSize(0)}} bits
                                         </span>
                                     </td>
                                 </tr>
@@ -61,7 +61,7 @@
                                 <tr>
                                     <td colspan="100%">
                                         <span>
-                                        Offset
+                                        Offset = {{$ctrl.offsetSize(0)}} bits
                                         </span>
                                     </td>
                                 </tr>
@@ -95,12 +95,12 @@
                         <md-button ng-click="$ctrl.removeCache(1, $event)" ng-disabled="$ctrl.cacheInfo.disableDeleteCache"><i class="material-icons">delete</i></md-button>
                     </md-card-title>
                     <md-card-content>
-                        <body ng-show="$ctrl.cacheOptionsSelected[1]">
+                        <body>
                             <table id="third" flex>
                                 <tr>
                                     <td colspan="100%">
                                         <span>
-                                        Tag
+                                        Tag = {{$ctrl.tagSize(1)}} bits
                                         </span>
                                     </td>
                                 </tr>
@@ -114,7 +114,7 @@
                                 <tr>
                                     <td colspan="100%">
                                         <span>
-                                        Index
+                                        Index = {{$ctrl.indexSize(1)}} bits
                                         </span>
                                     </td>
                                 </tr>
@@ -128,7 +128,7 @@
                                 <tr>
                                     <td colspan="100%">
                                         <span>
-                                        Offset
+                                        Offset = {{$ctrl.offsetSize(1)}} bits
                                         </span>
                                     </td>
                                 </tr>
@@ -163,12 +163,12 @@
                         <md-button ng-click="$ctrl.removeCache(2, $event)" ng-disabled="$ctrl.cacheInfo.disableDeleteCache"><i class="material-icons">delete</i></md-button>
                     </md-card-title>
                     <md-card-content>
-                        <body ng-show="$ctrl.cacheOptionsSelected[2]">
+                        <body>
                             <table id="third" flex>
                                 <tr>
                                     <td colspan="100%">
                                         <span>
-                                        Tag
+                                        Tag = {{$ctrl.tagSize(2)}} bits
                                         </span>
                                     </td>
                                 </tr>
@@ -182,7 +182,7 @@
                                 <tr>
                                     <td colspan="100%">
                                         <span>
-                                        Index
+                                        Index = {{$ctrl.indexSize(2)}} bits
                                         </span>
                                     </td>
                                 </tr>
@@ -196,7 +196,7 @@
                                 <tr>
                                     <td colspan="100%">
                                         <span>
-                                        Offset
+                                        Offset = {{$ctrl.offsetSize(2)}} bits
                                         </span>
                                     </td>
                                 </tr>
