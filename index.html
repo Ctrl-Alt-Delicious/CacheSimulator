@@ -33,7 +33,7 @@
             <div layout="space-between" flex="80">
                 <md-button ng-repeat="nav in navs"" ng-click="changeView($index)">{{nav.buttonTitle}}</md-button>
             </div>
-            <div layout="space-between" style="float:right">
+            <div layout="space-between">
                 <md-button ng-disabled="true">Policy: {{initialCacheInfo.policy}}</md-button>
                 <md-button ng-disabled="true">Block Size: {{initialCacheInfo.blockSize}}</md-button>
             </div>
