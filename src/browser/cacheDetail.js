@@ -12,6 +12,10 @@ function CacheDetailController($scope, SimDriver) {
 
     ctrl.cacheInfo = $scope.$parent.initialCacheInfo;
 
+    this.$onInit = () => {
+        console.log('detail init');
+    }
+
     ctrl.activeCache = 'L1';
     ctrl.maq = [];
     ctrl.index = 0;
@@ -50,11 +54,16 @@ function CacheDetailController($scope, SimDriver) {
         }
     });
 
-    ctrl.getAssociativity = function(event) {
-        return parseInt(ctrl.cacheInfo.caches[ctrl.index].associativity);
+    ctrl.getAssociativity = function() {
+        // we optionally return 1 since there associativity is set to 'Not Set' initially
+        // this is annoying problemt to solve since we have two ways to represent associativity,
+        // either by 'S' or the aformentioned var name. So instead of setting default value to both
+        // and hoping they are consistent with each other I rather error check when accessing this attribute
+        console.log("getting assoc");
+        return parseInt(ctrl.cacheInfo.caches[ctrl.index].associativity) || 1;
     };
 
-    ctrl.getIndicesSize = function(event) {
+    ctrl.getIndicesSize = function() {
         let cache = ctrl.cacheInfo.caches[ctrl.index];
         let C = cache.C;
         let S = cache.S;
@@ -62,7 +71,7 @@ function CacheDetailController($scope, SimDriver) {
         return Math.pow(2,C-S-B);
     };
 
-    ctrl.getBlockSize = function(event) {
+    ctrl.getBlockSize = function() {
         return Math.pow(2,ctrl.cacheInfo.B);
     };
 
