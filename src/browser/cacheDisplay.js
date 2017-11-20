@@ -19,7 +19,6 @@ function CacheDisplayController($scope) {
     ctrl.index = [1,0,0,1,1,0,0,1,0,0,0,1,1,0,1,1,1,0,1,1,0,0,1,0,0,0,1,1,0,1,1,0,0,0,1,1,0,1];
     ctrl.offset = [0,0,0,0,0,1,0,0,0,1,1,0,1,1,1,0,1,1,0,0,1,0,0,0,1,1,0,1,1,0,0,0,1,1,0,1];
     ctrl.fullyAssociative = [false,false,false];
-    ctrl.cacheOptionsSelected = [true,false,false];
     
 
     ctrl.tagSize = function(cacheIndex) {
