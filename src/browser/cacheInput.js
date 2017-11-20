@@ -200,8 +200,9 @@ function CacheInputController($scope, simDriver, fileParser) {
     };
 
     ctrl.stepForward = function() {
-        let val = ipcRenderer.sendSync('simAction', 'stepForward');
-        console.log('stepForward return value:', val);
+        let step = ipcRenderer.sendSync('simAction', 'stepForward');
+        console.log('stepForward return value:', step);
+        $scope.$emit('step', step);
     };
 
     ctrl.stepBackward = function() {

@@ -1,3 +1,5 @@
+const addressSize = 32;
+
 /**
  * Parses a line from the trace file and returns an object with the full address, tag, index, and offset
  * @param line
@@ -58,7 +60,7 @@ function mask(n) {
  * @returns {number}
  */
 function getTag(address, C, S) {
-    return (address >> C - S) & mask(31 - C - S);
+    return (address >> C - S) & mask(addressSize - 1 - C - S);
 }
 
 /**

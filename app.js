@@ -80,4 +80,8 @@ simulator.controller('IndexController', ['$scope', function($scope) {
     $scope.$on('inputUpdateCanvas', function(event, data) {
         $scope.$broadcast('displayUpdateCanvas');
     });
+
+    $scope.$on('step', (event, data) => {
+        $scope.$broadcast('updateModals', data);
+    });
 }]);
