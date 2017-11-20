@@ -26,9 +26,7 @@ function IndexController($scope) {
         buttonTitle: 'L1',
         active: true
     }
-    ];
-
-    $scope.detailNav = $scope.navs[0];
+    ];gstat
 
     ctrl.cacheInfo = {
         policy:  'FIFO',

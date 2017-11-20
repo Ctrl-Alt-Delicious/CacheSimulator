@@ -10,7 +10,7 @@
 <md-table-container>
   <table id="fillWidth">
     <tr>
-      <td ng-repeat="x in $ctrl.columns() track by $index">
+      <td ng-repeat="x in $ctrl.numColumns() track by $index">
         <table class="tableCollapse" md-table md-row-select multiple ng-model="selected" md-progress="promise">
           <thead md-head md-order="query.order">
             <tr md-row>
@@ -21,7 +21,7 @@
             </tr>
           </thead>
           <tbody md-body>
-            <tr md-row ng-repeat="x in [].constructor($ctrl.getIndicesSize()) track by $index">
+            <tr md-row ng-repeat="x in $ctrl.numRows() track by $index">
               <td class="index" md-cell> {{$index}} </td>
               <td md-cell  ng-click="$ctrl.openModal($event,'modal-' + $parent.$index + $index, 'modal-' + $parent.$index + $index + -tag)">
                 <span ng-attr-id="{{ 'modal-' + $parent.$index + $index + 'tag'}}"> {{$ctrl.modals[$ctrl.activeCache]['modal-' + $parent.$index + $index]['tag']}}</span>

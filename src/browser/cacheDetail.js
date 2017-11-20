@@ -54,9 +54,9 @@ function CacheDetailController($scope, SimDriver) {
         }
     });
 
-    ctrl.columns = () => {
+    ctrl.numColumns = () => {
         // we optionally return 1 since there associativity is set to 'Not Set' initially
-        // this is annoying problemt to solve since we have two ways to represent associativity,
+        // this is annoying problem to solve since we have two ways to represent associativity,
         // either by 'S' or the aformentioned var name. So instead of setting default value to both
         // and hoping they are consistent with each other I rather error check when accessing this attribute
 
@@ -65,12 +65,12 @@ function CacheDetailController($scope, SimDriver) {
         return new Array(s);
     };
 
-    ctrl.getIndicesSize = function() {
+    ctrl.numRows = () => {
         let cache = ctrl.cacheInfo.caches[ctrl.index];
         let C = cache.C;
         let S = cache.S;
         let B = ctrl.cacheInfo.B;
-        return Math.pow(2,C-S-B);
+        return new Array(Math.pow(2,C - S - B));
     };
 
     ctrl.getBlockSize = function() {
