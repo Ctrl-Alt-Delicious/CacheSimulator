@@ -10,7 +10,7 @@
 <md-table-container>
   <table id="fillWidth">
     <tr>
-      <td ng-repeat="x in range($ctrl.getAssociativity()) track by $index">
+      <td ng-repeat="x in $ctrl.columns() track by $index">
         <table class="tableCollapse" md-table md-row-select multiple ng-model="selected" md-progress="promise">
           <thead md-head md-order="query.order">
             <tr md-row>

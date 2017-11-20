@@ -54,13 +54,15 @@ function CacheDetailController($scope, SimDriver) {
         }
     });
 
-    ctrl.getAssociativity = function() {
+    ctrl.columns = () => {
         // we optionally return 1 since there associativity is set to 'Not Set' initially
         // this is annoying problemt to solve since we have two ways to represent associativity,
         // either by 'S' or the aformentioned var name. So instead of setting default value to both
         // and hoping they are consistent with each other I rather error check when accessing this attribute
-        console.log("getting assoc");
-        return parseInt(ctrl.cacheInfo.caches[ctrl.index].associativity) || 1;
+
+        let s = parseInt(ctrl.cacheInfo.caches[ctrl.index].associativity) || 0;
+        console.log('getting assoc', s, new Array(s));
+        return new Array(s);
     };
 
     ctrl.getIndicesSize = function() {
