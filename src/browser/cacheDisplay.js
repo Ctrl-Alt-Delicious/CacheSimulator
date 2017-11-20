@@ -23,17 +23,25 @@ function CacheDisplayController($scope) {
     
 
     ctrl.tagSize = function(cacheIndex) {
-        let cache = ctrl.cacheInfo.caches[cacheIndex];
-        let C = cache.C;
-        let S = cache.S;
-        return 32-C+S;
+        if (cacheIndex <= ctrl.cacheInfo.caches.length-1) {
+            let cache = ctrl.cacheInfo.caches[cacheIndex];
+            let C = cache.C;
+            let S = cache.S;
+            return 32-C+S;
+        } else {
+            return 0;
+        }
     }
 
     ctrl.indexSize = function(cacheIndex) {
-        let cache = ctrl.cacheInfo.caches[cacheIndex];
-        let C = cache.C;
-        let S = cache.S;
-        return C-S-ctrl.cacheInfo.B;
+        if (cacheIndex <= ctrl.cacheInfo.caches.length-1) {
+            let cache = ctrl.cacheInfo.caches[cacheIndex];
+            let C = cache.C;
+            let S = cache.S;
+            return C-S-ctrl.cacheInfo.B;
+        } else {
+            return 0;
+        }
     }
 
     ctrl.offsetSize = function(cacheIndex) {
