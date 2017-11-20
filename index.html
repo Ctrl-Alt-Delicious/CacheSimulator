@@ -38,7 +38,7 @@
                 <md-button ng-hide="hideParamLabels" ng-disabled="true">Block Size: {{initialCacheInfo.blockSize}}</md-button>
             </div>
         </div>
-        <cache-detail ng-show="!navs[0].active"></cache-detail>
+        <cache-detail ng-show="!detailNav"></cache-detail>
         <div id=display-container layout="row">
             <!-- <section id="main-display"> -->
                 <cache-display ng-show="navs[0].active" flex></cache-display>

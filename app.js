@@ -28,6 +28,8 @@ function IndexController($scope) {
     }
     ];
 
+    $scope.detailNav = $scope.navs[0];
+
     ctrl.cacheInfo = {
         policy:  'FIFO',
         blockSize:  32,
@@ -57,6 +59,7 @@ function IndexController($scope) {
     $scope.changeView = function(index) {
         for (let i = 0; i < $scope.navs.length; i++) {
             if (index === i) {
+                console.log('out of bounds?');
                 $scope.navs[i].active = true;
                 //Broadcast sends an event to child controllers/components
                 $scope.$broadcast('updatedNavs', $scope.navs[i], index-1);
@@ -75,6 +78,7 @@ function IndexController($scope) {
         ctrl.cacheInfo = data;
         let i = 1;
         for (let cache of ctrl.cacheInfo.caches) {
+            console.log('update cache info', i >= $scope.navs.length ? 'out of' : 'in', 'bounds');
             $scope.navs[i] = {
                 buttonTitle: cache.title
             };
