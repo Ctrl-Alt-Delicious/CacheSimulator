@@ -7,16 +7,13 @@ md-card-content {
   display: inline-block;
 }
 
-table {
-	float : left;
-}
-
 #third {
-	width: auto%;
+	float : left;
+	width: auto;
+	color: black;
 }
 
 td {
-	color: black;
     font-weight:bold;
     font-color:black;
     width : 10px;

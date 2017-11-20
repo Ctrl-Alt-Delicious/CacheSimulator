@@ -24,7 +24,7 @@
                         <md-card-title-media>
                             <div class="md-media-lg card-media"></div>
                         </md-card-title-media>
-                        <md-button ng-click="$ctrl.removeCache(0, $event)" ng-disabled="$ctrl.cacheInfo.disableDeleteCache"><i class="material-icons">delete</i></md-button>
+                        
 
                     </md-card-title>
                     <md-card-content>
@@ -73,6 +73,7 @@
                             </table>
                         
                     </md-card-content>
+                    <md-button ng-click="$ctrl.removeCache(0, $event)" ng-disabled="$ctrl.cacheInfo.disableDeleteCache"><i class="material-icons">delete</i></md-button>
                 </md-card>
                 <!--L2-->
                 <md-card id="L2" ng-show="$ctrl.cacheInfo.caches[1]" ng-click="$ctrl.clickCache(2)" flex>
@@ -92,8 +93,7 @@
                         <md-card-title-media>
                             <div class="md-media-lg card-media"></div>
                         </md-card-title-media>
-                        <md-button ng-click="$ctrl.removeCache(1, $event)" ng-disabled="$ctrl.cacheInfo.disableDeleteCache"><i class="material-icons">delete</i></md-button>
-                    </md-card-title>
+                        </md-card-title>
                     <md-card-content>
                         <body>
                             <table id="third" flex>
@@ -140,6 +140,7 @@
                             </table>
                         </body>
                     </md-card-content>
+                    <md-button ng-click="$ctrl.removeCache(1, $event)" ng-disabled="$ctrl.cacheInfo.disableDeleteCache"><i class="material-icons">delete</i></md-button>
                 </md-card>
             </div>
             <div id="canvas2" ng-controller="IndexController" layout="column">
@@ -160,7 +161,7 @@
                         <md-card-title-media>
                             <div class="md-media-lg card-media"></div>
                         </md-card-title-media>
-                        <md-button ng-click="$ctrl.removeCache(2, $event)" ng-disabled="$ctrl.cacheInfo.disableDeleteCache"><i class="material-icons">delete</i></md-button>
+                        
                     </md-card-title>
                     <md-card-content>
                         <body>
@@ -208,6 +209,7 @@
                             </table>
                         </body>
                     </md-card-content>
+                    <md-button ng-click="$ctrl.removeCache(2, $event)" ng-disabled="$ctrl.cacheInfo.disableDeleteCache"><i class="material-icons">delete</i></md-button>
                 </md-card>
             </div>
         </md-content>
