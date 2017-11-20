@@ -211,12 +211,16 @@ function CacheInputController($scope, simDriver, fileParser) {
     ctrl.pauseSimulation = function() {
         console.log('pauseSimulation return value:', ipcRenderer.sendSync('simAction', 'pause'));
         ctrl.hideMAQ = true;
+        // Send this to parent controller for the policy & block size labels
+        $scope.$emit('updateParamLabels', ctrl.hideMAQ)
     };
 
     ctrl.playSimulation = function() {
         console.log('runSimulation return value:', ipcRenderer.sendSync('simAction', 'play'));
         ctrl.hideRunSimButton = true;
         ctrl.hideMAQ = false;
+        // Send this to parent controller for the policy & block size labels
+        $scope.$emit('updateParamLabels', ctrl.hideMAQ)
     };
 
     ctrl.resetSimulation = function() {
