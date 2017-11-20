@@ -26,7 +26,7 @@ function IndexController($scope) {
         buttonTitle: 'L1',
         active: true
     }
-    ];gstat
+    ];
 
     ctrl.cacheInfo = {
         policy:  'FIFO',
