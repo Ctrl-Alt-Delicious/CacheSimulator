@@ -15,7 +15,6 @@ function CacheDetailController($scope, SimDriver) {
     ctrl.activeCache = 'L1';
     ctrl.maq = [];
     ctrl.index = 0;
-    ctrl.modals = {};
     ctrl.modals = {
         'L1' : {},
         'L2' : {},
@@ -33,7 +32,6 @@ function CacheDetailController($scope, SimDriver) {
     });
 
     $scope.$on('updateModals', function (event, data) {
-        console.log('updating modals', data);
         for (let action of data) {
             console.log(action);
             let cacheLevel = action.level;
@@ -95,7 +93,7 @@ function CacheDetailController($scope, SimDriver) {
     };
 
     window.onclick = function(event) {
-        if (event.target == modal) {
+        if (event.target === modal) {
             modal.style.display = 'none';
             activeCache.style.visibility = 'visible';
             modalOpen = false;

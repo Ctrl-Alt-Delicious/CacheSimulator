@@ -11,7 +11,11 @@ simulator.config(function($mdThemingProvider) {
         .accentPalette('blue-grey');
 });
 
-simulator.controller('IndexController', ['$scope', function($scope) {
+
+
+simulator.controller('IndexController', ['$scope', IndexController]);
+
+function IndexController($scope) {
     let ctrl = this;
 
     $scope.navs = [{
@@ -90,4 +94,4 @@ simulator.controller('IndexController', ['$scope', function($scope) {
     $scope.$on('step', (event, data) => {
         $scope.$broadcast('updateModals', data);
     });
-}]);
+}
