@@ -1,34 +1,61 @@
-function instruction(address, action) {
+const { parseAddress }= require('../common/addressParser');
+
+let B, mockActions, cache;
+
+function initSim(data) {
+    B = data.B;
+    cache = data.caches[0];
+    mockActions = [];
+}
+
+function mockRunSim(data) {
+    initSim(data);
+    mockActions = [[action(cache, '0x00000001', 0, 0, 0)], [action(cache, '0xddccbbaa', 0, 0, 0)]];
+    console.log(mockActions);
+}
+
+function action(cache, address, way, valid, dirty) {
+    let addressBreakdown = parseAddress(address, cache.C, cache.S, B);
+    let index = addressBreakdown.index.toString(10);
+    let tag = addressBreakdown.tag.toString(16);
     return {
-        address: address,
-        action: action,
+        level: cache.title,
+        way: way,
+        // need to know B
+        block: block(address, B),
+        index: index,
+        tag: tag,
+        valid: valid,
+        dirty: dirty,
     };
 }
 
-/*
-    a list of steps where each step contains a list of instructions
- */
-let mockInstructions = [
-    instruction('0xffffff', 'add'),
-    instruction('0xfffffff0', 'add'),
-    instruction('0xffffff00', 'add'),
-    instruction('0xffffffff', 'remove'),
-    instruction('0xffffff00', 'remove'),
-];
+function block(initAddress, B) {
+    let blockSize = Math.pow(2, B);
+    let address = parseInt(initAddress, 16);
+    address -= address % blockSize;
+    let block = [];
+
+    for (let i = 0; i < blockSize; i++, address++) {
+        block.push(address.toString(16));
+    }
+    return block;
+}
+
 
 // This is a generator. Yield is similar to return but it hangs after returning, the next time it is called the execution
 // continues and it increments i (modding to the length) and then yields again.
 // the star next to the function name declares this function as a generator
-function *nextInstructionGen() {
+function *nextActionGen() {
     let i = 0;
 
     while (true) {
-        yield mockInstructions[i];
-        i = (i + 1) % mockInstructions.length;
+        yield mockActions[i];
+        i = (i + 1) % mockActions.length;
     }
 }
 
-let gen = nextInstructionGen();
+let gen = nextActionGen();
 
 exports.mockStepForward = () => {
     return gen.next().value;
@@ -49,3 +76,5 @@ exports.mockPause = () => {
 exports.mockReset = () => {
     return 'reset';
 };
+
+exports.mockRunSim = mockRunSim;

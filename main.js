@@ -61,7 +61,7 @@ function createWindow() {
     }));
 
     // Open the DevTools.
-    // win.webContents.openDevTools()
+    // win.webContents.openDevTools();
 
     // Maximize Browser Window
     win.maximize();
@@ -101,9 +101,8 @@ function ipcListeners() {
         event.returnValue = sim[action]();
     });
 
-    ipcMain.on('runSimulation', (event, action) => {
+    ipcMain.on('runSimulation', (event, data) => {
         console.log('running simulation....');
-        // TODO: trigger the start of the simulation here
-        // event.sender.send(arrayOfStatesFromSimulator)
+        sim.runSim(data);
     });
 }

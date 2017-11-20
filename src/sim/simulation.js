@@ -355,3 +355,4 @@ exports.stepBackward = mockSim.mockStepBackward;
 exports.play = mockSim.mockPlay;
 exports.pause = mockSim.mockPause;
 exports.reset = mockSim.mockReset;
+exports.runSim = mockSim.mockRunSim;
