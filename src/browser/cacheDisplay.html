@@ -24,9 +24,56 @@
                         <md-card-title-media>
                             <div class="md-media-lg card-media"></div>
                         </md-card-title-media>
-                        <md-button ng-click="$ctrl.removeCache(0, $event)" ng-disabled="$ctrl.cacheInfo.disableDeleteCache"><i class="material-icons">delete</i></md-button>
+                        
 
                     </md-card-title>
+                    <md-card-content>
+                        
+                            <table id="third" flex>
+                                <tr>
+                                    <td colspan="100%">
+                                        <span>
+                                        Tag = {{$ctrl.tagSize(0)}} bits
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td ng-repeat="x in [].constructor($ctrl.tagSize(0)) track by $index">
+                                    {{$ctrl.tag[$index]}}
+                                    </td>
+                                </tr>
+                            </table>
+                            <table ng-hide="$ctrl.fullyAssociative[0]" id="third" flex>
+                                <tr>
+                                    <td colspan="100%">
+                                        <span>
+                                        Index = {{$ctrl.indexSize(0)}} bits
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td ng-repeat="x in [].constructor($ctrl.indexSize(0)) track by $index">
+                                    {{$ctrl.index[$index]}}
+                                    </td>
+                                </tr>
+                            </table>
+                            <table id="third" flex>
+                                <tr>
+                                    <td colspan="100%">
+                                        <span>
+                                        Offset = {{$ctrl.offsetSize(0)}} bits
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td ng-repeat="x in [].constructor($ctrl.offsetSize(0)) track by $index">
+                                    {{$ctrl.offset[$index]}}
+                                    </td>
+                                </tr>
+                            </table>
+                        
+                    </md-card-content>
+                    <md-button ng-click="$ctrl.removeCache(0, $event)" ng-disabled="$ctrl.cacheInfo.disableDeleteCache"><i class="material-icons">delete</i></md-button>
                 </md-card>
                 <!--L2-->
                 <md-card id="L2" ng-show="$ctrl.cacheInfo.caches[1]" ng-click="$ctrl.clickCache(2)" flex>
@@ -46,8 +93,54 @@
                         <md-card-title-media>
                             <div class="md-media-lg card-media"></div>
                         </md-card-title-media>
-                        <md-button ng-click="$ctrl.removeCache(1, $event)" ng-disabled="$ctrl.cacheInfo.disableDeleteCache"><i class="material-icons">delete</i></md-button>
-                    </md-card-title>
+                        </md-card-title>
+                    <md-card-content>
+                        <body>
+                            <table id="third" flex>
+                                <tr>
+                                    <td colspan="100%">
+                                        <span>
+                                        Tag = {{$ctrl.tagSize(1)}} bits
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td ng-repeat="x in [].constructor($ctrl.tagSize(1)) track by $index">
+                                    {{$ctrl.tag[$index]}}
+                                    </td>
+                                </tr>
+                            </table>
+                            <table ng-hide="$ctrl.fullyAssociative[1]" id="third" flex>
+                                <tr>
+                                    <td colspan="100%">
+                                        <span>
+                                        Index = {{$ctrl.indexSize(1)}} bits
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td ng-repeat="x in [].constructor($ctrl.indexSize(1)) track by $index">
+                                    {{$ctrl.index[$index]}}
+                                    </td>
+                                </tr>
+                            </table>
+                            <table id="third" flex>
+                                <tr>
+                                    <td colspan="100%">
+                                        <span>
+                                        Offset = {{$ctrl.offsetSize(1)}} bits
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td ng-repeat="x in [].constructor($ctrl.offsetSize(1)) track by $index">
+                                    {{$ctrl.offset[$index]}}
+                                    </td>
+                                </tr>
+                            </table>
+                        </body>
+                    </md-card-content>
+                    <md-button ng-click="$ctrl.removeCache(1, $event)" ng-disabled="$ctrl.cacheInfo.disableDeleteCache"><i class="material-icons">delete</i></md-button>
                 </md-card>
             </div>
             <div id="canvas2" ng-controller="IndexController" layout="column">
@@ -68,8 +161,55 @@
                         <md-card-title-media>
                             <div class="md-media-lg card-media"></div>
                         </md-card-title-media>
-                        <md-button ng-click="$ctrl.removeCache(2, $event)" ng-disabled="$ctrl.cacheInfo.disableDeleteCache"><i class="material-icons">delete</i></md-button>
+                        
                     </md-card-title>
+                    <md-card-content>
+                        <body>
+                            <table id="third" flex>
+                                <tr>
+                                    <td colspan="100%">
+                                        <span>
+                                        Tag = {{$ctrl.tagSize(2)}} bits
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td ng-repeat="x in [].constructor($ctrl.tagSize(2)) track by $index">
+                                    {{$ctrl.tag[$index]}}
+                                    </td>
+                                </tr>
+                            </table>
+                            <table ng-hide="$ctrl.fullyAssociative[2]" id="third" flex>
+                                <tr>
+                                    <td colspan="100%">
+                                        <span>
+                                        Index = {{$ctrl.indexSize(2)}} bits
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td ng-repeat="x in [].constructor($ctrl.indexSize(2)) track by $index">
+                                    {{$ctrl.index[$index]}}
+                                    </td>
+                                </tr>
+                            </table>
+                            <table id="third" flex>
+                                <tr>
+                                    <td colspan="100%">
+                                        <span>
+                                        Offset = {{$ctrl.offsetSize(2)}} bits
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td ng-repeat="x in [].constructor($ctrl.offsetSize(2)) track by $index">
+                                    {{$ctrl.offset[$index]}}
+                                    </td>
+                                </tr>
+                            </table>
+                        </body>
+                    </md-card-content>
+                    <md-button ng-click="$ctrl.removeCache(2, $event)" ng-disabled="$ctrl.cacheInfo.disableDeleteCache"><i class="material-icons">delete</i></md-button>
                 </md-card>
             </div>
         </md-content>

@@ -42,8 +42,8 @@ function CacheInputController($scope, simDriver, fileParser) {
                 size: 'Not Set',
                 associativity: 'Not Set',
                 active: true,
-                C: 1,
-                S: 1
+                C: 10,
+                S: 0    
             });
         }
         ctrl.cacheInfo.caches = caches;

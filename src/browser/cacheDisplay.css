@@ -2,3 +2,23 @@
     background-color:#d9d9d9;
     font-weight:bold;
 }
+
+md-card-content {
+  display: inline-block;
+}
+
+#third {
+	float : left;
+	width: auto;
+	color: black;
+}
+
+td {
+    font-weight:bold;
+    font-color:black;
+    width : 10px;
+}
+
+th {
+	width : 22px;
+}
