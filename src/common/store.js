@@ -2,6 +2,8 @@ const electron = require('electron');
 const path = require('path');
 const fs = require('fs');
 
+const defaultConfig = require('./default-config.json');
+
 class Store {
     /**
      * constructs data and file path for some user data that is saved to an OS specific place save from any updates
@@ -32,6 +34,15 @@ class Store {
     }
 
     /**
+     * returns True if the key is in the data
+     * @param key
+     * @returns {boolean} if data has key
+     */
+    has(key) {
+        return this.data.hasOwnProperty(key);
+    }
+
+    /**
      * Sets some data then saves to the file
      * @param key
      * @param value
@@ -50,6 +61,31 @@ class Store {
         this.data = data;
         fs.writeFileSync(this.path, JSON.stringify(this.data));
     }
+
+    /**
+     * updates the local data structure based on the data in this Store object
+     * @param localData compatible data structure that is a superset of the Store object's data
+     */
+    updateLocalFromStore(localData) {
+        console.log('updating');
+        this._dataWalk(localData, this.data);
+    }
+
+    /**
+     * recursively tracerses store data and checks if the key is in both the local and stored data set
+     * @param localData
+     * @param storeData
+     * @private
+     */
+    _dataWalk(localData, storeData){
+        for (let key in storeData) {
+            if (storeData.hasOwnProperty(key)) {
+                let value = storeData[key];
+                console.log('key', key, 'value', value);
+                this._dataWalk(value);
+            }
+        }
+    }
 }
 
 function parseDataFile(filePath, defaults) {
@@ -63,4 +99,10 @@ function parseDataFile(filePath, defaults) {
     }
 }
 
-module.exports = Store;
+const settingsStore = new Store({
+    configName: 'user-config',
+    defaults: defaultConfig
+});
+
+module.exports.Store = Store;
+module.exports.settingsStore = settingsStore;
