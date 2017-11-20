@@ -28,7 +28,7 @@ simulator.controller('IndexController', ['$scope', function($scope) {
         policy:  'FIFO',
         blockSize:  32,
         fileName:  '',
-        B:  '',
+        B:  5,
         policySet:  true,
         blockSizeSet:  false,
         disableDeleteCache:  true,

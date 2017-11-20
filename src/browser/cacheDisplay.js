@@ -14,6 +14,46 @@ function CacheDisplayController($scope) {
     let ctrl = this;
 
     ctrl.cacheInfo = $scope.$parent.initialCacheInfo;
+
+    ctrl.tag = [1,0,1,1,0,0,1,0,0,0,1,1,0,1,1,0,1,1,0,0,1,0,0,0,1,1,0,1,1,0,0,0,1,1,0,1];
+    ctrl.index = [1,0,0,1,1,0,0,1,0,0,0,1,1,0,1,1,1,0,1,1,0,0,1,0,0,0,1,1,0,1,1,0,0,0,1,1,0,1];
+    ctrl.offset = [0,0,0,0,0,1,0,0,0,1,1,0,1,1,1,0,1,1,0,0,1,0,0,0,1,1,0,1,1,0,0,0,1,1,0,1];
+    ctrl.fullyAssociative = [false,false,false];
+    ctrl.cacheOptionsSelected = [true,false,false];
+    
+
+    ctrl.tagSize = function(cacheIndex) {
+        let cache = ctrl.cacheInfo.caches[cacheIndex];
+        let C = cache.C;
+        let S = cache.S;
+        return 31-C-S;
+    }
+
+    ctrl.indexSize = function(cacheIndex) {
+        let cache = ctrl.cacheInfo.caches[cacheIndex];
+        let C = cache.C;
+        let S = cache.S;
+        return C-S-ctrl.cacheInfo.B;
+    }
+
+    ctrl.offsetSize = function(cacheIndex) {
+        return ctrl.cacheInfo.B;
+    }
+
+    //Should return array containing bits in tag of address
+    ctrl.getTag = function(event, address) {
+        return null;
+    }
+
+    //Should return array containing bits in index of address
+    ctrl.getIndex = function(event, address) {
+        return null;
+    }
+
+    //Should return array containing bits in offset of address
+    ctrl.getOffset = function(event, address) {
+        return null;
+    }
     
     ctrl.clickCache = function(index) {
         $scope.$parent.changeView(index);
@@ -63,7 +103,41 @@ function CacheDisplayController($scope) {
 
     $scope.$on('cacheInfoUpdated', function(event, data) {
         ctrl.cacheInfo = data;
+        ctrl.fullyAssociative = checkFullyAssociative();
+        ctrl.cacheOptionsSelected = checkCacheOptions();
     });
+
+    function checkFullyAssociative() {
+        let fullyAssociative = ctrl.fullyAssociative;
+        let caches = ctrl.cacheInfo.caches;
+        for (let i = 0; i < ctrl.cacheInfo.caches.length; i++) {
+            let C = caches[i].C;
+            let S = caches[i].S;
+            if (C-S-B === 0) {
+                fullyAssociative[i] = true;
+            } else {
+                fullyAssociative[i] = false;
+            }
+        }
+        return fullyAssociative;
+    }
+
+        function checkCacheOptions() {
+        let cacheOptions = ctrl.cacheOptionsSelected;
+        let caches = ctrl.cacheInfo.caches;
+        for (let i = 0; i < ctrl.cacheInfo.caches.length; i++) {
+            let C = caches[i].C;
+            let S = caches[i].S;
+            if (typeof C !== "undefined" && typeof S !== "undefined") {
+                cacheOptions[i] = true
+            } else {
+                cacheOptions[i] = false;
+            }
+        }
+        return cacheOptions;
+    }
+
+
 
 
     // Here is the code that updates the canvas based on cache sizes    

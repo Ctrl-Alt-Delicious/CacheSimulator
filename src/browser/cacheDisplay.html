@@ -28,7 +28,50 @@
 
                     </md-card-title>
                     <md-card-content>
-                        <address-breakdown> </address-breakdown>
+                        
+                            <table id="third" flex>
+                                <tr>
+                                    <td colspan="100%">
+                                        <span>
+                                        Tag
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td ng-repeat="x in [].constructor($ctrl.tagSize(0)) track by $index">
+                                    {{$ctrl.tag[$index]}}
+                                    </td>
+                                </tr>
+                            </table>
+                            <table ng-hide="$ctrl.fullyAssociative[0]" id="third" flex>
+                                <tr>
+                                    <td colspan="100%">
+                                        <span>
+                                        Index
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td ng-repeat="x in [].constructor($ctrl.indexSize(0)) track by $index">
+                                    {{$ctrl.index[$index]}}
+                                    </td>
+                                </tr>
+                            </table>
+                            <table id="third" flex>
+                                <tr>
+                                    <td colspan="100%">
+                                        <span>
+                                        Offset
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td ng-repeat="x in [].constructor($ctrl.offsetSize(0)) track by $index">
+                                    {{$ctrl.offset[$index]}}
+                                    </td>
+                                </tr>
+                            </table>
+                        
                     </md-card-content>
                 </md-card>
                 <!--L2-->
@@ -52,7 +95,50 @@
                         <md-button ng-click="$ctrl.removeCache(1, $event)" ng-disabled="$ctrl.cacheInfo.disableDeleteCache"><i class="material-icons">delete</i></md-button>
                     </md-card-title>
                     <md-card-content>
-                        <address-breakdown> </address-breakdown>
+                        <body ng-show="$ctrl.cacheOptionsSelected[1]">
+                            <table id="third" flex>
+                                <tr>
+                                    <td colspan="100%">
+                                        <span>
+                                        Tag
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td ng-repeat="x in [].constructor($ctrl.tagSize(1)) track by $index">
+                                    {{$ctrl.tag[$index]}}
+                                    </td>
+                                </tr>
+                            </table>
+                            <table ng-hide="$ctrl.fullyAssociative[1]" id="third" flex>
+                                <tr>
+                                    <td colspan="100%">
+                                        <span>
+                                        Index
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td ng-repeat="x in [].constructor($ctrl.indexSize(1)) track by $index">
+                                    {{$ctrl.index[$index]}}
+                                    </td>
+                                </tr>
+                            </table>
+                            <table id="third" flex>
+                                <tr>
+                                    <td colspan="100%">
+                                        <span>
+                                        Offset
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td ng-repeat="x in [].constructor($ctrl.offsetSize(1)) track by $index">
+                                    {{$ctrl.offset[$index]}}
+                                    </td>
+                                </tr>
+                            </table>
+                        </body>
                     </md-card-content>
                 </md-card>
             </div>
@@ -77,7 +163,50 @@
                         <md-button ng-click="$ctrl.removeCache(2, $event)" ng-disabled="$ctrl.cacheInfo.disableDeleteCache"><i class="material-icons">delete</i></md-button>
                     </md-card-title>
                     <md-card-content>
-                        <address-breakdown> </address-breakdown>
+                        <body ng-show="$ctrl.cacheOptionsSelected[2]">
+                            <table id="third" flex>
+                                <tr>
+                                    <td colspan="100%">
+                                        <span>
+                                        Tag
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td ng-repeat="x in [].constructor($ctrl.tagSize(2)) track by $index">
+                                    {{$ctrl.tag[$index]}}
+                                    </td>
+                                </tr>
+                            </table>
+                            <table ng-hide="$ctrl.fullyAssociative[2]" id="third" flex>
+                                <tr>
+                                    <td colspan="100%">
+                                        <span>
+                                        Index
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td ng-repeat="x in [].constructor($ctrl.indexSize(2)) track by $index">
+                                    {{$ctrl.index[$index]}}
+                                    </td>
+                                </tr>
+                            </table>
+                            <table id="third" flex>
+                                <tr>
+                                    <td colspan="100%">
+                                        <span>
+                                        Offset
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td ng-repeat="x in [].constructor($ctrl.offsetSize(2)) track by $index">
+                                    {{$ctrl.offset[$index]}}
+                                    </td>
+                                </tr>
+                            </table>
+                        </body>
                     </md-card-content>
                 </md-card>
             </div>
