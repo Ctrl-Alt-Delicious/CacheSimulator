@@ -18,9 +18,12 @@ function CacheInputController($scope, simDriver, fileParser) {
     ctrl.hideControlButtons = true;
     ctrl.hideMAQ = true;
 
+    ctrl.simPlaying = 0;
+
     ctrl.cacheInfo = $scope.$parent.initialCacheInfo;
     ctrl.currentMemQueueIndex = 0;
     ctrl.currentMemQueue = null;
+    ctrl.speedRating = 1;
 
     let B_min = 3, B_max = 7;
 
@@ -204,8 +207,11 @@ function CacheInputController($scope, simDriver, fileParser) {
         // Increment memory address queue index
         if (ctrl.currentMemQueueIndex < $scope.$parent.memQueue.length - 1) {
             ctrl.currentMemQueueIndex++;
+        } else {
+            window.clearInterval(ctrl.simPlaying);  // stop sim if necessary
         }
         ctrl.updateCurrentMemQueue();
+        $scope.$digest();  // this is needed to have the render update when the sim is playing
     };
 
     ctrl.stepBackward = function() {
@@ -214,28 +220,40 @@ function CacheInputController($scope, simDriver, fileParser) {
         if (ctrl.currentMemQueueIndex > 0) {
             ctrl.currentMemQueueIndex--;
         }
+        window.clearInterval(ctrl.simPlaying);  // stop sim if necessary
         ctrl.updateCurrentMemQueue();
     };
 
     ctrl.pauseSimulation = function() {
         console.log('pauseSimulation return value:', ipcRenderer.sendSync('simAction', 'pause'));
-        ctrl.hideMAQ = true;
+        window.clearInterval(ctrl.simPlaying);  // stop sim if necessary
         // Send this to parent controller for the policy & block size labels
-        $scope.$emit('updateParamLabels', ctrl.hideMAQ)
+        $scope.$emit('updateParamLabels', ctrl.hideMAQ);
     };
 
     ctrl.playSimulation = function() {
         console.log('runSimulation return value:', ipcRenderer.sendSync('simAction', 'play'));
         ctrl.hideRunSimButton = true;
         ctrl.hideMAQ = false;
+
         // Send this to parent controller for the policy & block size labels
-        $scope.$emit('updateParamLabels', ctrl.hideMAQ)
+        $scope.$emit('updateParamLabels', ctrl.hideMAQ);
+
+        // This sends repeated calls to stepForward to "play" the simulation
+        // Use window.clearInterval(ctrl.simPlaying) to stop it
+        let timeInterval = (1.0 / parseFloat(ctrl.speedRating)) * 1000;  // time in ms
+        ctrl.simPlaying = window.setInterval(ctrl.stepForward, timeInterval);
     };
 
     ctrl.resetSimulation = function() {
         console.log('resetSimulation return value:', ipcRenderer.sendSync('simAction', 'reset'));
+        ctrl.currentMemQueueIndex = 0;
+        ctrl.hideMAQ = true;
+        window.clearInterval(ctrl.simPlaying);  // stop sim if necessary
+        ctrl.updateCurrentMemQueue();
     };
 
+    // Sets the current address/action in the memory access queue based on index
     ctrl.updateCurrentMemQueue = function() {
         ctrl.currentMemQueue = $scope.$parent.memQueue[ctrl.currentMemQueueIndex];
     }
