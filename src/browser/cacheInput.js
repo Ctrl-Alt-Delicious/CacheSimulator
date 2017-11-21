@@ -19,6 +19,8 @@ function CacheInputController($scope, simDriver, fileParser) {
     ctrl.hideMAQ = true;
 
     ctrl.cacheInfo = $scope.$parent.initialCacheInfo;
+    ctrl.currentMemQueueIndex = 0;
+    ctrl.currentMemQueue = null;
 
     let B_min = 3, B_max = 7;
 
@@ -185,10 +187,6 @@ function CacheInputController($scope, simDriver, fileParser) {
         $scope.selectedRow = index;
     };
 
-    // var emitCacheInfo = function() {
-    //     $scope.emit('updateCacheInfo', ctrl.cacheInfo);
-    // }
-
     $scope.$on('cacheInfoUpdated', function(event, data) {
         ctrl.cacheInfo = data;
     });
@@ -203,10 +201,20 @@ function CacheInputController($scope, simDriver, fileParser) {
         let step = ipcRenderer.sendSync('simAction', 'stepForward');
         console.log('stepForward return value:', step);
         $scope.$emit('step', step);
+        // Increment memory address queue index
+        if (ctrl.currentMemQueueIndex < $scope.$parent.memQueue.length - 1) {
+            ctrl.currentMemQueueIndex++;
+        }
+        ctrl.updateCurrentMemQueue();
     };
 
     ctrl.stepBackward = function() {
         console.log('stepBackward return value:', ipcRenderer.sendSync('simAction', 'stepBackward'));
+        // Decrement memory address queue index
+        if (ctrl.currentMemQueueIndex > 0) {
+            ctrl.currentMemQueueIndex--;
+        }
+        ctrl.updateCurrentMemQueue();
     };
 
     ctrl.pauseSimulation = function() {
@@ -227,6 +235,10 @@ function CacheInputController($scope, simDriver, fileParser) {
     ctrl.resetSimulation = function() {
         console.log('resetSimulation return value:', ipcRenderer.sendSync('simAction', 'reset'));
     };
+
+    ctrl.updateCurrentMemQueue = function() {
+        ctrl.currentMemQueue = $scope.$parent.memQueue[ctrl.currentMemQueueIndex];
+    }
 
     init();
 }

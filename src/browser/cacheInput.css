@@ -32,3 +32,9 @@
 #hide-sidebar {
 	min-height: 430px;
 }
+
+/* Sets the color for the background of the selected table row*/
+.selected {
+    background-color: rgb(33,150,243) !important;
+    font-weight:bold;
+}
