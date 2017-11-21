@@ -45,6 +45,8 @@ simulator.controller('IndexController', ['$scope', function($scope) {
         }]
     };
 
+    $scope.hideParamLabels = true;
+
     $scope.initialCacheInfo = ctrl.cacheInfo;
 
 
@@ -75,6 +77,10 @@ simulator.controller('IndexController', ['$scope', function($scope) {
             i++;
         }
         $scope.$broadcast('cacheInfoUpdated', ctrl.cacheInfo);
+    });
+
+    $scope.$on('updateParamLabels', function(event, data) {
+        $scope.hideParamLabels = data;
     });
 
     $scope.$on('inputUpdateCanvas', function(event, data) {
