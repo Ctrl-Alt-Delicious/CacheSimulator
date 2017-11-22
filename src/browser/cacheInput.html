@@ -56,7 +56,7 @@
                 </md-tab>
             </md-tabs>
 
-            <!-- Memory Access Queue -->
+            <!-- Upload & Run Simulation Button -->
             <md-content layout="row" layout-align="space-around center">
                 <md-subheader class="md-no-sticky">{{$ctrl.cacheInfo.fileName}}</md-subheader>
                 <md-button id="upload-button" class="md-primary md-raised" ng-click="$ctrl.handleUpload()" type="submit">Upload</md-button>
@@ -66,11 +66,11 @@
             <!-- Control Flow Buttons -->
             <div id="control-flow-buttons" ng-hide="$ctrl.hideControlButtons">
                 <md-content layout="row" layout-align="space-around center">
-                    <md-button class="md-icon-button" ng-disabled="$ctrl.fileName.length == 0" ng-click= "$ctrl.stepBackward();"><i class="material-icons">skip_previous</i></md-button>
-                    <md-button class="md-icon-button" ng-disabled="$ctrl.fileName.length == 0" ng-click= "$ctrl.pauseSimulation(); $ctrl.showSideBar();"><i class="material-icons">pause</i></md-button>
-                    <md-button class="md-icon-button" ng-disabled="$ctrl.fileName.length == 0" ng-click= "$ctrl.playSimulation(); $ctrl.hideSideBar();"><i class="material-icons">play_arrow</i></md-button>
-                    <md-button class="md-icon-button" ng-disabled="$ctrl.fileName.length == 0" ng-click= "$ctrl.stepForward();"><i class="material-icons">skip_next</i></md-button>
-                    <md-button class="md-icon-button" ng-disabled="$ctrl.fileName.length == 0" ng-click= "$ctrl.resetSimulation();"><i class="material-icons">replay</i></md-button>
+                    <md-button class="md-icon-button" ng-disabled="$ctrl.hideMAQ" ng-click= "$ctrl.stepBackward();"><i class="material-icons">skip_previous</i></md-button>
+                    <md-button class="md-icon-button" ng-disabled="$ctrl.hideMAQ" ng-click= "$ctrl.pauseSimulation();"><i class="material-icons">pause</i></md-button>
+                    <md-button class="md-icon-button" ng-click= "$ctrl.playSimulation(); $ctrl.hideSideBar();"><i class="material-icons">play_arrow</i></md-button>
+                    <md-button class="md-icon-button" ng-disabled="$ctrl.hideMAQ" ng-click= "$ctrl.stepForward();"><i class="material-icons">skip_next</i></md-button>
+                    <md-button class="md-icon-button" ng-disabled="$ctrl.hideMAQ" ng-click= "$ctrl.resetSimulation(); $ctrl.showSideBar();"><i class="material-icons">replay</i></md-button>
                 </md-content>
                 <md-content id="speed-controls" layout="row" layout-align="center">
                     <div layout layout-align="center center">
@@ -94,12 +94,17 @@
                       </tr>
                     </thead>
                     <tbody md-body>
-                      <tr md-row ng-repeat="item in $parent.memQueue" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index)">
+                      <tr md-row ng-repeat="item in $parent.memQueue" ng-class="{'selected':$index == $ctrl.currentMemQueueIndex}">
                           <td md-cell>{{item.address}}</td>
                         <td md-cell>{{item.action}}</td>
                       </tr>
                     </tbody>
                 </table>
             </md-table-container>
+
+            <!-- This is really only for debugging purposes -->
+            <md-subheader>Current Instruction</md-subheader>
+            <md-subheader>Address: {{$ctrl.currentMemQueue.address}}</md-subheader>
+            <md-subheader>Action: {{$ctrl.currentMemQueue.action}}</md-subheader>
     </div>
 </body>
