@@ -85,7 +85,7 @@ function CacheDisplayController($scope) {
         }
         $scope.showL3();
         $scope.updateCacheCanvas();
-        $scope.emit('updateCacheInfo', ctrl.cacheInfo);
+        $scope.$emit('updateCacheInfo', ctrl.cacheInfo);
     };
 
     // ipcRenderer.on('fileNameReceived', (e, fPath) => {
