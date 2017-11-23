@@ -76,7 +76,6 @@ function IndexController($scope) {
         ctrl.cacheInfo = data;
         let i = 1;
         for (let cache of ctrl.cacheInfo.caches) {
-            console.log('update cache info', i >= $scope.navs.length ? 'out of' : 'in', 'bounds');
             $scope.navs[i] = {
                 buttonTitle: cache.title
             };
