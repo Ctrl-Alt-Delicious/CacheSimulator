@@ -11,7 +11,11 @@ simulator.config(function($mdThemingProvider) {
         .accentPalette('blue-grey');
 });
 
-simulator.controller('IndexController', ['$scope', function($scope) {
+
+
+simulator.controller('IndexController', ['$scope', IndexController]);
+
+function IndexController($scope) {
     let ctrl = this;
 
     $scope.navs = [{
@@ -53,6 +57,7 @@ simulator.controller('IndexController', ['$scope', function($scope) {
     $scope.changeView = function(index) {
         for (let i = 0; i < $scope.navs.length; i++) {
             if (index === i) {
+                console.log('out of bounds?');
                 $scope.navs[i].active = true;
                 //Broadcast sends an event to child controllers/components
                 $scope.$broadcast('updatedNavs', $scope.navs[i], index-1);
@@ -90,4 +95,4 @@ simulator.controller('IndexController', ['$scope', function($scope) {
     $scope.$on('step', (event, data) => {
         $scope.$broadcast('updateModals', data);
     });
-}]);
+}

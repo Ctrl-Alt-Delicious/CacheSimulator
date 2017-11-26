@@ -6,7 +6,7 @@
     <div ng-cloak>
         <!--Cache Display-->
         <md-content layout="column" layout-padding md-theme="docs-dark" flex>
-            <div id="canvas1" ng-app="Simulator" ng-controller="IndexController" layout="row" flex>
+            <div id="canvas1" layout="row" flex>
                 <!--L1-->
                 <md-card id="L1" ng-show="$ctrl.cacheInfo.caches[0]" ng-click="$ctrl.clickCache(1)" flex>
                     <md-card-title layout="column">
@@ -143,7 +143,7 @@
                     <md-button ng-click="$ctrl.removeCache(1, $event)" ng-disabled="$ctrl.cacheInfo.disableDeleteCache"><i class="material-icons">delete</i></md-button>
                 </md-card>
             </div>
-            <div id="canvas2" ng-controller="IndexController" layout="column">
+            <div id="canvas2" layout="column">
                 <!--L3-->
                 <md-card id="L3" ng-show="$ctrl.cacheInfo.caches[2]" ng-click="$ctrl.clickCache(3)" flex>
                     <md-card-title layout="column">

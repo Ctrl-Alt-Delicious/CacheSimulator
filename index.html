@@ -31,7 +31,7 @@
     <div ng-controller="IndexController" layout="column">
         <div layout="row">
             <div layout="space-between" flex="80">
-                <md-button ng-repeat="nav in navs"" ng-click="changeView($index)">{{nav.buttonTitle}}</md-button>
+                <md-button ng-repeat="nav in navs" ng-click="changeView($index)">{{nav.buttonTitle}}</md-button>
             </div>
             <div layout="space-between">
                 <md-button ng-hide="hideParamLabels" ng-disabled="true">Policy: {{initialCacheInfo.policy}}</md-button>
