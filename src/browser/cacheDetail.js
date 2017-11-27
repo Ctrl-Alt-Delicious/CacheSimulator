@@ -12,9 +12,12 @@ function CacheDetailController($scope, SimDriver) {
 
     ctrl.cacheInfo = $scope.$parent.initialCacheInfo;
 
+    ctrl.posInQueue = 0;
+    ctrl.overallAge = 0;
     ctrl.activeCache = 'L1';
     ctrl.maq = [];
     ctrl.index = 0;
+    ctrl.modals = {};
     ctrl.modals = {
         'L1' : {},
         'L2' : {},
@@ -32,8 +35,11 @@ function CacheDetailController($scope, SimDriver) {
     });
 
     $scope.$on('updateModals', function (event, data) {
+        console.log('updating modals', data);
+        ctrl.overallAge++;
         for (let action of data) {
             console.log(action);
+            let address = action.address
             let cacheLevel = action.level;
             let way = action.way;
             let index = action.index;
@@ -41,35 +47,189 @@ function CacheDetailController($scope, SimDriver) {
             let block = action.block; //Array of memory addresses associated with given tag
             let valid = action.valid;
             let dirty = action.dirty;
-            ctrl.modals[cacheLevel]['modal-'+way+index] = {
-                'tag' : tag,
-                'block' : block,
-                'valid' : valid,
-                'dirty' : dirty
-            };
+            let age = ctrl.overallAge;
+            let position = document.getElementById(index.toString());
+            if (ctrl.modals[cacheLevel]['modal-'+way+index] == null) {
+                position.style.backgroundColor = "#7FFF00";
+                let span = position.getElementsByTagName('span');
+                span[0].innerHTML = tag;
+                ctrl.modals[cacheLevel]['modal-'+way+index] = {
+                    'tag' : tag,
+                    'block' : block,
+                    'valid' : valid,
+                    'dirty' : dirty,
+                    'age' : age,
+                    'fu' : 0,
+                    'pos' : ctrl.posInQueue++,
+                };
+            } else {
+                if (ctrl.modals[cacheLevel]['modal-'+way+index]['tag'] == tag) {
+                    position.style.backgroundColor = "#6767FF";
+                    let span = position.getElementsByTagName('span');
+                    span[0].innerHTML = tag;
+                    let fu = ctrl.modals[cacheLevel]['modal-'+way+index]['fu'];
+                    ctrl.modals[cacheLevel]['modal-'+way+index] = {
+                        'tag' : tag,
+                        'block' : block,
+                        'valid' : valid,
+                        'dirty' : dirty,
+                        'age' : age,
+                        'fu' : fu + 1,
+                        'pos' : ctrl.posInQueue,
+                    };
+                    return;
+                }
+                let numWays = ctrl.getAssociativity();
+                let checker = true;
+                while (way < (numWays - 1)) {
+                    way++;
+                    if (ctrl.modals[cacheLevel]['modal-'+way+index] == null) {
+                        let correctIndex = (ctrl.getIndicesSize() * parseInt(way)) + parseInt(index);
+                        position = document.getElementById(correctIndex.toString());
+                        position.style.backgroundColor = "#7FFF00";
+                        let span = position.getElementsByTagName('span');
+                        span[0].innerHTML = tag;
+                        ctrl.modals[cacheLevel]['modal-'+way+index] = {
+                            'tag' : tag,
+                            'block' : block,
+                            'valid' : valid,
+                            'dirty' : dirty,
+                            'age' : age,
+                            'fu' : 0,
+                            'pos' : ctrl.posInQueue++,
+                        };
+                        checker = false;
+                        break;
+                    }
+                }
+                if (checker) {
+                    way = action.way;
+                    let policy = ctrl.cacheInfo.policy;
+
+                    if (policy == "LRU") {
+                        let size = ctrl.getIndicesSize();
+                        let numWays = ctrl.getAssociativity();
+                        let youngest = age;
+                        let aIndex = 0;
+                        let aWay = 0;
+                        while (way < numWays) {
+                            for (let i = 0; i < size; i++) {
+                                let aPos = ctrl.modals[cacheLevel]['modal-'+way+i];
+                                if (aPos != null) {
+                                    if (aPos['age'] < youngest) {
+                                        youngest = aPos['age'];
+                                        aIndex = i;
+                                        aWay = way;
+                                    }
+                                }
+                            }
+                            way++;
+                        }
+                        let correctIndex = (ctrl.getIndicesSize() * parseInt(aWay)) + parseInt(aIndex);
+                        position = document.getElementById(correctIndex.toString());
+                        position.style.backgroundColor = "#FF7F7F";
+                        let span = position.getElementsByTagName('span');
+                        span[0].innerHTML = tag;
+                        let fu = ctrl.modals[cacheLevel]['modal-'+aWay+aIndex]['fu'];
+                        ctrl.modals[cacheLevel]['modal-'+aWay+aIndex] = {
+                            'tag' : tag,
+                            'block' : block,
+                            'valid' : valid,
+                            'dirty' : dirty,
+                            'age' : age,
+                            'fu' : fu + 1,
+                            'pos' : ctrl.posInQueue++,
+                        };
+                    }
+                    if (policy == "LFU") {
+                        let size = ctrl.getIndicesSize();
+                        let numWays = ctrl.getAssociativity();
+                        let lfu = age; //age will always be >= lfu;
+                        let aIndex = 0;
+                        let aWay = 0;
+                        while (way < numWays) {
+                            for (let i = 0; i < size; i++) {
+                                let aPos = ctrl.modals[cacheLevel]['modal-'+way+i];
+                                if (aPos != null) {
+                                    if (aPos['fu'] < lfu) {
+                                        lfu = aPos['fu'];
+                                        aIndex = i;
+                                        aWay = way;
+                                    }
+                                }
+                            }
+                            way++;
+                        }
+                        let correctIndex = (ctrl.getIndicesSize() * parseInt(aWay)) + parseInt(aIndex);
+                        position = document.getElementById(correctIndex.toString());
+                        position.style.backgroundColor = "#FF7F7F";
+                        let span = position.getElementsByTagName('span');
+                        span[0].innerHTML = tag;
+                        let fu = ctrl.modals[cacheLevel]['modal-'+aWay+aIndex]['fu'];
+                        ctrl.modals[cacheLevel]['modal-'+aWay+aIndex] = {
+                            'tag' : tag,
+                            'block' : block,
+                            'valid' : valid,
+                            'dirty' : dirty,
+                            'age' : age,
+                            'fu' : fu + 1,
+                            'pos' : ctrl.posInQueue++,
+                        };
+                    }
+                    if (policy == "FIFO") {
+                        let size = ctrl.getIndicesSize();
+                        let numWays = ctrl.getAssociativity();
+                        let firstPos = ctrl.posInQueue; //age will always be >= lfu;
+                        let aIndex = 0;
+                        let aWay = 0;
+                        while (way < numWays) {
+                            for (let i = 0; i < size; i++) {
+                                let aPos = ctrl.modals[cacheLevel]['modal-'+way+i];
+                                if (aPos != null) {
+                                    if (aPos['pos'] < firstPos) {
+                                        firstPos = aPos['pos'];
+                                        aIndex = i;
+                                        aWay = way;
+                                    }
+                                }
+                            }
+                            way++;
+                        }
+                        let correctIndex = (ctrl.getIndicesSize() * parseInt(aWay)) + parseInt(aIndex);
+                        position = document.getElementById(correctIndex.toString());
+                        position.style.backgroundColor = "#FF7F7F";
+                        let span = position.getElementsByTagName('span');
+                        span[0].innerHTML = tag;
+                        let fu = ctrl.modals[cacheLevel]['modal-'+aWay+aIndex]['fu'];
+                        ctrl.modals[cacheLevel]['modal-'+aWay+aIndex] = {
+                            'tag' : tag,
+                            'block' : block,
+                            'valid' : valid,
+                            'dirty' : dirty,
+                            'age' : age,
+                            'fu' : fu + 1,
+                            'pos' : ctrl.posInQueue++,
+                        };
+                    }
+                }
+            }
         }
     });
 
-    ctrl.numSets = () => {
-        // we optionally return 1 since there associativity is set to 'Not Set' initially
-        // this is annoying problem to solve since we have two ways to represent associativity,
-        // either by 'S' or the aformentioned var name. So instead of setting default value to both
-        // and hoping they are consistent with each other I rather error check when accessing this attribute
-
-        let s = parseInt(ctrl.cacheInfo.caches[ctrl.index].associativity) || 0;
-        return new Array(s);
+    ctrl.getAssociativity = function(event) {
+        return parseInt(ctrl.cacheInfo.caches[ctrl.index].associativity);
     };
 
-    ctrl.numCacheRows = () => {
+    ctrl.getIndicesSize = function(event) {
         let cache = ctrl.cacheInfo.caches[ctrl.index];
         let C = cache.C;
         let S = cache.S;
         let B = ctrl.cacheInfo.B;
-        return new Array(Math.pow(2,C - S - B));
+        return Math.pow(2,C-S-B);
     };
 
-    ctrl.numBlockRows = function() {
-        return new Array(Math.pow(2, ctrl.cacheInfo.B));
+    ctrl.getBlockSize = function(event) {
+        return Math.pow(2,ctrl.cacheInfo.B);
     };
 
     let modal;
@@ -99,7 +259,7 @@ function CacheDetailController($scope, SimDriver) {
     };
 
     window.onclick = function(event) {
-        if (event.target === modal) {
+        if (event.target == modal) {
             modal.style.display = 'none';
             activeCache.style.visibility = 'visible';
             modalOpen = false;
