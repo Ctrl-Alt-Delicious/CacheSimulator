@@ -62,6 +62,9 @@ function CacheDetailController($scope, SimDriver) {
                     'fu' : 0,
                     'pos' : ctrl.posInQueue++,
                 };
+                let title = document.getElementById(ctrl.activeCache);
+                let titleSpan = title.getElementsByTagName('span');
+                titleSpan[0].innerHTML = ctrl.activeCache;
             } else {
                 if (ctrl.modals[cacheLevel]['modal-'+way+index]['tag'] == tag) {
                     position.style.backgroundColor = "#6767FF";
@@ -77,6 +80,9 @@ function CacheDetailController($scope, SimDriver) {
                         'fu' : fu + 1,
                         'pos' : ctrl.posInQueue,
                     };
+                    let title = document.getElementById(ctrl.activeCache);
+                    let titleSpan = title.getElementsByTagName('span');
+                    titleSpan[0].innerHTML = ctrl.activeCache;
                     return;
                 }
                 let numWays = ctrl.getAssociativity();
@@ -99,6 +105,9 @@ function CacheDetailController($scope, SimDriver) {
                             'pos' : ctrl.posInQueue++,
                         };
                         checker = false;
+                        let title = document.getElementById(ctrl.activeCache);
+                        let titleSpan = title.getElementsByTagName('span');
+                        titleSpan[0].innerHTML = ctrl.activeCache;
                         break;
                     }
                 }
@@ -131,6 +140,7 @@ function CacheDetailController($scope, SimDriver) {
                         let span = position.getElementsByTagName('span');
                         span[0].innerHTML = tag;
                         let fu = ctrl.modals[cacheLevel]['modal-'+aWay+aIndex]['fu'];
+                        let prevTag = ctrl.modals[cacheLevel]['modal-'+aWay+aIndex]['tag'];
                         ctrl.modals[cacheLevel]['modal-'+aWay+aIndex] = {
                             'tag' : tag,
                             'block' : block,
@@ -140,6 +150,9 @@ function CacheDetailController($scope, SimDriver) {
                             'fu' : fu + 1,
                             'pos' : ctrl.posInQueue++,
                         };
+                        let title = document.getElementById(ctrl.activeCache);
+                        let titleSpan = title.getElementsByTagName('span');
+                        titleSpan[0].innerHTML = ctrl.activeCache + ", block at index: " + aIndex + ", tag: " + prevTag + " was EVICTED.";
                     }
                     if (policy == "LFU") {
                         let size = ctrl.getIndicesSize();
@@ -166,6 +179,7 @@ function CacheDetailController($scope, SimDriver) {
                         let span = position.getElementsByTagName('span');
                         span[0].innerHTML = tag;
                         let fu = ctrl.modals[cacheLevel]['modal-'+aWay+aIndex]['fu'];
+                        let prevTag = ctrl.modals[cacheLevel]['modal-'+aWay+aIndex]['tag'];
                         ctrl.modals[cacheLevel]['modal-'+aWay+aIndex] = {
                             'tag' : tag,
                             'block' : block,
@@ -175,6 +189,9 @@ function CacheDetailController($scope, SimDriver) {
                             'fu' : fu + 1,
                             'pos' : ctrl.posInQueue++,
                         };
+                        let title = document.getElementById(ctrl.activeCache);
+                        let titleSpan = title.getElementsByTagName('span');
+                        titleSpan[0].innerHTML = ctrl.activeCache + ", block at index: " + aIndex + ", tag: " + prevTag + " was EVICTED.";
                     }
                     if (policy == "FIFO") {
                         let size = ctrl.getIndicesSize();
@@ -201,6 +218,7 @@ function CacheDetailController($scope, SimDriver) {
                         let span = position.getElementsByTagName('span');
                         span[0].innerHTML = tag;
                         let fu = ctrl.modals[cacheLevel]['modal-'+aWay+aIndex]['fu'];
+                        let prevTag = ctrl.modals[cacheLevel]['modal-'+aWay+aIndex]['tag'];
                         ctrl.modals[cacheLevel]['modal-'+aWay+aIndex] = {
                             'tag' : tag,
                             'block' : block,
@@ -210,6 +228,9 @@ function CacheDetailController($scope, SimDriver) {
                             'fu' : fu + 1,
                             'pos' : ctrl.posInQueue++,
                         };
+                        let title = document.getElementById(ctrl.activeCache);
+                        let titleSpan = title.getElementsByTagName('span');
+                        titleSpan[0].innerHTML = ctrl.activeCache + ", block at index: " + aIndex + ", tag: " + prevTag + " was EVICTED.";
                     }
                 }
             }
