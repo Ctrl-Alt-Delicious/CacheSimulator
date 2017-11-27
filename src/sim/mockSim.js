@@ -10,7 +10,10 @@ function initSim(data) {
 
 function mockRunSim(data) {
     initSim(data);
-    mockActions = [[action(cache, '0x00000001', 0, 0, 0)], [action(cache, '0xddccbbaa', 0, 0, 0)]];
+    mockActions = [[action(cache, '0x99baddad', 0, 0, 0)], [action(cache, '0x99090000', 0, 0, 0)], [action(cache, '0x43443493', 0, 0, 0)],
+        [action(cache, '0x44983433', 0, 0, 0)], [action(cache, '0x43bdaaaa', 0, 0, 0)], [action(cache, '0x5520ffff', 0, 0, 0)],
+        [action(cache, '0xffffffff', 0, 0, 0)], [action(cache, '0xdeaddead', 0, 0, 0)], [action(cache, '0x77777777', 0, 0, 0)], 
+        [action(cache, '0x10000000', 0, 0, 0)], [action(cache, '0x00000099', 0, 0, 0)]];
     console.log(mockActions);
 }
 
@@ -48,7 +51,6 @@ function block(initAddress, B) {
 // the star next to the function name declares this function as a generator
 function *nextActionGen() {
     let i = 0;
-
     while (true) {
         yield mockActions[i];
         i = (i + 1) % mockActions.length;
