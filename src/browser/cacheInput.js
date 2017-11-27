@@ -250,6 +250,7 @@ function CacheInputController($scope, simDriver, fileParser) {
         ctrl.currentMemQueueIndex = 0;
         ctrl.hideMAQ = true;
         window.clearInterval(ctrl.simPlaying);  // stop sim if necessary
+        document.getElementById('upload-button').disabled = null; // enable upload button
         ctrl.updateCurrentMemQueue();
     };
 
