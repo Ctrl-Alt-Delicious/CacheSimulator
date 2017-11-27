@@ -230,6 +230,7 @@ function CacheDetailController($scope, SimDriver) {
                         };
                         let title = document.getElementById(ctrl.activeCache);
                         let titleSpan = title.getElementsByTagName('span');
+                        //displays which tag at what index was evicted
                         titleSpan[0].innerHTML = ctrl.activeCache + ", block at index: " + aIndex + ", tag: " + prevTag + " was EVICTED.";
                     }
                 }
