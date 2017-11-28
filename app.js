@@ -1,5 +1,5 @@
 let simulator = angular.module('Simulator', ['ngMaterial', 'md.data.table', 'angularResizable']);
-const settingsStore = require('./src/common/store').settingsStore;
+const { settingsStore } = require('./src/common/store');
 
 simulator.config(function($mdThemingProvider) {
     $mdThemingProvider.theme('docs-dark')

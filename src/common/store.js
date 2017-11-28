@@ -53,6 +53,19 @@ class Store {
     }
 
     /**
+     * sets a value to a key associated with a key
+     * @param cacheNum
+     * @param key
+     * @param value
+     */
+    setCacheValue(cacheNum, key, value) {
+        if (this.data.hasOwnProperty('caches') && cacheNum < this.data.caches.length) {
+            this.data.caches[cacheNum][key] = value;
+        }
+        fs.writeFileSync(this.path, JSON.stringify(this.data));
+    }
+
+    /**
      * Sets all the data at once, this saves time for file I/O since without this one would
      * write to the file per key
      * @param data
@@ -101,7 +114,6 @@ function parseDataFile(filePath, defaults) {
         return JSON.parse(fs.readFileSync(filePath));
     } catch(error) {
         // if there was some kind of error (such as the file not existing), return the passed in defaults instead.
-        console.error('defaulting');
         return defaults;
     }
 }
