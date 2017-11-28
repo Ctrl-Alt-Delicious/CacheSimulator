@@ -67,22 +67,28 @@ class Store {
      * @param localData compatible data structure that is a superset of the Store object's data
      */
     updateLocalFromStore(localData) {
-        console.log('updating');
         this._dataWalk(localData, this.data);
     }
 
     /**
-     * recursively tracerses store data and checks if the key is in both the local and stored data set
+     * recursively traverses store data and checks if the key is in both the local and stored data set
      * @param localData
      * @param storeData
      * @private
      */
     _dataWalk(localData, storeData){
         for (let key in storeData) {
-            if (storeData.hasOwnProperty(key)) {
-                let value = storeData[key];
-                console.log('key', key, 'value', value);
-                this._dataWalk(value);
+            if (localData.hasOwnProperty(key) || localData.hasOwnProperty(storeData[key])) {
+                let storeValue = storeData[key];
+                let localValue = localData[key];
+
+                if (typeof storeValue === 'number' || typeof storeValue === 'string') {
+                    localData[key] = storeValue;
+                } else {
+                    this._dataWalk(localValue, storeValue);
+                }
+            } else {
+                console.error('the stored data format does not match expected,', 'key "', key, '" is not in expected format', localData);
             }
         }
     }
@@ -95,6 +101,7 @@ function parseDataFile(filePath, defaults) {
         return JSON.parse(fs.readFileSync(filePath));
     } catch(error) {
         // if there was some kind of error (such as the file not existing), return the passed in defaults instead.
+        console.error('defaulting');
         return defaults;
     }
 }

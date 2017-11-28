@@ -53,6 +53,7 @@ function IndexController($scope) {
 
     this.$onInit = () => {
         settingsStore.updateLocalFromStore(ctrl.cacheInfo);
+        ctrl.cacheInfo.blockSize = Math.pow(2, ctrl.cacheInfo.B);
     }
 
 

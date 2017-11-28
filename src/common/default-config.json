@@ -1,6 +1,6 @@
 {
-  "B": 5,
-  "policy": "FIFO",
+  "B": 6,
+  "policy": "LRU",
   "caches": [
     {
       "C": 10,
