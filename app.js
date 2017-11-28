@@ -1,4 +1,5 @@
 let simulator = angular.module('Simulator', ['ngMaterial', 'md.data.table', 'angularResizable']);
+const { settingsStore } = require('./src/common/store');
 
 simulator.config(function($mdThemingProvider) {
     $mdThemingProvider.theme('docs-dark')
@@ -28,6 +29,7 @@ function IndexController($scope) {
     }
     ];
 
+
     ctrl.cacheInfo = {
         policy:  'FIFO',
         blockSize:  32,
@@ -49,6 +51,12 @@ function IndexController($scope) {
         }]
     };
 
+    this.$onInit = () => {
+        settingsStore.updateLocalFromStore(ctrl.cacheInfo);
+        ctrl.cacheInfo.blockSize = Math.pow(2, ctrl.cacheInfo.B);
+    }
+
+
     $scope.hideParamLabels = true;
 
     $scope.initialCacheInfo = ctrl.cacheInfo;
@@ -57,7 +65,6 @@ function IndexController($scope) {
     $scope.changeView = function(index) {
         for (let i = 0; i < $scope.navs.length; i++) {
             if (index === i) {
-                console.log('out of bounds?');
                 $scope.navs[i].active = true;
                 //Broadcast sends an event to child controllers/components
                 $scope.$broadcast('updatedNavs', $scope.navs[i], index-1);

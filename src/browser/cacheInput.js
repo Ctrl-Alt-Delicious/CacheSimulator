@@ -1,6 +1,6 @@
 'use strict';
 
-const {ipcRenderer} = require('electron');
+const { ipcRenderer } = require('electron');
 
 angular.module('Simulator').component('cacheInput', {
     templateUrl: 'src/browser/cacheInput.html',
@@ -66,6 +66,14 @@ function CacheInputController($scope, simDriver, fileParser) {
 
     let setCacheSize = function(index) {
         ctrl.cacheInfo.caches[index].C = Math.log(ctrl.cacheInfo.caches[index].cacheSize) / Math.log(2);
+
+        // Only changing the first cache since we are guaranteed one
+        // Two have default config for multiple caches would mean rewriting the add cache button
+        // something I dnt want to do for this PR
+        if (index === 0) {
+            settingsStore.setCacheValue(index, 'C', ctrl.cacheInfo.caches[index].C);
+        }
+
         setAssocOptions(index);
         $scope.$emit('updateCacheInfo', ctrl.cacheInfo);
     };
@@ -77,6 +85,14 @@ function CacheInputController($scope, simDriver, fileParser) {
         } else {
             ctrl.cacheInfo.caches[index].S = Math.log(assoc) / Math.log(2);
         }
+
+        // Only changing the first cache since we are guaranteed one
+        // Two have default config for multiple caches would mean rewriting the add cache button
+        // something I dnt want to do for this PR
+        if (index === 0) {
+            settingsStore.setCacheValue(index, 'S', ctrl.cacheInfo.caches[index].S);
+        }
+
         $scope.$emit('updateCacheInfo', ctrl.cacheInfo);
     };
 
@@ -85,11 +101,17 @@ function CacheInputController($scope, simDriver, fileParser) {
         ctrl.cacheInfo.B = Math.log(blockSize) / Math.log(2);
         setCacheSizeOptions();
         ctrl.cacheInfo.blockSizeSet = true;
+
+        settingsStore.set('B', ctrl.cacheInfo.B);
+
         $scope.$emit('updateCacheInfo', ctrl.cacheInfo);
     };
 
     ctrl.setPolicy = () => {
         ctrl.cacheInfo.policySet = true;
+
+        settingsStore.set('policy', ctrl.cacheInfo.policy);
+
         $scope.$emit('updateCacheInfo', ctrl.cacheInfo);
     };
 
@@ -127,6 +149,7 @@ function CacheInputController($scope, simDriver, fileParser) {
             setAssociativity(cacheNum, value);
         }
         ctrl.cacheInfo.caches[cacheNum] = cache;
+
         $scope.$emit('inputUpdateCanvas', ctrl.cacheInfo);
         $scope.$emit('updateCacheInfo', ctrl.cacheInfo);
     };
