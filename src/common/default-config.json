@@ -1,5 +1,5 @@
 {
-  "B": 6,
+  "B": 3,
   "policy": "LRU",
   "caches": [
     {

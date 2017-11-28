@@ -49,7 +49,7 @@ class Store {
      */
     set(key, value) {
         this.data[key] = value;
-        fs.writeFileSync(this.path, JSON.stringify(this.data));
+        this._updateConfig();
     }
 
     /**
@@ -62,7 +62,7 @@ class Store {
         if (this.data.hasOwnProperty('caches') && cacheNum < this.data.caches.length) {
             this.data.caches[cacheNum][key] = value;
         }
-        fs.writeFileSync(this.path, JSON.stringify(this.data));
+        this._updateConfig();
     }
 
     /**
@@ -72,7 +72,7 @@ class Store {
      */
     setAll(data) {
         this.data = data;
-        fs.writeFileSync(this.path, JSON.stringify(this.data));
+        this._updateConfig();
     }
 
     /**
@@ -104,6 +104,14 @@ class Store {
                 console.error('the stored data format does not match expected,', 'key "', key, '" is not in expected format', localData);
             }
         }
+    }
+
+    /**
+     * added for modularity, no need for it now but it helped for debugging
+     * @private
+     */
+    _updateConfig() {
+        fs.writeFileSync(this.path, JSON.stringify(this.data));
     }
 }
 
