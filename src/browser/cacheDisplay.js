@@ -23,14 +23,14 @@ function CacheDisplayController($scope) {
             offset : new Array(32).fill(0)
         },
         L2 : {
-            tag : new Array(32).fill(1),
-            index : new Array(32).fill(1),
-            offset : new Array(32).fill(1)
+            tag : new Array(32).fill(0),
+            index : new Array(32).fill(0),
+            offset : new Array(32).fill(0)
         },
         L3 : {
-            tag : new Array(32).fill(2),
-            index : new Array(32).fill(2),
-            offset : new Array(32).fill(2)
+            tag : new Array(32).fill(0),
+            index : new Array(32).fill(0),
+            offset : new Array(32).fill(0)
         }
     }
 
