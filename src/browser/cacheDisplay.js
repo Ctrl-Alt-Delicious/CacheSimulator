@@ -1,7 +1,7 @@
 'use strict';
 
 // const {ipcRenderer} = require('electron')
-const { parseAddress }= require('../common/addressParser');
+const { parseAddress } = require('./src/common/addressParser');
 
 angular.module('Simulator').component('cacheDisplay', {
     templateUrl: 'src/browser/cacheDisplay.html',
@@ -33,6 +33,7 @@ function CacheDisplayController($scope) {
             offset : new Array(32).fill(2)
         }
     }
+
     ctrl.parsed = [ctrl.breakdownModel.L1, ctrl.breakdownModel.L2, ctrl.breakdownModel.L3];
 
     $scope.$on('breakdown', function(event, data) {
