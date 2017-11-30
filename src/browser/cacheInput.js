@@ -280,6 +280,7 @@ function CacheInputController($scope, simDriver, fileParser) {
     // Sets the current address/action in the memory access queue based on index
     ctrl.updateCurrentMemQueue = function() {
         ctrl.currentMemQueue = $scope.$parent.memQueue[ctrl.currentMemQueueIndex];
+        $scope.$emit('currentInstruction', ctrl.currentMemQueue);
     }
 
     init();

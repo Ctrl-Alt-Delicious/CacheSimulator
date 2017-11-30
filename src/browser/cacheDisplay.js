@@ -1,6 +1,7 @@
 'use strict';
 
 // const {ipcRenderer} = require('electron')
+const { parseAddress }= require('../common/addressParser');
 
 angular.module('Simulator').component('cacheDisplay', {
     templateUrl: 'src/browser/cacheDisplay.html',
@@ -14,11 +15,33 @@ function CacheDisplayController($scope) {
     let ctrl = this;
 
     ctrl.cacheInfo = $scope.$parent.initialCacheInfo;
-
-    ctrl.tag = [1,0,1,1,0,0,1,0,0,0,1,1,0,1,1,0,1,1,0,0,1,0,0,0,1,1,0,1,1,0,0,0,1,1,0,1];
-    ctrl.index = [1,0,0,1,1,0,0,1,0,0,0,1,1,0,1,1,1,0,1,1,0,0,1,0,0,0,1,1,0,1,1,0,0,0,1,1,0,1];
-    ctrl.offset = [0,0,0,0,0,1,0,0,0,1,1,0,1,1,1,0,1,1,0,0,1,0,0,0,1,1,0,1,1,0,0,0,1,1,0,1];
     ctrl.fullyAssociative = [false,false,false];
+    ctrl.breakdownModel = {
+        L1 : {
+            tag : new Array(32).fill(0),
+            index : new Array(32).fill(0),
+            offset : new Array(32).fill(0)
+        },
+        L2 : {
+            tag : new Array(32).fill(1),
+            index : new Array(32).fill(1),
+            offset : new Array(32).fill(1)
+        },
+        L3 : {
+            tag : new Array(32).fill(2),
+            index : new Array(32).fill(2),
+            offset : new Array(32).fill(2)
+        }
+    }
+    ctrl.parsed = [ctrl.breakdownModel.L1, ctrl.breakdownModel.L2, ctrl.breakdownModel.L3];
+
+    $scope.$on('breakdown', function(event, data) {
+        ctrl.parsed = [];
+        for (let cache of ctrl.cacheInfo.caches) {
+            let breakdown = parseAddress(data.address, cache.C, cache.S, ctrl.cacheInfo.B);
+            ctrl.parsed.push(breakdown);
+        }
+    })
     
 
     ctrl.tagSize = function(cacheIndex) {
