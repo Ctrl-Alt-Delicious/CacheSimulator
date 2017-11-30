@@ -40,8 +40,14 @@ function CacheDisplayController($scope) {
         ctrl.parsed = [];
         for (let cache of ctrl.cacheInfo.caches) {
             let breakdown = parseAddress(data.address, cache.C, cache.S, ctrl.cacheInfo.B);
-            ctrl.parsed.push(breakdown);
+            let binBreakdown = {
+                tag : breakdown.tag.toString(2),
+                index : breakdown.index.toString(2),
+                offset : breakdown.index.toString(2)
+            }
+            ctrl.parsed.push(binBreakdown);
         }
+        $scope.$digest();
     })
     
 
