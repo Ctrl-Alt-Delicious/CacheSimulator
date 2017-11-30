@@ -12,9 +12,9 @@ exports.parseAddress = (line, C, S, B) => {
     let address = parseInt(line, 16);
     return {
         address: address,
-        tag: pad(getTag(address, C, S), 32-C+S),
-        index: pad(getIndex(address, C, S, B), C-S-B),
-        offset: pad(getOffset(address, B), B),
+        tag: pad(getTag(address, C, S).toString(2), 32-C+S),
+        index: pad(getIndex(address, C, S, B).toString(2), C-S-B),
+        offset: pad(getOffset(address, B).toString(2), B),
     };
 };
 
