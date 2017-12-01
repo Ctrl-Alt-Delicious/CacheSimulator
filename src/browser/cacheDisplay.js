@@ -41,9 +41,9 @@ function CacheDisplayController($scope) {
         for (let cache of ctrl.cacheInfo.caches) {
             let breakdown = parseAddress(data.address, cache.C, cache.S, ctrl.cacheInfo.B);
             let binBreakdown = {
-                tag : breakdown.tag.toString(2),
-                index : breakdown.index.toString(2),
-                offset : breakdown.offset.toString(2)
+                tag : breakdown.tag,
+                index : breakdown.index,
+                offset : breakdown.offset
             }
             ctrl.parsed.push(binBreakdown);
         }
