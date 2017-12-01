@@ -5,8 +5,9 @@
     <div ng-cloak id="sidebar">
         <!--Cache Input-->
         <div layout="column" layout-padding md-theme="docs-light" class="md-inline-form">
-            <md-input-container ng-hide="$ctrl.hideSidebar">
+            <md-input-container class="tooltip" ng-hide="$ctrl.hideSidebar">
                 <label>Replacement Policy</label>
+                <span class="tooltiptext"> A replacement policy (or eviction policy) decides how the cache deals with choosing a block to be replaced. </span>
                 <md-select ng-model="$ctrl.cacheInfo.policy" placeholder="Select a Policy" ng-change="$ctrl.setPolicy()">
                     <md-option ng-repeat="policy in $ctrl.cacheInfo.policies" value="{{policy}}">
                         {{policy}}
@@ -14,8 +15,9 @@
                 </md-select>
             </md-input-container>
 
-            <md-input-container ng-hide="$ctrl.hideSidebar">
+            <md-input-container class="tooltip" ng-hide="$ctrl.hideSidebar">
                 <label ng-hide="$ctrl.hideSidebar">Block Size</label>
+                <span class="tooltiptext"> The block size defines the size of the granular object in the cache.  The smalled object which is added and removed from the cache will have this size. </span>
                 <md-select ng-model="$ctrl.cacheInfo.blockSize" ng-change="$ctrl.setBlockSize()" placeholder="Select a Block Size">
                     <md-option ng-repeat="size in $ctrl.cacheInfo.blockSizes" value="{{size}}">
                         {{size}}
@@ -42,8 +44,9 @@
                                 </md-select>
                             </md-input-container>
 
-                            <md-input-container>
+                            <md-input-container class="tooltip">
                                 <label>Associativity</label>
+                                <span class="tooltiptext"> Defines how many different positions there can be for a block with a given tag. </span>
                                 <md-select ng-model="cache.associativity" placeholder="Select an Associativity"
                                            ng-change="updateCache(cache.associativity, $index%4, 'associativity')" ng-disabled="!($ctrl.cacheInfo.policySet && $ctrl.cacheInfo.blockSizeSet)" ng-hide="$ctrl.hideSidebar">
                                     <md-option ng-repeat="associativity in $ctrl.cacheInfo.caches[$index%4].associativities" value="{{associativity}}">
