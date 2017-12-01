@@ -102,4 +102,8 @@ function IndexController($scope) {
     $scope.$on('step', (event, data) => {
         $scope.$broadcast('updateModals', data);
     });
+
+    $scope.$on('currentInstruction', (event, data) => {
+        $scope.$broadcast('breakdown', data);
+    })
 }
