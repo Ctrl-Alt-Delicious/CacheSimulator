@@ -6,6 +6,12 @@ angular.module('Simulator').component('cacheDetail', {
     bindings: {}
 });
 
+
+/*
+ * The cache details page is what the user sees when they click on a nav tab or a cache level on the display.
+ * This page contains all of the information about the contents of the cache level and represents them as modals
+ * which are displayed to the user as a table.
+ */
 function CacheDetailController($scope, SimDriver) {
 
     let ctrl = this;
@@ -39,7 +45,7 @@ function CacheDetailController($scope, SimDriver) {
         ctrl.overallAge++;
         for (let action of data) {
             console.log(action);
-            let address = action.address
+            let address = action.address;
             let cacheLevel = action.level;
             let way = action.way;
             let index = action.index;
@@ -50,7 +56,7 @@ function CacheDetailController($scope, SimDriver) {
             let age = ctrl.overallAge;
             let position = document.getElementById(index.toString());
             if (ctrl.modals[cacheLevel]['modal-'+way+index] == null) {
-                position.style.backgroundColor = "#7FFF00";
+                position.style.backgroundColor = '#7FFF00';
                 let span = position.getElementsByTagName('span');
                 span[0].innerHTML = tag;
                 ctrl.modals[cacheLevel]['modal-'+way+index] = {
@@ -67,7 +73,7 @@ function CacheDetailController($scope, SimDriver) {
                 titleSpan[0].innerHTML = ctrl.activeCache;
             } else {
                 if (ctrl.modals[cacheLevel]['modal-'+way+index]['tag'] == tag) {
-                    position.style.backgroundColor = "#6767FF";
+                    position.style.backgroundColor = '#6767FF';
                     let span = position.getElementsByTagName('span');
                     span[0].innerHTML = tag;
                     let fu = ctrl.modals[cacheLevel]['modal-'+way+index]['fu'];
@@ -92,7 +98,7 @@ function CacheDetailController($scope, SimDriver) {
                     if (ctrl.modals[cacheLevel]['modal-'+way+index] == null) {
                         let correctIndex = (ctrl.getIndicesSize() * parseInt(way)) + parseInt(index);
                         position = document.getElementById(correctIndex.toString());
-                        position.style.backgroundColor = "#7FFF00";
+                        position.style.backgroundColor = '#7FFF00';
                         let span = position.getElementsByTagName('span');
                         span[0].innerHTML = tag;
                         ctrl.modals[cacheLevel]['modal-'+way+index] = {
@@ -115,7 +121,7 @@ function CacheDetailController($scope, SimDriver) {
                     way = action.way;
                     let policy = ctrl.cacheInfo.policy;
 
-                    if (policy == "LRU") {
+                    if (policy == 'LRU') {
                         let size = ctrl.getIndicesSize();
                         let numWays = ctrl.getAssociativity();
                         let youngest = age;
@@ -136,7 +142,7 @@ function CacheDetailController($scope, SimDriver) {
                         }
                         let correctIndex = (ctrl.getIndicesSize() * parseInt(aWay)) + parseInt(aIndex);
                         position = document.getElementById(correctIndex.toString());
-                        position.style.backgroundColor = "#FF7F7F";
+                        position.style.backgroundColor = '#FF7F7F';
                         let span = position.getElementsByTagName('span');
                         span[0].innerHTML = tag;
                         let fu = ctrl.modals[cacheLevel]['modal-'+aWay+aIndex]['fu'];
@@ -152,9 +158,9 @@ function CacheDetailController($scope, SimDriver) {
                         };
                         let title = document.getElementById(ctrl.activeCache);
                         let titleSpan = title.getElementsByTagName('span');
-                        titleSpan[0].innerHTML = ctrl.activeCache + ", block at index: " + aIndex + ", tag: " + prevTag + " was EVICTED.";
+                        titleSpan[0].innerHTML = ctrl.activeCache + ', block at index: ' + aIndex + ', tag: ' + prevTag + ' was EVICTED.';
                     }
-                    if (policy == "LFU") {
+                    if (policy == 'LFU') {
                         let size = ctrl.getIndicesSize();
                         let numWays = ctrl.getAssociativity();
                         let lfu = age; //age will always be >= lfu;
@@ -175,7 +181,7 @@ function CacheDetailController($scope, SimDriver) {
                         }
                         let correctIndex = (ctrl.getIndicesSize() * parseInt(aWay)) + parseInt(aIndex);
                         position = document.getElementById(correctIndex.toString());
-                        position.style.backgroundColor = "#FF7F7F";
+                        position.style.backgroundColor = '#FF7F7F';
                         let span = position.getElementsByTagName('span');
                         span[0].innerHTML = tag;
                         let fu = ctrl.modals[cacheLevel]['modal-'+aWay+aIndex]['fu'];
@@ -191,9 +197,9 @@ function CacheDetailController($scope, SimDriver) {
                         };
                         let title = document.getElementById(ctrl.activeCache);
                         let titleSpan = title.getElementsByTagName('span');
-                        titleSpan[0].innerHTML = ctrl.activeCache + ", block at index: " + aIndex + ", tag: " + prevTag + " was EVICTED.";
+                        titleSpan[0].innerHTML = ctrl.activeCache + ', block at index: ' + aIndex + ', tag: ' + prevTag + ' was EVICTED.';
                     }
-                    if (policy == "FIFO") {
+                    if (policy == 'FIFO') {
                         let size = ctrl.getIndicesSize();
                         let numWays = ctrl.getAssociativity();
                         let firstPos = ctrl.posInQueue; //age will always be >= lfu;
@@ -214,7 +220,7 @@ function CacheDetailController($scope, SimDriver) {
                         }
                         let correctIndex = (ctrl.getIndicesSize() * parseInt(aWay)) + parseInt(aIndex);
                         position = document.getElementById(correctIndex.toString());
-                        position.style.backgroundColor = "#FF7F7F";
+                        position.style.backgroundColor = '#FF7F7F';
                         let span = position.getElementsByTagName('span');
                         span[0].innerHTML = tag;
                         let fu = ctrl.modals[cacheLevel]['modal-'+aWay+aIndex]['fu'];
@@ -231,7 +237,7 @@ function CacheDetailController($scope, SimDriver) {
                         let title = document.getElementById(ctrl.activeCache);
                         let titleSpan = title.getElementsByTagName('span');
                         //displays which tag at what index was evicted
-                        titleSpan[0].innerHTML = ctrl.activeCache + ", block at index: " + aIndex + ", tag: " + prevTag + " was EVICTED.";
+                        titleSpan[0].innerHTML = ctrl.activeCache + ', block at index: ' + aIndex + ', tag: ' + prevTag + ' was EVICTED.';
                     }
                 }
             }

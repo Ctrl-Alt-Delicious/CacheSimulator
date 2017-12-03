@@ -9,21 +9,30 @@ angular.module('Simulator').component('cacheInput', {
     bindings: {}
 });
 
+
+/*
+ * This controller is responsible for everything that happens in the "cache input" component, or the sidebar, in the main
+ * display of the application. This is where the user sets all the parameters for the cache configuration, uploads their 
+ * trace file, and runs the simulation. The contents of the trace file are displayed as a table called the "Memory Access Queue",
+ * or MAQ. Once the simulation has been triggered, the user controls the flow of the simulation using buttons that trigger actions,
+ * namely play, pause, step forward, step backward, and reset.
+ */
 function CacheInputController($scope, simDriver, fileParser) {
 
     let ctrl = this;
 
+    // flags for hiding/displaying elements
     ctrl.hideSidebar = false;
     ctrl.hideRunSimButton = true;
     ctrl.hideControlButtons = true;
     ctrl.hideMAQ = true;
 
-    ctrl.simPlaying = 0;
+    ctrl.simPlaying = 0;  // this is an int set by the window.setInterval method when the sim is playing
 
     ctrl.cacheInfo = $scope.$parent.initialCacheInfo;
     ctrl.currentMemQueueIndex = 0;
     ctrl.currentMemQueue = null;
-    ctrl.speedRating = 1;
+    ctrl.speedRating = 1;  // set by the value of the speed slider
 
     let B_min = 3, B_max = 7;
 
@@ -281,7 +290,7 @@ function CacheInputController($scope, simDriver, fileParser) {
     ctrl.updateCurrentMemQueue = function() {
         ctrl.currentMemQueue = $scope.$parent.memQueue[ctrl.currentMemQueueIndex];
         $scope.$emit('currentInstruction', ctrl.currentMemQueue);
-    }
+    };
 
     init();
 }
