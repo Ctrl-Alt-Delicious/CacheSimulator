@@ -10,6 +10,9 @@ angular.module('Simulator').component('cacheDisplay', {
     bindings: {}
 });
 
+/*
+ * This controller handles all of the display on the main page of the application outside of the input sidebar.
+ */
 function CacheDisplayController($scope) {
 
     let ctrl = this;
@@ -32,7 +35,7 @@ function CacheDisplayController($scope) {
             index : new Array(32).fill(0),
             offset : new Array(32).fill(0)
         }
-    }
+    };
 
     ctrl.parsed = [ctrl.breakdownModel.L1, ctrl.breakdownModel.L2, ctrl.breakdownModel.L3];
 
@@ -44,11 +47,11 @@ function CacheDisplayController($scope) {
                 tag : breakdown.tag,
                 index : breakdown.index,
                 offset : breakdown.offset
-            }
+            };
             ctrl.parsed.push(binBreakdown);
         }
         $scope.$digest();
-    })
+    });
     
 
     ctrl.tagSize = function(cacheIndex) {
@@ -60,7 +63,7 @@ function CacheDisplayController($scope) {
         } else {
             return 0;
         }
-    }
+    };
 
     ctrl.indexSize = function(cacheIndex) {
         if (cacheIndex <= ctrl.cacheInfo.caches.length-1) {
@@ -71,26 +74,26 @@ function CacheDisplayController($scope) {
         } else {
             return 0;
         }
-    }
+    };
 
     ctrl.offsetSize = function(cacheIndex) {
         return ctrl.cacheInfo.B;
-    }
+    };
 
     //Should return array containing bits in tag of address
     ctrl.getTag = function(event, address) {
         return null;
-    }
+    };
 
     //Should return array containing bits in index of address
     ctrl.getIndex = function(event, address) {
         return null;
-    }
+    };
 
     //Should return array containing bits in offset of address
     ctrl.getOffset = function(event, address) {
         return null;
-    }
+    };
     
     ctrl.clickCache = function(index) {
         $scope.$parent.changeView(index);
@@ -118,26 +121,6 @@ function CacheDisplayController($scope) {
         $scope.$emit('updateCacheInfo', ctrl.cacheInfo);
     };
 
-    // ipcRenderer.on('fileNameReceived', (e, fPath) => {
-    //     //Use node's functions for parsing file path to base name on all native OS
-    //     ctrl.fileName = path.basename(fPath)
-    //     //This forces the angular rendering lifecycle to update the value
-    //     $scope.$digest();
-    // })
-
-    // //subscribe to fileParser notifications when file is parsed
-    // fileParser.subscribe($scope, () => {
-    //     //ask for new mem traces in queue
-    //     console.log("updating traces")
-    //     ctrl.memQueue = simDriver.getMemAcceses()
-    // })
-
-    // ipcRenderer.on('fileDataReceived', (err, fileData) => {
-    //     fileParser.parseFile(fileData);
-    //     //This forces the angular rendering lifecycle to update the value
-    //     $scope.$digest();
-    // })
-
     $scope.$on('cacheInfoUpdated', function(event, data) {
         ctrl.cacheInfo = data;
         ctrl.fullyAssociative = checkFullyAssociative();
@@ -157,9 +140,6 @@ function CacheDisplayController($scope) {
         }
         return fullyAssociative;
     }
-
-
-
 
     // Here is the code that updates the canvas based on cache sizes    
     let canvas1 = document.getElementById('canvas1');
