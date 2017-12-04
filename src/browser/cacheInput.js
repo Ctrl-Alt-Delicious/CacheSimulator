@@ -70,6 +70,8 @@ function CacheInputController($scope, simDriver, fileParser) {
     };
 
     ctrl.handleUpload = () => {
+        console.log('uf');
+
         ipcRenderer.send('uploadFile');
     };
 
@@ -141,6 +143,7 @@ function CacheInputController($scope, simDriver, fileParser) {
     });
 
     ipcRenderer.on('fileDataReceived', (e, fData) => {
+        console.log('fdr');
         fileParser.parseFile(fData);
         ctrl.hideRunSimButton = false;
         //This forces the angular rendering lifecycle to update the value
