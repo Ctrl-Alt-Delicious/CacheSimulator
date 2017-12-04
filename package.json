@@ -2,23 +2,56 @@
   "name": "cs-2200-cache-simulator",
   "version": "1.0.0",
   "main": "main.js",
+  "description": "Cache Visual Simulator for CS 2200 at Georgia Tech",
+  "author": "Ctrl-Alt-Delicious",
   "scripts": {
     "start": "electron .",
     "lint": "./node_modules/.bin/eslint .",
-    "lint-fix": "./node_modules/.bin/eslint --fix ."
+    "lint-fix": "./node_modules/.bin/eslint --fix .",
+    "pack": "build --dir",
+    "dist": "build"
+  },
+  "build": {
+    "appId": "com.2200.cacheSimulator",
+    "dmg": {
+      "contents": [
+        {
+          "x": 110,
+          "y": 150
+        },
+        {
+          "x": 240,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    },
+    "win": {
+      "target": "NSIS",
+      "icon": "build/icon.ico"
+    }
   },
   "repository": "https://github.com/Ctrl-Alt-Delicious/CacheSimulator.git",
   "devDependencies": {
     "electron": "~1.6.2",
+    "electron-builder": "^19.47.1",
     "eslint": "^4.9.0"
   },
   "dependencies": {
-    "jquery": "^3.2.1",
     "angular": "^1.6.4",
     "angular-animate": "^1.6.4",
     "angular-aria": "^1.6.4",
     "angular-material": "^1.1.3",
     "angular-material-data-table": "^0.10.10",
-    "angular-resizable": "^1.2.0"
+    "angular-resizable": "^1.2.0",
+    "electron-log": "^2.2.11",
+    "jquery": "^3.2.1"
   }
 }
