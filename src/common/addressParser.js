@@ -12,9 +12,9 @@ exports.parseAddress = (line, C, S, B) => {
     let address = parseInt(line, 16);
     return {
         address: address,
-        tag: getTag(address, C, S),
-        index: getIndex(address, C, S, B),
-        offset: getOffset(address, B),
+        tag: pad(getTag(address, C, S).toString(2), 32-C+S),
+        index: pad(getIndex(address, C, S, B).toString(2), C-S-B),
+        offset: pad(getOffset(address, B).toString(2), B),
     };
 };
 
@@ -70,4 +70,18 @@ function getTag(address, C, S) {
  */
 function parseHexToString(hex) {
     return '0x' + hex.toString(16);
+}
+
+/**
+ * pads a given binary number with given pad value
+ * @param n
+ * @param width
+ * @param z
+ * @returns {string}
+ */
+
+function pad(n, width, z) {
+  z = z || '0';
+  n = n + '';
+  return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
 }
