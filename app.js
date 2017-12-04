@@ -16,9 +16,16 @@ simulator.config(function($mdThemingProvider) {
 
 simulator.controller('IndexController', ['$scope', IndexController]);
 
+
+/*
+ * The IndexController is the "root" in our application's controller hierarchy. It is responsible
+ * for changing the view between the main display and the cache details page, as well as storing
+ * the cacheInfo variable that is used across the entire application.
+ */
 function IndexController($scope) {
     let ctrl = this;
 
+    // These are the tabs that appear on the navigation bar at the top of the display
     $scope.navs = [{
         buttonTitle: 'Overview',
         active: true
@@ -29,7 +36,7 @@ function IndexController($scope) {
     }
     ];
 
-
+    // This is where all the info is stored about the cache configuration
     ctrl.cacheInfo = {
         policy:  'FIFO',
         blockSize:  32,
@@ -54,13 +61,12 @@ function IndexController($scope) {
     this.$onInit = () => {
         settingsStore.updateLocalFromStore(ctrl.cacheInfo);
         ctrl.cacheInfo.blockSize = Math.pow(2, ctrl.cacheInfo.B);
-    }
+    };
 
 
     $scope.hideParamLabels = true;
-
-    $scope.initialCacheInfo = ctrl.cacheInfo;
-
+    
+    $scope.initialCacheInfo = ctrl.cacheInfo;  // this is necessary for initializing the application
 
     $scope.changeView = function(index) {
         for (let i = 0; i < $scope.navs.length; i++) {
@@ -75,6 +81,7 @@ function IndexController($scope) {
         //Pass the updated cache list to cacheDetail template to change its model
     };
 
+    // Triggered by the cacheInput controller each time the cache config changes
     $scope.$on('updateCacheInfo', function(event, data) {
         $scope.navs = [{
             buttonTitle: 'Overview',
@@ -88,7 +95,7 @@ function IndexController($scope) {
             };
             i++;
         }
-        $scope.$broadcast('cacheInfoUpdated', ctrl.cacheInfo);
+        $scope.$broadcast('cacheInfoUpdated', ctrl.cacheInfo);  // send updated info back to children controllers
     });
 
     $scope.$on('updateParamLabels', function(event, data) {
@@ -105,5 +112,5 @@ function IndexController($scope) {
 
     $scope.$on('currentInstruction', (event, data) => {
         $scope.$broadcast('breakdown', data);
-    })
+    });
 }
