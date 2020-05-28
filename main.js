@@ -5,8 +5,13 @@ const path = require('path');
 const url = require('url');
 //const $ = require('jQuery')
 const fs = require('fs');
+const log = require('electron-log');
 
 const sim = require('./src/sim/simulation');
+
+
+log.transports.console.level = 'debug';
+log.transports.file.level = 'debug';
 
 
 // This method will be called when Electron has finished
@@ -85,14 +90,18 @@ function ipcListeners() {
             }]
         }, (fileNames) => {
             if (fileNames === undefined) return;
+
+            let filePath  = fileNames[0];
+            log.debug('filename:', filePath);
             let fileName = path.basename(fileNames[0]);
             win.webContents.send('fileNameReceived', fileName);
-            fs.readFile(fileName, 'utf-8', (err, data) => {
+            fs.readFile(filePath, 'utf-8', (err, data) => {
                 if (err) {
-                    console.error('an error has occurred while reading the trace file:', err, '\nas a result we are not sending the trace file');
+                    log.error('an error has occurred while reading the trace file:', err, '\nas a result we are not sending the trace file');
                     return;
                 }
                 win.webContents.send('fileDataReceived', data);
+                log.debug('sending ipc to channel "fileDataReceived"');
             });
         });
     });
@@ -102,7 +111,7 @@ function ipcListeners() {
     });
 
     ipcMain.on('runSimulation', (event, data) => {
-        console.log('running simulation....');
+        log.verbose('running simulation....');
         sim.runSim(data);
     });
 }

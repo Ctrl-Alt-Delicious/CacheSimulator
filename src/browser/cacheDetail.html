@@ -10,8 +10,8 @@
 <md-table-container>
   <table id="fillWidth">
     <tr>
-      <td ng-repeat="x in [].constructor($ctrl.getAssociativity()) track by $index">
-        <table class="tableCollapse" md-table md-row-select multiple ng-model="selected" md-progress="promise">
+      <td ng-repeat="x in $ctrl.numSets() track by $index">
+        <table class="tableCollapse" md-table md-row-select multiple  md-progress="promise">
           <thead md-head md-order="query.order">
             <tr md-row>
               <th class="index" md-column>Index</th>
@@ -21,7 +21,7 @@
             </tr>
           </thead>
           <tbody md-body>
-            <tr md-row ng-repeat="x in [].constructor($ctrl.getIndicesSize()) track by $index">
+            <tr md-row ng-repeat="x in $ctrl.numCacheRows() track by $index">
               <td class="index" md-cell> {{$index}} </td>
               <td id="{{$parent.$index * $ctrl.getIndicesSize() + $index}}" md-cell ng-click="$ctrl.openModal($event,'modal-' + $parent.$index + $index, 'modal-' + $parent.$index + $index + -tag)">
                 <span id="{{ 'modal-' + $parent.$index + $index + 'tag'}}"></span>
@@ -46,7 +46,7 @@
                               <th class="center" md-column>Offset</th>
                             </tr>
                             <tbody>
-                              <tr md-row ng-repeat="x in [].constructor($ctrl.getBlockSize()) track by $index"> 
+                              <tr md-row ng-repeat="x in $ctrl.numBlockRows() track by $index">
                                 <td> 0x{{$ctrl.modals[$ctrl.activeCache]['modal-' + $parent.$parent.$index + $parent.$index]['block'][$index].toString(16)}} </td>
                                 <td> {{$index.toString(2)}} </td>
                               </tr>
