@@ -52,6 +52,6 @@
     "angular-material-data-table": "^0.10.10",
     "angular-resizable": "^1.2.0",
     "electron-log": "^2.2.11",
-    "jquery": "^3.2.1"
+    "jquery": "^3.5.0"
   }
 }
