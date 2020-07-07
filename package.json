@@ -40,7 +40,7 @@
   },
   "repository": "https://github.com/Ctrl-Alt-Delicious/CacheSimulator.git",
   "devDependencies": {
-    "electron": "~1.6.2",
+    "electron": "~7.2.4",
     "electron-builder": "^19.47.1",
     "eslint": "^4.9.0"
   },
